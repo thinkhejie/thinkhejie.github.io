@@ -202,6 +202,88 @@
 
       <div class="body-wrap">
   
+    <article id="post-Git命令列表" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/15/Git命令列表/" class="article-date">
+  	<time datetime="2016-04-15T04:26:38.000Z" itemprop="datePublished">2016-04-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/15/Git命令列表/">Git命令列表</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>git checkout<br>创建新分支：git branch branchName</p>
+<p>切换到新分支：git checkout branchName</p>
+<p>git config</p>
+<p>git diff -cacheed</p>
+<p>git diff head</p>
+<p>git init</p>
+<p>git status -s</p>
+<p>git reset</p>
+<p>M 版本库和中间状态有差异</p>
+<p>M 工作区和当前文件有差异</p>
+<p><a href="http://ndpsoftware.com/git-cheatsheet.html#loc=remote_repo" target="_blank" rel="external">http://ndpsoftware.com/git-cheatsheet.html#loc=remote_repo</a>;</p>
+<p>git stash</p>
+<p>git stash pop</p>
+<p>git reset head  重置暂存区</p>
+<p>git show 用法</p>
+<p>git log –pretty=raw –graph 872b140</p>
+<p>git reflog show master</p>
+<p>git reflog -1 最近一条</p>
+<p>git rest –soft 暂存区工作区不变</p>
+<p>1、已经修改某一文件， 但是没有执行 git add，如果撤销<br>git checkout a.txt</p>
+<p>2、已经修改某一个文件，但是已经执行了 git add ，如何撤销<br>git rest a.txt</p>
+<p>3、已经修改了某几个文件，但是没有执行 git add，想撤销到某个版本，但是暂存区、工作区不想撤销<br>git rest –soft  commitId</p>
+<p>4、果已经修改了某几个文件，但是没有执行 git add，也提交了暂存区，想撤销到某个commit<br>git rest –hard commitId</p>
+<p>5、如何查看HEAD指向<br>cat ../.git/HEAD</p>
+<p>7、Git的官网地址<br><a href="https://www.kernel.org/pub/software/scm/git/docs/" target="_blank" rel="external">https://www.kernel.org/pub/software/scm/git/docs/</a></p>
+<p>8、显示简要的增改行数统计,每次提交文件的变更统计，-n 同上，前n条。<br>git log –stat -n</p>
+<p>9、git log 打印如何美化<br>$ git log –pretty=format:”%h -%an,%ar : %s” -3</p>
+<p>10、git stat -s 命令会出现两个MM，分别是什么意思。<br>第一个M 版本库和中间状态有差异<br>第二个M 工作区和当前文件有差异</p>
+<p>git log –pretty=format:”%h -%an,%ar : %s” -3<br>$ git log –pretty=format:”%h -%an,%ar : %s” -3<br>d0b9a20 -BeginMan,24 hours ago : ok<br>8c186cd -BeginMan,24 hours ago : mi<br>b2a3100 -BeginMan,24 hours ago : what?</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-My-New-Post" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -242,6 +324,7 @@
     </div>
     
   </div>
+  
   
 </article>
 
@@ -294,6 +377,7 @@
     </div>
     
   </div>
+  
   
 </article>
 
@@ -355,6 +439,7 @@
     </div>
     
   </div>
+  
   
 </article>
 

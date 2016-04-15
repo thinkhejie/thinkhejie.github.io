@@ -4,18 +4,48 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>潘总太帅了2016-04 | Hexo</title>
+  <title>Git命令列表 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="bruce sha&apos;s blog | java | scala | bi">
+  <meta name="description" content="git checkout创建新分支：git branch branchName
+切换到新分支：git checkout branchName
+git config
+git diff -cacheed
+git diff head
+git init
+git status -s
+git reset
+M 版本库和中间状态有差异
+M 工作区和当前文件有差异
+http://ndpsoftware.com/gi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="潘总太帅了2016-04">
-<meta property="og:url" content="http://thinkhejie.github.io/2016/04/14/TestTitle/index.html">
+<meta property="og:title" content="Git命令列表">
+<meta property="og:url" content="http://thinkhejie.github.io/2016/04/15/Git命令列表/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="bruce sha&apos;s blog | java | scala | bi">
-<meta property="og:updated_time" content="2016-04-14T13:25:06.000Z">
+<meta property="og:description" content="git checkout创建新分支：git branch branchName
+切换到新分支：git checkout branchName
+git config
+git diff -cacheed
+git diff head
+git init
+git status -s
+git reset
+M 版本库和中间状态有差异
+M 工作区和当前文件有差异
+http://ndpsoftware.com/gi">
+<meta property="og:updated_time" content="2016-04-15T04:38:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="潘总太帅了2016-04">
-<meta name="twitter:description" content="bruce sha&apos;s blog | java | scala | bi">
+<meta name="twitter:title" content="Git命令列表">
+<meta name="twitter:description" content="git checkout创建新分支：git branch branchName
+切换到新分支：git checkout branchName
+git config
+git diff -cacheed
+git diff head
+git init
+git status -s
+git reset
+M 版本库和中间状态有差异
+M 工作区和当前文件有差异
+http://ndpsoftware.com/gi">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -201,11 +231,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-TestTitle" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Git命令列表" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/14/TestTitle/" class="article-date">
-  	<time datetime="2016-04-14T13:04:38.000Z" itemprop="datePublished">2016-04-14</time>
+      <a href="/2016/04/15/Git命令列表/" class="article-date">
+  	<time datetime="2016-04-15T04:26:38.000Z" itemprop="datePublished">2016-04-15</time>
 </a>
     </div>
   
@@ -218,7 +248,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      潘总太帅了2016-04
+      Git命令列表
     </h1>
   
 
@@ -234,7 +264,36 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>git checkout<br>创建新分支：git branch branchName</p>
+<p>切换到新分支：git checkout branchName</p>
+<p>git config</p>
+<p>git diff -cacheed</p>
+<p>git diff head</p>
+<p>git init</p>
+<p>git status -s</p>
+<p>git reset</p>
+<p>M 版本库和中间状态有差异</p>
+<p>M 工作区和当前文件有差异</p>
+<p><a href="http://ndpsoftware.com/git-cheatsheet.html#loc=remote_repo" target="_blank" rel="external">http://ndpsoftware.com/git-cheatsheet.html#loc=remote_repo</a>;</p>
+<p>git stash</p>
+<p>git stash pop</p>
+<p>git reset head  重置暂存区</p>
+<p>git show 用法</p>
+<p>git log –pretty=raw –graph 872b140</p>
+<p>git reflog show master</p>
+<p>git reflog -1 最近一条</p>
+<p>git rest –soft 暂存区工作区不变</p>
+<p>1、已经修改某一文件， 但是没有执行 git add，如果撤销<br>git checkout a.txt</p>
+<p>2、已经修改某一个文件，但是已经执行了 git add ，如何撤销<br>git rest a.txt</p>
+<p>3、已经修改了某几个文件，但是没有执行 git add，想撤销到某个版本，但是暂存区、工作区不想撤销<br>git rest –soft  commitId</p>
+<p>4、果已经修改了某几个文件，但是没有执行 git add，也提交了暂存区，想撤销到某个commit<br>git rest –hard commitId</p>
+<p>5、如何查看HEAD指向<br>cat ../.git/HEAD</p>
+<p>7、Git的官网地址<br><a href="https://www.kernel.org/pub/software/scm/git/docs/" target="_blank" rel="external">https://www.kernel.org/pub/software/scm/git/docs/</a></p>
+<p>8、显示简要的增改行数统计,每次提交文件的变更统计，-n 同上，前n条。<br>git log –stat -n</p>
+<p>9、git log 打印如何美化<br>$ git log –pretty=format:”%h -%an,%ar : %s” -3</p>
+<p>10、git stat -s 命令会出现两个MM，分别是什么意思。<br>第一个M 版本库和中间状态有差异<br>第二个M 工作区和当前文件有差异</p>
+<p>git log –pretty=format:”%h -%an,%ar : %s” -3<br>$ git log –pretty=format:”%h -%an,%ar : %s” -3<br>d0b9a20 -BeginMan,24 hours ago : ok<br>8c186cd -BeginMan,24 hours ago : mi<br>b2a3100 -BeginMan,24 hours ago : what?</p>
+
       
     </div>
     
@@ -243,18 +302,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/04/14/My-New-Post/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          My New Post
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/04/14/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/04/14/My-New-Post/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">My New Post</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -316,7 +366,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="TestTitle" data-title="潘总太帅了2016-04" data-url="http://thinkhejie.github.io/2016/04/14/TestTitle/"></div>
+	<div class="ds-thread" data-thread-key="Git命令列表" data-title="Git命令列表" data-url="http://thinkhejie.github.io/2016/04/15/Git命令列表/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
