@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://thinkhejie.github.io/2016/04/14/My-New-Post/</loc>
+    
+    <lastmod>2016-04-15T11:28:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://thinkhejie.github.io/2016/04/15/Git%E5%91%BD%E4%BB%A4%E5%88%97%E8%A1%A8/</loc>
     
     <lastmod>2016-04-15T10:57:49.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://thinkhejie.github.io/2016/04/14/hello-world/</loc>
     
     <lastmod>2016-04-15T10:44:03.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://thinkhejie.github.io/2016/04/14/My-New-Post/</loc>
-    
-    <lastmod>2016-04-14T14:43:05.000Z</lastmod>
     
   </url>
   
