@@ -4,18 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Java/NIO解析 | Hexo</title>
+  <title>MAVEN命令总结 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+  <meta name="description" content="如果想跳过测试阶段，可用：mvn package -DskipTests
+想临时性跳过测试代码的编译，可用：mvn package -Dmaven.test.skip=truemaven.test.skip同时控制maven-compiler-plugin和maven-surefire-plugin两个插件的行为，即跳过编译，又跳过测试。
+指定测试类mvn test -Dtest=RandomG">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java/NIO解析">
-<meta property="og:url" content="http://thinkhejie.github.io/2016/05/03/Java-NIO解析/index.html">
+<meta property="og:title" content="MAVEN命令总结">
+<meta property="og:url" content="http://thinkhejie.github.io/2016/05/04/MAVEN命令总结/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
-<meta property="og:updated_time" content="2016-05-03T14:17:26.000Z">
+<meta property="og:description" content="如果想跳过测试阶段，可用：mvn package -DskipTests
+想临时性跳过测试代码的编译，可用：mvn package -Dmaven.test.skip=truemaven.test.skip同时控制maven-compiler-plugin和maven-surefire-plugin两个插件的行为，即跳过编译，又跳过测试。
+指定测试类mvn test -Dtest=RandomG">
+<meta property="og:updated_time" content="2016-05-04T03:31:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java/NIO解析">
-<meta name="twitter:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+<meta name="twitter:title" content="MAVEN命令总结">
+<meta name="twitter:description" content="如果想跳过测试阶段，可用：mvn package -DskipTests
+想临时性跳过测试代码的编译，可用：mvn package -Dmaven.test.skip=truemaven.test.skip同时控制maven-compiler-plugin和maven-surefire-plugin两个插件的行为，即跳过编译，又跳过测试。
+指定测试类mvn test -Dtest=RandomG">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -167,11 +173,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-Java-NIO解析" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MAVEN命令总结" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/03/Java-NIO解析/" class="article-date">
-  	<time datetime="2016-05-03T14:17:26.000Z" itemprop="datePublished">2016-05-03</time>
+      <a href="/2016/05/04/MAVEN命令总结/" class="article-date">
+  	<time datetime="2016-05-04T03:30:43.000Z" itemprop="datePublished">2016-05-04</time>
 </a>
     </div>
   
@@ -184,7 +190,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Java/NIO解析
+      MAVEN命令总结
     </h1>
   
 
@@ -200,7 +206,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <a id="more"></a>
+<p>如果想跳过测试阶段，可用：<br>mvn package -DskipTests</p>
+<p>想临时性跳过测试代码的编译，可用：<br>mvn package -Dmaven.test.skip=true<br>maven.test.skip同时控制maven-compiler-plugin和maven-surefire-plugin两个插件的行为，即跳过编译，又跳过测试。</p>
+<p>指定测试类<br>mvn test -Dtest=RandomGeneratorTest</p>
+<p>以Random开头，Test结尾的测试类<br>mvn test -Dtest=Random*Test</p>
+<p>用逗号分隔指定多个测试用例<br>mvn test -Dtest=ATest,BTest</p>
+<p>test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。<br>mvn test -Dtest -DfailIfNoTests = false</p>
+
       
     </div>
     
@@ -209,18 +222,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/05/04/MAVEN命令总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          MAVEN命令总结
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/03/SQL查询优化总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SQL查询优化总结</div>
+    <a href="/2016/05/03/Java-NIO解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java/NIO解析</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -282,7 +286,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Java-NIO解析" data-title="Java/NIO解析" data-url="http://thinkhejie.github.io/2016/05/03/Java-NIO解析/"></div>
+	<div class="ds-thread" data-thread-key="MAVEN命令总结" data-title="MAVEN命令总结" data-url="http://thinkhejie.github.io/2016/05/04/MAVEN命令总结/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
