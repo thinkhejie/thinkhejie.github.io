@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://thinkhejie.github.io/2016/05/03/Dubbo%E6%A1%86%E6%9E%B6(%E4%BA%8C)/</loc>
+    
+    <lastmod>2016-05-04T11:47:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://thinkhejie.github.io/2016/05/03/Dubbo%E6%A1%86%E6%9E%B6(%E4%B8%80)/</loc>
     
     <lastmod>2016-05-04T11:42:18.000Z</lastmod>
@@ -54,13 +61,6 @@
     <loc>http://thinkhejie.github.io/2016/05/03/JVM%E7%B3%BB%E5%88%97%E4%BA%8C/</loc>
     
     <lastmod>2016-05-03T13:59:14.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://thinkhejie.github.io/2016/05/03/Dubbo%E6%A1%86%E6%9E%B6(%E4%BA%8C)/</loc>
-    
-    <lastmod>2016-05-03T13:57:51.000Z</lastmod>
     
   </url>
   
