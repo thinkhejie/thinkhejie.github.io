@@ -6,16 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>JVM系列一 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+  <meta name="description" content="S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survivor space 1 区已使用空间的百分比E   — Heap上的 Eden space 区已使用空间的百分比O   — Heap上的 Old space 区已使用空间的百分比P   — Perm space 区已使用空间的百分比YGC — 从应用程序启动到采样时发生 Young">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM系列一">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/03/JVM系列一/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
-<meta property="og:updated_time" content="2016-05-03T13:59:10.000Z">
+<meta property="og:description" content="S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survivor space 1 区已使用空间的百分比E   — Heap上的 Eden space 区已使用空间的百分比O   — Heap上的 Old space 区已使用空间的百分比P   — Perm space 区已使用空间的百分比YGC — 从应用程序启动到采样时发生 Young">
+<meta property="og:image" content="http://thinkhejie.github.io/img/20160504110524.png">
+<meta property="og:updated_time" content="2016-05-04T03:22:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列一">
-<meta name="twitter:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+<meta name="twitter:description" content="S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survivor space 1 区已使用空间的百分比E   — Heap上的 Eden space 区已使用空间的百分比O   — Heap上的 Old space 区已使用空间的百分比P   — Perm space 区已使用空间的百分比YGC — 从应用程序启动到采样时发生 Young">
+<meta name="twitter:image" content="http://thinkhejie.github.io/img/20160504110524.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -200,7 +202,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><img src="/img/20160504110524.png" alt="vmstat view"></p>
+<p>S0  — Heap上的 Survivor space 0 区已使用空间的百分比<br>S1  — Heap上的 Survivor space 1 区已使用空间的百分比<br>E   — Heap上的 Eden space 区已使用空间的百分比<br>O   — Heap上的 Old space 区已使用空间的百分比<br>P   — Perm space 区已使用空间的百分比<br>YGC — 从应用程序启动到采样时发生 Young GC 的次数<br>YGCT– 从应用程序启动到采样时 Young GC 所用的时间(单位秒)<br>FGC — 从应用程序启动到采样时发生 Full GC 的次数<br>FGCT– 从应用程序启动到采样时 Full GC 所用的时间(单位秒)<br>GCT — 从应用程序启动到采样时用于垃圾回收的总时间(单位秒)</p>
+
       
     </div>
     
