@@ -6,17 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Dubbo框架(二) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：">
+  <meta name="description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：
+
+dubbo服务调用如下所示：
+Provider: 暴露服务的服务提供方。
+
+Consumer: 调用远程服务的服务消费方。
+
+Registry: 服">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo框架(二)">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/03/Dubbo框架(二)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：">
+<meta property="og:description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：
+
+dubbo服务调用如下所示：
+Provider: 暴露服务的服务提供方。
+
+Consumer: 调用远程服务的服务消费方。
+
+Registry: 服">
 <meta property="og:image" content="http://thinkhejie.github.io/img/20141230234821034.jpeg">
-<meta property="og:updated_time" content="2016-05-04T11:47:16.000Z">
+<meta property="og:image" content="http://thinkhejie.github.io/img/05031249_S1ZB.jpg">
+<meta property="og:updated_time" content="2016-05-04T12:37:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(二)">
-<meta name="twitter:description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：">
+<meta name="twitter:description" content="SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系列的功能。dubbo官方服务治理如下：
+
+dubbo服务调用如下所示：
+Provider: 暴露服务的服务提供方。
+
+Consumer: 调用远程服务的服务消费方。
+
+Registry: 服">
 <meta name="twitter:image" content="http://thinkhejie.github.io/img/20141230234821034.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -212,6 +234,17 @@
       
         <p>SOA 架构出现之前，主要依靠java rmi 等功能实现了远程调用。 不过，rmi 性能低下（短连接、序列化<br>过大），局限于java领域，缺少整套的解决方案。rpc框架实现了，从服务注册、发现、治理、监控等一系<br>列的功能。<br>dubbo官方服务治理如下：</p>
 <p><img src="/img/20141230234821034.jpeg" alt="jstat gcutil"></p>
+<p>dubbo服务调用如下所示：</p>
+<pre><code>Provider: 暴露服务的服务提供方。
+
+Consumer: 调用远程服务的服务消费方。
+
+Registry: 服务注册与发现的注册中心。
+
+Monitor: 统计服务的调用次调和调用时间的监控中心。
+
+Container: 服务运行容器。
+</code></pre><p><img src="/img/05031249_S1ZB.jpg" alt="jstat gcutil"></p>
 
       
     </div>
