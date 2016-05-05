@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>潘总太帅了2016-04 | Hexo</title>
+  <title>Dubbo框架(五) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+  <meta name="description" content="Dubbo服务管理与监控">
 <meta property="og:type" content="article">
-<meta property="og:title" content="潘总太帅了2016-04">
-<meta property="og:url" content="http://thinkhejie.github.io/2016/04/14/TestTitle/index.html">
+<meta property="og:title" content="Dubbo框架(五)">
+<meta property="og:url" content="http://thinkhejie.github.io/2014/05/05/Dubbo框架(五)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
-<meta property="og:updated_time" content="2016-04-15T12:35:33.000Z">
+<meta property="og:description" content="Dubbo服务管理与监控">
+<meta property="og:updated_time" content="2016-05-05T12:18:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="潘总太帅了2016-04">
-<meta name="twitter:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+<meta name="twitter:title" content="Dubbo框架(五)">
+<meta name="twitter:description" content="Dubbo服务管理与监控">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Git/" style="font-size: 20px;">Git</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a>
+						<a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a>
 					</div>
 				</section>
 				
@@ -167,11 +167,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-TestTitle" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Dubbo框架(五)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/14/TestTitle/" class="article-date">
-  	<time datetime="2016-04-14T13:04:38.000Z" itemprop="datePublished">2016-04-14</time>
+      <a href="/2014/05/05/Dubbo框架(五)/" class="article-date">
+  	<time datetime="2014-05-05T13:04:38.000Z" itemprop="datePublished">2014-05-05</time>
 </a>
     </div>
   
@@ -184,7 +184,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      潘总太帅了2016-04
+      Dubbo框架(五)
     </h1>
   
 
@@ -192,9 +192,13 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dubbo/">dubbo</a></li></ul>
+	</div>
+
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Git/">Git</a>
+	<a class="article-category-link" href="/categories/dubbo/">dubbo</a>
 	</div>
 
 
@@ -204,7 +208,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Dubbo服务管理与监控</p>
+<a id="more"></a>
+<p>我们需要在安装好管理中心和监控中心以后，再将上面的开发的提供方服务部署到物理节点上，然后就能够通过管理中心和监控中心来查看对应的详细情况。</p>
+<p>Dubbo服务管理中心<br>安装Dubbo服务管理中心，需要选择一个Web容器，我们使用Tomcat服务器。首先下载Dubbo管理中心安装文件dubbo-admin-2.5.3.war，或者直接从源码构建得到该WAR文件。这里，我们已经构建好对应的WAR文件，然后进行安装，执行如下命令：</p>
+<p>Dubbo监控中心</p>
+<p>Dubbo监控中心是以Dubbo服务的形式发布到注册中心，和普通的服务时一样的。例如，我这里下载了Dubbo自带的简易监控中心文件dubbo-monitor-simple-2.5.3-assembly.tar.gz，可以解压缩以后，修改配置文件~/dubbo-monitor-simple-2.5.3/conf/dubbo.properties的内容，如下所示：</p>
+<p>监控中心使用了Jetty Web容器，访问地址<a href="http://localhost:8087/就可以查看监控中心，Applications选项卡页面包含了服务提供方和消费方的基本信息，如图所示" target="_blank" rel="external">http://localhost:8087/就可以查看监控中心，Applications选项卡页面包含了服务提供方和消费方的基本信息，如图所示</a></p>
+
       
     </div>
     
@@ -213,18 +224,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/04/14/My-New-Post/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/04/14/Linux命令列表/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          My New Post
+          Linux命令列表
         
       </div>
     </a>
   
   
-    <a href="/2015/04/15/Git命令列表/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Git命令列表</div>
+    <a href="/2014/05/04/Dubbo框架(四)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dubbo框架(四)</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -286,7 +297,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="TestTitle" data-title="潘总太帅了2016-04" data-url="http://thinkhejie.github.io/2016/04/14/TestTitle/"></div>
+	<div class="ds-thread" data-thread-key="Dubbo框架(五)" data-title="Dubbo框架(五)" data-url="http://thinkhejie.github.io/2014/05/05/Dubbo框架(五)/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
