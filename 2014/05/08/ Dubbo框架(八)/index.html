@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/08/ Dubbo框架(八)/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api">
-<meta property="og:updated_time" content="2016-05-09T03:28:02.000Z">
+<meta property="og:updated_time" content="2016-05-09T06:06:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(八)">
 <meta name="twitter:description" content="Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api">
@@ -211,7 +211,47 @@
         <p>Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api</p>
 <a id="more"></a>
 <p>Dubbo会根据用户配置的协议调用不同协议的Invoker，再通过ReferenceFonfig将Invoker的引用关联到Reference的ref属性上提供给消费端调用。当用户调用一个Service接口的一个方法后由于Dubbo使用javassist动态代理，会调用Invoker的Invoke方法从而初始化一个RPC调用访问请求访问服务端的Service返回结果。下面我们就从Comsumer端开始逐步解析这个框架。</p>
+<p>服务消费方发起请求<br>当服务的消费方引用了某远程服务，服务的应用方在spring的配置实例如下：</p>
+<dubbo:referenceid="demoservice"interface="com.alibaba.dubbo.demo.demoserv ice"="">
 
+<p>demoService实例其实是代理工厂生产的代理对象（大家可以参考代理那部分生成的伪代码），在代码中调用demoService.sayHello(“world!”)时，</p>
+<ol>
+<li>将方法名方法参数传入InvokerInvocationHandler的invoke方</li>
+</ol>
+<p>对于Object中的方法toString, hashCode, equals直接调用invoker的对应方法,</p>
+<p>这里对于Object的方法需要被远程调用吗？调用了是不是报错比默认处理更好呢？？</p>
+<p>远程调用层是以Invocation, Result为中心， 这里根据要调用的方法以及传入的参数构建RpcInvocation对象，作为Invoker的入参</p>
+<ol>
+<li>MockClusterInvoker根据参数提供了三种调用策略</li>
+</ol>
+<p>不需要mock， 直接调用FailoverClusterInvoker</p>
+<p>强制mock，调用mock</p>
+<p>先调FailoverClusterInvoker，调用失败在mock、</p>
+<ol>
+<li>FailoverClusterInvoker默认调用策略</li>
+</ol>
+<p>通过目录服务查找到所有订阅的服务提供者的Invoker对象</p>
+<p>路由服务根据策略来过滤选择调用的Invokers</p>
+<p>通过负载均衡策略LoadBalance来选择一个Invoker</p>
+<ol>
+<li>执行选择的Invoker.inoker(invocation)</li>
+</ol>
+<p>经过监听器链，默认没有</p>
+<p>经过过滤器链，内置实现了很多</p>
+<p>执行到远程调用的DubboInvoker</p>
+<ol>
+<li>DubboInvoker</li>
+</ol>
+<p>根据url 也就是根据服务提供者的长连接，这里封装成交互层对象ExchangeClient供这里调用</p>
+<p>判断远程调用类型同步，异步还是oneway模式</p>
+<p>ExchangeClient发起远程调用，底层remoting不在这里描述了</p>
+<p>获取调用结果：</p>
+<pre><code>Oneway返回空RpcResult
+
+异步，直接返回空RpcResult, ResponseFuture回调
+
+同步， ResponseFuture模式同步转异步，等待响应返回
+</code></pre></dubbo:referenceid="demoservice"interface="com.alibaba.dubbo.demo.demoserv>
       
     </div>
     
