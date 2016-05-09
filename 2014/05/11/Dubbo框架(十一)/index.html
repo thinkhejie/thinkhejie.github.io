@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Dubbo框架(十) | Hexo</title>
+  <title>Dubbo框架(十一) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Dubbo框架负载均衡的实现">
+  <meta name="description" content="Dubbo框架监控（monitor），Dubbo框架中自带了一个简易的监控中心实现。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dubbo框架(十)">
-<meta property="og:url" content="http://thinkhejie.github.io/2014/05/10/Dubbo框架(十)/index.html">
+<meta property="og:title" content="Dubbo框架(十一)">
+<meta property="og:url" content="http://thinkhejie.github.io/2014/05/11/Dubbo框架(十一)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Dubbo框架负载均衡的实现">
-<meta property="og:updated_time" content="2016-05-09T04:00:18.000Z">
+<meta property="og:description" content="Dubbo框架监控（monitor），Dubbo框架中自带了一个简易的监控中心实现。">
+<meta property="og:updated_time" content="2016-05-09T04:11:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dubbo框架(十)">
-<meta name="twitter:description" content="Dubbo框架负载均衡的实现">
+<meta name="twitter:title" content="Dubbo框架(十一)">
+<meta name="twitter:description" content="Dubbo框架监控（monitor），Dubbo框架中自带了一个简易的监控中心实现。">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -167,11 +167,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-Dubbo框架(十)" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Dubbo框架(十一)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2014/05/10/Dubbo框架(十)/" class="article-date">
-  	<time datetime="2014-05-10T13:04:38.000Z" itemprop="datePublished">2014-05-10</time>
+      <a href="/2014/05/11/Dubbo框架(十一)/" class="article-date">
+  	<time datetime="2014-05-11T13:04:38.000Z" itemprop="datePublished">2014-05-11</time>
 </a>
     </div>
   
@@ -184,7 +184,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Dubbo框架(十)
+      Dubbo框架(十一)
     </h1>
   
 
@@ -208,36 +208,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Dubbo框架负载均衡的实现</p>
+        <p>Dubbo框架监控（monitor），Dubbo框架中自带了一个简易的监控中心实现。</p>
 <a id="more"></a>
-<p>1、负载均衡接口定义：com.alibaba.dubbo.rpc.cluster.LoadBalance<br>2、负载均衡相关bundle：dubbo-cluster</p>
-<p>算法如下表格：</p>
-<table>
-<thead>
-<tr>
-<th>算法策略</th>
-<th>实现类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>一致性hash（consistent hash）算法</td>
-<td>ConsistentHashLoadBalance</td>
-</tr>
-<tr>
-<td>最少活跃调用数</td>
-<td>LeastActiveLoadBalance</td>
-</tr>
-<tr>
-<td>随机算法</td>
-<td>RandomLoadBalance</td>
-</tr>
-<tr>
-<td>轮询算法</td>
-<td>RoundRobinLoadBalance</td>
-</tr>
-</tbody>
-</table>
+<p>1、Dubbo框架自带的监控相关的bundle有三个：</p>
+<p>dubbo-monitor-api</p>
+<p>dubbo-monitor-default</p>
+<p>dubbo-monitor-simple</p>
+<p>2.SimpleMonitorService</p>
+<p>监控中心配置了监控服务的实现SimpleMonitorService, 并且作为一个普通的dubbo服务暴露到注册中心，供服务的提供者和服务的消费方调用，将服务提供者和服务的消费方的调用数据保存到监控中心。</p>
 
       
     </div>
@@ -247,18 +225,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2014/05/11/Dubbo框架(十一)/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/04/14/Linux命令列表/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Dubbo框架(十一)
+          Linux命令列表
         
       </div>
     </a>
   
   
-    <a href="/2014/05/09/Dubbo框架(九)/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Dubbo框架(九)</div>
+    <a href="/2014/05/10/Dubbo框架(十)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Dubbo框架(十)</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -320,7 +298,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Dubbo框架(十)" data-title="Dubbo框架(十)" data-url="http://thinkhejie.github.io/2014/05/10/Dubbo框架(十)/"></div>
+	<div class="ds-thread" data-thread-key="Dubbo框架(十一)" data-title="Dubbo框架(十一)" data-url="http://thinkhejie.github.io/2014/05/11/Dubbo框架(十一)/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
