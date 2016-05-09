@@ -13,7 +13,8 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo 注册中心(Registry)">
 <meta property="og:image" content="http://thinkhejie.github.io/img/dubbo-architecture-future.jpg">
-<meta property="og:updated_time" content="2016-05-09T11:03:58.000Z">
+<meta property="og:image" content="http://thinkhejie.github.io/img/20160509191142.png">
+<meta property="og:updated_time" content="2016-05-09T11:22:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(十六)">
 <meta name="twitter:description" content="Dubbo 注册中心(Registry)">
@@ -214,6 +215,7 @@
 <a id="more"></a>
 <p>Dubbo在跟注册中心（Registry）通信之前，首先要创建Registry Proxy，才能subscribe（订阅服务）和register（注册服务）。</p>
 <p><img src="/img/dubbo-architecture-future.jpg" alt="Dubbo Registry"></p>
+<p>在Dubbo中，和注册中心有关的bundle一共有六个，下图所示。<br><img src="/img/20160509191142.png" alt="Dubbo Registry Code"><br>| bundle  | 功能 |<br>| ————- | ————- |<br>|dubbo-registry-api||<br>|dubbo-registry-default||<br>|dubbo-registry-multicast||<br>|dubbo-registry-redis||<br>|dubbo-registry-simple||<br>|dubbo-registry-zookeeper||</p>
 <p>1、创建了一个RegistryDirectory，可以调用RegistryDirectory的doList(Invocation invocation)方法来获得invocation的所有Invoker。其中invocation只需要给出调用的方法名称，Invoker则负责发送调用请求和接收返回结果，里面封装了所有的通信，序列化细节。RegistryDirectory又是如何根据invocation来得到invoker的呢？RegistryDirectory包含一个subscribe方法，用来向Registry请求感兴趣的服务的调用地址，然后Registry会回调RegistryDirectory，也就是notify方法，notify方法就会把这些服务的地址进一步封装成invoker，并且缓存起来。这样调用doList的时候直接根据invocation的方法名来找对应的invoker就可以了。</p>
 <p>2、因为RegistryDirectory的doList返回的invocation是一个list列表，也就是可能会存在多个可用的服务实现，那么就需要一个负载均衡机制来决定调用哪个服务，可以看到cluster的invoke方法里都有一个loadbalance来具体实现选择。</p>
 <p>3、构造RegistryService代理，所有的请求通过cluster最后落到directory的invoker上面，具体负责RegistryService里各种接口方法的调用。</p>
