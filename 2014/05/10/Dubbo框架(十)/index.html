@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/10/Dubbo框架(十)/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo框架负载均衡的实现">
-<meta property="og:updated_time" content="2016-05-09T03:54:45.000Z">
+<meta property="og:updated_time" content="2016-05-09T03:57:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(十)">
 <meta name="twitter:description" content="Dubbo框架负载均衡的实现">
@@ -212,36 +212,7 @@
 <a id="more"></a>
 <p>1、负载均衡接口定义：com.alibaba.dubbo.rpc.cluster.LoadBalance<br>2、负载均衡相关bundle：dubbo-cluster</p>
 <p>算法如下表格：</p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>一致性hash（consistent hash）算法</td>
-<td>ConsistentHashLoadBalance</td>
-<td></td>
-</tr>
-<tr>
-<td>算法</td>
-<td>LeastActiveLoadBalance</td>
-<td></td>
-</tr>
-<tr>
-<td>随机算法</td>
-<td>RandomLoadBalance</td>
-<td></td>
-</tr>
-<tr>
-<td>轮询算法</td>
-<td>RoundRobinLoadBalance</td>
-</tr>
-</tbody>
-</table>
+<p>| 算法名称  | 实现类 ||<br>|一致性hash（consistent hash）算法|ConsistentHashLoadBalance||<br>|算法|LeastActiveLoadBalance||<br>|随机算法|RandomLoadBalance||<br>|轮询算法|RoundRobinLoadBalance||</p>
 
       
     </div>
