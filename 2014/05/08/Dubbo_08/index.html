@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/08/Dubbo_08/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo 服务的定义和消费">
-<meta property="og:updated_time" content="2016-05-09T13:10:15.000Z">
+<meta property="og:updated_time" content="2016-05-09T13:18:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(八)">
 <meta name="twitter:description" content="Dubbo 服务的定义和消费">
@@ -212,14 +212,15 @@
 <a id="more"></a>
 <p>1、Dubbo有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api</p>
 <p>Dubbo会根据用户配置的协议调用不同协议的Invoker，再通过ReferenceFonfig将Invoker的引用关联到Reference的ref属性上提供给消费端调用。当用户调用一个Service接口的一个方法后由于Dubbo使用javassist动态代理，会调用Invoker的Invoke方法从而初始化一个RPC调用访问请求访问服务端的Service返回结果。下面我们就从Comsumer端开始逐步解析这个框架。</p>
-<p>服务消费方发起请求，当服务的消费方引用了某远程服务，服务的应用方在spring的配置实例如下：</p>
+<p>服务消费方发起请求</p>
+<p>当服务的消费方引用了某远程服务，服务的应用方在spring的配置实例如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"demoService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.dubbo.demo.DemoService"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>demoService实例其实是代理工厂生产的代理对象（大家可以参考代理那部分生成的伪代码），在代码中调用demoService.sayHello(“world!”)时，</p>
-<p>1.将方法名方法参数传入InvokerInvocationHandler的invoke方法</p>
-<p>对于Object中的方法toString, hashCode, equals直接调用invoker的对应方法,这里对于Object的方法需要被远程调用吗？调用了是不是报错比默认处理更好呢？？</p>
-<p>远程调用层是以Invocation, Result为中心， 这里根据要调用的方法以及传入的参数构建RpcInvocation对象，作为Invoker的入参</p>
+<p>demoService实例其实是代理工厂生产的代理对象（大家可以参考代理那部分生成的伪代码），在代码中调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">demoService.sayHello(“world!”)</span><br></pre></td></tr></table></figure>
+<p>1.将方法名、方法参数传入InvokerInvocationHandler的invoke方法，对于Object中的方法toString, hashCode, equals直接调用invoker的对应方法</p>
+<p>远程调用层是以Invocation, Result为中心，这里根据要调用的方法以及传入的参数构建RpcInvocation对象，作为Invoker的入参</p>
 <p>2.MockClusterInvoker根据参数提供了三种调用策略</p>
-<p>不需要mock， 直接调用FailoverClusterInvoker</p>
+<p>不需要mock，直接调用FailoverClusterInvoker</p>
 <p>强制mock，调用mock</p>
 <p>先调FailoverClusterInvoker，调用失败在mock、</p>
 <p>3.FailoverClusterInvoker默认调用策略</p>
@@ -227,11 +228,10 @@
 <p>4.执行选择的Invoker.inoker(invocation)</p>
 <p>经过监听器链，默认没有<br>经过过滤器链，内置实现了很多<br>执行到远程调用的DubboInvoker</p>
 <p>5.DubboInvoker</p>
-<p>根据url 也就是根据服务提供者的长连接，这里封装成交互层对象ExchangeClient供这里调用，判断远程调用类型同步，异步还是oneway模式ExchangeClient发起远程调用，底层remoting不在这里描述了</p>
+<p>根据url也就是根据服务提供者的连接，这里封装成交互层对象ExchangeClient供这里调用，判断远程调用类型同步，异步还是oneway模式ExchangeClient发起远程调用。</p>
 <p>获取调用结果：<br>1、Oneway返回空RpcResult<br>2、异步，直接返回空RpcResult, ResponseFuture回调<br>3、同步，ResponseFuture模式同步转异步，等待响应返回</p>
-<p>同样我们也是rpc调用层DubboProtocol层开始分析，对于通信层remoting的数据接收反序列等等过程不做分析。</p>
-<p>DubboProtocol的requestHandler是ExchangeHandler的实现，是remoting层接收数据后的回调。</p>
-<p>requestHandler.replay方法接收请求消息，这里只处理远程调用消息Invocation。</p>
+<p>服务提供方接收调用请求</p>
+<p>从rpc调用层DubboProtocol层开始分析，对于通信层remoting的数据接收反序列等等过程不做分析。DubboProtocol的requestHandler是ExchangeHandler的实现，是remoting层接收数据后的回调。requestHandler.replay方法接收请求消息，这里只处理远程调用消息Invocation。</p>
 <p>1.通过Invocation获取服务名和端口组成serviceKey=com.alibaba.dubbo.demo.DemoService:20880, 从DubboProtocol的exproterMap中获取暴露服务的DubboExporter, 在从dubboExporter获取invoker返回</p>
 <p>2.经过过滤器链</p>
 <p>3.经过监听器链</p>
