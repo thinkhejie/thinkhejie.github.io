@@ -6,16 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Dubbo框架(十六) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="搭建Dubbo单机版">
+  <meta name="description" content="Dubbo 注册中心(Registry)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo框架(十六)">
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/16/Dubbo_16/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="搭建Dubbo单机版">
-<meta property="og:updated_time" content="2016-05-09T07:52:14.000Z">
+<meta property="og:description" content="Dubbo 注册中心(Registry)">
+<meta property="og:image" content="http://thinkhejie.github.io/img/">
+<meta property="og:updated_time" content="2016-05-09T08:36:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(十六)">
-<meta name="twitter:description" content="搭建Dubbo单机版">
+<meta name="twitter:description" content="Dubbo 注册中心(Registry)">
+<meta name="twitter:image" content="http://thinkhejie.github.io/img/">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -208,8 +210,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>搭建Dubbo单机版</p>
+        <p>Dubbo 注册中心(Registry)</p>
 <a id="more"></a>
+<p>Dubbo在跟注册中心（Registry）通信之前，首先要创建Registry Proxy，才能subscribe（订阅服务）和register（注册服务）。</p>
+<p><img src="/img/" alt="Dubbo Registry"></p>
+<p>1、创建了一个RegistryDirectory，可以调用RegistryDirectory的doList(Invocation invocation)方法来获得invocation的所有Invoker。其中invocation只需要给出调用的方法名称，Invoker则负责发送调用请求和接收返回结果，里面封装了所有的通信，序列化细节。RegistryDirectory又是如何根据invocation来得到invoker的呢？RegistryDirectory包含一个subscribe方法，用来向Registry请求感兴趣的服务的调用地址，然后Registry会回调RegistryDirectory，也就是notify方法，notify方法就会把这些服务的地址进一步封装成invoker，并且缓存起来。这样调用doList的时候直接根据invocation的方法名来找对应的invoker就可以了。</p>
+<p>2、因为RegistryDirectory的doList返回的invocation是一个list列表，也就是可能会存在多个可用的服务实现，那么就需要一个负载均衡机制来决定调用哪个服务，可以看到cluster的invoke方法里都有一个loadbalance来具体实现选择。</p>
+<p>3、构造RegistryService代理，所有的请求通过cluster最后落到directory的invoker上面，具体负责RegistryService里各种接口方法的调用。</p>
+<p>4、实现一个DubboRegistry，跟RegistryService区别是，dubboRegistry里面实现了failback机制，如果某个方法调用失败，那么会有一个线程来重复的调用，直到调用成功。</p>
+<p>5、是用来设置Registry Proxy，RegistryDirectory使用它来连接Registry，请求感兴趣的服务地址。</p>
+<p>6、设置Protocol，RegistryDirectory使用它来把url转换成invoker。</p>
+<p>7、初始化Registry Proxy，使用consumer端的配置信息来连接Registry，调用完成后Registry的invoker就生成了。这一步就是RegistryProxy同普通的Service Proxy不一致的地方。</p>
+<p>8、重新注册Registry服务，这样就可以获得Registry的Provider端的配置信息。生成Registry代理和普通代理的区别是：普通代理需要Registry代理同Registry通信，订阅服务和生成invoker。但是Registry代理则只能先通过consumer端的配置信息生成一个临时的代理，然后在notify回调时重新生成Registry代理（包含了Provider端的参数以及路由信息）。</p>
 
       
     </div>
