@@ -14,7 +14,7 @@ Dubbo框架中有一个bundle为dubbo-config-spring">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo扩展了spring的schema，在使用Dubbo时，定义服务/消费者时，使用Dubbo自定义的schema。
 Dubbo框架中有一个bundle为dubbo-config-spring">
-<meta property="og:updated_time" content="2016-05-09T03:23:55.000Z">
+<meta property="og:updated_time" content="2016-05-09T06:44:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(七)">
 <meta name="twitter:description" content="Dubbo扩展了spring的schema，在使用Dubbo时，定义服务/消费者时，使用Dubbo自定义的schema。
@@ -214,11 +214,11 @@ Dubbo框架中有一个bundle为dubbo-config-spring">
         <p>Dubbo扩展了spring的schema，在使用Dubbo时，定义服务/消费者时，使用Dubbo自定义的schema。</p>
 <p>Dubbo框架中有一个bundle为dubbo-config-spring</p>
 <a id="more"></a>
-<p>1、首先使用com.alibaba.dubbo.config.spring.schema.NamespaceHandler注册解析器，当spring解析xml配置文件时就会调用这些解析器生成对应的BeanDefinition交给spring管理。它继承了spring的org.springframework.beans.factory.xml.NamespaceHandlerSupport。<br>NamespaceHandlerSupport是一个抽象类。可以发现，几乎所有spring的schema都继承了这个类。</p>
+<p>1、Dubbo框架定义了注册解析器com.alibaba.dubbo.config.spring.schema.NamespaceHandler，当spring解析xml配置文件时就会调用这些解析器生成对应的BeanDefinition交给spring管理。它继承了spring的org.springframework.beans.factory.xml.NamespaceHandlerSupport。<br>NamespaceHandlerSupport是一个抽象类。可以发现，几乎所有spring的schema都继承了这个类。</p>
 <p>2、定义spring.handlers文件，位置为：dubbo-config-spring/src/main/resources/META-INF/spring.handlers</p>
 <p>3、定义spring.schemas文件，位置为：dubbo-config-spring/src/main/resources/META-INF/spring.schemas</p>
 <p>4、定义xsd文件，位置为：dubbo-config-spring/src/main/resources/META-INF/dubbo.xsd</p>
-<p>Spring在初始化IOC容器时会利用这里注册的BeanDefinitionParser的parse方法获取对应的ReferenceBean的BeanDefinition实例，由于ReferenceBean实现了InitializingBean接口，在设置了bean的所有属性后会调用afterPropertiesSet方法。</p>
+<p>5、Spring在初始化IOC容器时会利用这里注册的BeanDefinitionParser的parse方法获取对应的ReferenceBean的BeanDefinition实例，由于ReferenceBean实现了InitializingBean接口，在设置了bean的所有属性后会调用afterPropertiesSet方法。</p>
 
       
     </div>
