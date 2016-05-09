@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/08/Dubbo_08/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo 服务的定义和消费">
-<meta property="og:updated_time" content="2016-05-09T12:53:14.000Z">
+<meta property="og:updated_time" content="2016-05-09T12:55:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(八)">
 <meta name="twitter:description" content="Dubbo 服务的定义和消费">
@@ -228,7 +228,7 @@
 <p>经过监听器链，默认没有<br>经过过滤器链，内置实现了很多<br>执行到远程调用的DubboInvoker</p>
 <p>5.DubboInvoker</p>
 <p>根据url 也就是根据服务提供者的长连接，这里封装成交互层对象ExchangeClient供这里调用，判断远程调用类型同步，异步还是oneway模式ExchangeClient发起远程调用，底层remoting不在这里描述了</p>
-<p>获取调用结果：<br>Oneway返回空RpcResult<br>异步，直接返回空RpcResult, ResponseFuture回调<br>同步， ResponseFuture模式同步转异步，等待响应返回</p>
+<p>获取调用结果：<br>1、Oneway返回空RpcResult<br>2、异步，直接返回空RpcResult, ResponseFuture回调<br>3、同步，ResponseFuture模式同步转异步，等待响应返回</p>
 <p>同样我们也是rpc调用层DubboProtocol层开始分析，对于通信层remoting的数据接收反序列等等过程不做分析。</p>
 <p>DubboProtocol的requestHandler是ExchangeHandler的实现，是remoting层接收数据后的回调。</p>
 <p>requestHandler.replay方法接收请求消息，这里只处理远程调用消息Invocation。</p>
