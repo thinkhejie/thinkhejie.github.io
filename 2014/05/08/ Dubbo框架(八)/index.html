@@ -6,16 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Dubbo框架(八) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api">
+  <meta name="description" content="Dubbo服务的定义和消费">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo框架(八)">
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/08/ Dubbo框架(八)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api">
-<meta property="og:updated_time" content="2016-05-09T06:06:38.000Z">
+<meta property="og:description" content="Dubbo服务的定义和消费">
+<meta property="og:updated_time" content="2016-05-09T07:01:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(八)">
-<meta name="twitter:description" content="Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api">
+<meta name="twitter:description" content="Dubbo服务的定义和消费">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -208,8 +208,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Dubbol有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api</p>
+        <p>Dubbo服务的定义和消费</p>
 <a id="more"></a>
+<p>1、Dubbo有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api</p>
 <p>Dubbo会根据用户配置的协议调用不同协议的Invoker，再通过ReferenceFonfig将Invoker的引用关联到Reference的ref属性上提供给消费端调用。当用户调用一个Service接口的一个方法后由于Dubbo使用javassist动态代理，会调用Invoker的Invoke方法从而初始化一个RPC调用访问请求访问服务端的Service返回结果。下面我们就从Comsumer端开始逐步解析这个框架。</p>
 <p>服务消费方发起请求<br>当服务的消费方引用了某远程服务，服务的应用方在spring的配置实例如下：</p>
 <dubbo:referenceid="demoservice"interface="com.alibaba.dubbo.demo.demoserv ice"="">
@@ -251,7 +252,28 @@
 异步，直接返回空RpcResult, ResponseFuture回调
 
 同步， ResponseFuture模式同步转异步，等待响应返回
-</code></pre></dubbo:referenceid="demoservice"interface="com.alibaba.dubbo.demo.demoserv>
+
+
+
+
+同样我们也是rpc调用层DubboProtocol层开始分析，对于通信层remoting的数据接收反序列等等过程不做分析。
+</code></pre><p>DubboProtocol的requestHandler是ExchangeHandler的实现，是remoting层接收数据后的回调。</p>
+<p>requestHandler.replay方法接收请求消息，这里只处理远程调用消息Invocation。</p>
+<ol>
+<li><p>通过Invocation获取服务名和端口组成serviceKey=com.alibaba.dubbo.demo.DemoService:20880, 从DubboProtocol的exproterMap中获取暴露服务的DubboExporter, 在从dubboExporter 获取invoker返回</p>
+</li>
+<li><p>经过过滤器链</p>
+</li>
+<li><p>经过监听器链</p>
+</li>
+<li><p>到达执行真正调用的invoker， 这个invoker由代理工厂ProxyFactory.getInvoker(demoService, DemoService.class, registryUrl)创建，具体请看代理那部分介绍。</p>
+</li>
+</ol>
+<p>调用demoService实例方法，将结果封装成RpcResult返回</p>
+<ol>
+<li>交换层构建Response，通过Remoting层编码传输将结果响应给调用方</li>
+</ol>
+</dubbo:referenceid="demoservice"interface="com.alibaba.dubbo.demo.demoserv>
       
     </div>
     
