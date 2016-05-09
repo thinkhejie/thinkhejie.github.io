@@ -14,7 +14,7 @@
 <meta property="og:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
 <meta property="og:image" content="http://thinkhejie.github.io/img/20141230223041400.jpeg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/dubbo-architecture.png">
-<meta property="og:updated_time" content="2016-05-09T07:54:59.000Z">
+<meta property="og:updated_time" content="2016-05-09T13:26:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(一)">
 <meta name="twitter:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
@@ -214,9 +214,9 @@
         <p>Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。</p>
 <a id="more"></a>
 <p>官方的Dubbo架构路线图来概括,如下:</p>
-<p><img src="/img/20141230223041400.jpeg" alt="jstat gcutil"></p>
+<p><img src="/img/20141230223041400.jpeg" alt="Dubbo roadmap"></p>
 <p>Dubbo的总体架构，如图所示：</p>
-<p><img src="/img/dubbo-architecture.png" alt="jstat gcutil"></p>
+<p><img src="/img/dubbo-architecture.png" alt="Dubbo"></p>
 <p>Dubbo框架设计一共划分了10个层，而最上面的Service层是留给实际想要使用Dubbo开发分布式服务的开发者实现业务逻辑的接口层。图中左边淡蓝背景的为服务消费方使用的接口，右边淡绿色背景的为服务提供方使用的接口， 位于中轴线上的为双方都用到的接口。</p>
 <p>服务接口层（Service）：该层是与实际业务逻辑相关的，根据服务提供方和服务消费方的业务设计对应的接口和实现。</p>
 <p>配置层（Config）：对外配置接口，以ServiceConfig和ReferenceConfig为中心，可以直接new配置类，也可以通过spring解析配置生成配置类。</p>
@@ -245,7 +245,7 @@
 <p>服务监控</p>
 <p>无论是服务提供方，还是服务消费方，他们都需要对服务调用的实际状态进行有效的监控，从而改进服务质量。</p>
 <p>远程通信与信息交换</p>
-<p>远程通信需要指定通信双方所约定的协议，在保证通信双方理解协议语义的基础上，还要保证高效、稳定的消息传输。Dubbo继承了当前主流的网络通信框架，主要包括如下几个：Mina Netty Grizzly</p>
+<p>远程通信需要指定通信双方所约定的协议，在保证通信双方理解协议语义的基础上，还要保证高效、稳定的消息传输。Dubbo继承了当前主流的网络通信框架，主要包括如下几个：<a href="https://mina.apache.org/" target="_blank" rel="external">Mina</a> <a href="netty.io">Netty</a> <a href="https://grizzly.java.net/" target="_blank" rel="external">Grizzly</a></p>
 
       
     </div>
