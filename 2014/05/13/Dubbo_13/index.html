@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/13/Dubbo_13/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Dubbo Telnet 功能">
-<meta property="og:updated_time" content="2016-05-09T07:28:54.000Z">
+<meta property="og:updated_time" content="2016-05-09T07:39:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(十三)">
 <meta name="twitter:description" content="Dubbo Telnet 功能">
@@ -211,7 +211,65 @@
         <p>Dubbo Telnet 功能</p>
 <a id="more"></a>
 <p>1、使用如下命令进入telnet：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet localhost 20880</span><br></pre></td></tr></table></figure></p>
-<p>2、Telnet命令<br>| 命令           |  用法         |<br>| ————- | ————- |<br>|ls|显示服务列表|<br>|ps|显示服务端口列表|<br>|cd|改变缺省服务，当设置了缺省服务，凡是需要输入服务名作为参数的命令，都可以省略服务参数|<br>|pwd|显示当前缺省服务|<br>|trace|跟踪服务任意方法的调用情况|<br>|count|统计1次服务任意方法的调用情况|<br>|invoke|调用服务的方法|<br>|status|显示汇总状态，该状态将汇总所有资源的状态，当全部OK时则显示OK，只要有一个ERROR则显示ERROR，只要有一个WARN则显示WARN|<br>|log|修改dubbo logger的日志级别|<br>|help|显示telnet命帮助信息|<br>|clear|清除屏幕上的内容|<br>|exit|退出当前telnet命令行|</p>
+<p>2、Telnet命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ls</td>
+<td>显示服务列表</td>
+</tr>
+<tr>
+<td>ps</td>
+<td>显示服务端口列表</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>改变缺省服务，当设置了缺省服务，凡是需要输入服务名作为参数的命令，都可以省略服务参数</td>
+</tr>
+<tr>
+<td>pwd</td>
+<td>显示当前缺省服务</td>
+</tr>
+<tr>
+<td>trace</td>
+<td>跟踪服务任意方法的调用情况</td>
+</tr>
+<tr>
+<td>count</td>
+<td>统计1次服务任意方法的调用情况</td>
+</tr>
+<tr>
+<td>invoke</td>
+<td>调用服务的方法</td>
+</tr>
+<tr>
+<td>status</td>
+<td>显示汇总状态，该状态将汇总所有资源的状态，当全部OK时则显示OK，只要有一个ERROR则显示ERROR，只要有一个WARN则显示WARN</td>
+</tr>
+<tr>
+<td>log</td>
+<td>修改Dubbo的logger的日志级别</td>
+</tr>
+<tr>
+<td>help</td>
+<td>显示telnet命帮助信息</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>清除屏幕上的内容</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>退出当前telnet命令行</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
