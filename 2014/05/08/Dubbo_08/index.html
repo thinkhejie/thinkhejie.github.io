@@ -6,16 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Dubbo框架(八) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Dubbo服务的定义和消费">
+  <meta name="description" content="Dubbo 服务的定义和消费">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo框架(八)">
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/08/Dubbo_08/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Dubbo服务的定义和消费">
-<meta property="og:updated_time" content="2016-05-09T07:01:02.000Z">
+<meta property="og:description" content="Dubbo 服务的定义和消费">
+<meta property="og:updated_time" content="2016-05-09T07:53:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(八)">
-<meta name="twitter:description" content="Dubbo服务的定义和消费">
+<meta name="twitter:description" content="Dubbo 服务的定义和消费">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -208,7 +208,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Dubbo服务的定义和消费</p>
+        <p>Dubbo 服务的定义和消费</p>
 <a id="more"></a>
 <p>1、Dubbo有两个接口是com.alibaba.dubbo.rpc.Invoker和com.alibaba.dubbo.rpc.Exporter，定义位置为dubbo-rpc-api</p>
 <p>Dubbo会根据用户配置的协议调用不同协议的Invoker，再通过ReferenceFonfig将Invoker的引用关联到Reference的ref属性上提供给消费端调用。当用户调用一个Service接口的一个方法后由于Dubbo使用javassist动态代理，会调用Invoker的Invoke方法从而初始化一个RPC调用访问请求访问服务端的Service返回结果。下面我们就从Comsumer端开始逐步解析这个框架。</p>

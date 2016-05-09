@@ -6,18 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Dubbo框架(一) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
+  <meta name="description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo框架(一)">
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/01/Dubbo_01/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
+<meta property="og:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
 <meta property="og:image" content="http://thinkhejie.github.io/img/20141230223041400.jpeg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/dubbo-architecture.png">
-<meta property="og:updated_time" content="2016-05-09T06:43:46.000Z">
+<meta property="og:updated_time" content="2016-05-09T07:54:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dubbo框架(一)">
-<meta name="twitter:description" content="dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
+<meta name="twitter:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
 <meta name="twitter:image" content="http://thinkhejie.github.io/img/20141230223041400.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -211,7 +211,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。</p>
+        <p>Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。</p>
 <a id="more"></a>
 <p>官方的Dubbo架构路线图来概括,如下:</p>
 <p><img src="/img/20141230223041400.jpeg" alt="jstat gcutil"></p>
@@ -241,11 +241,7 @@
 <p>服务是围绕服务提供方和服务消费方的，服务提供方实现服务，而服务消费方调用服务。</p>
 <p>服务注册</p>
 <p>对于服务提供方，它需要发布服务，而且由于应用系统的复杂性，服务的数量、类型也不断膨胀；对于服务消费方，它最关心如何获取到它所需要的服务，而面对复杂的应用系统，需要管理大量的服务调用。而且，对于服务提供方和服务消费方来说，他们还有可能兼具这两种角色，即既需要提供服务，有需要消费服务。</p>
-<p>通过将服务统一管理起来，可以有效地优化内部应用对服务发布/使用的流程和管理。服务注册中心可以通过特定协议来完成服务对外的统一。Dubbo提供的注册中心有如下几种类型可供选择：</p>
-<p>Multicast注册中心</p>
-<p>Zookeeper注册中心</p>
-<p>Redis注册中心</p>
-<p>Simple注册中心</p>
+<p>通过将服务统一管理起来，可以有效地优化内部应用对服务发布/使用的流程和管理。服务注册中心可以通过特定协议来完成服务对外的统一。Dubbo提供的注册中心有如下几种类型可供选择：Multicast注册中心、Zookeeper注册中心、Redis注册中心、Simple注册中心</p>
 <p>服务监控</p>
 <p>无论是服务提供方，还是服务消费方，他们都需要对服务调用的实际状态进行有效的监控，从而改进服务质量。</p>
 <p>远程通信与信息交换</p>
