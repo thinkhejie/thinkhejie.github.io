@@ -12,7 +12,7 @@ jmap -heap pid 可以获取当前内存的使用状态和最大限制信息
 jmap -dump:live,format=b,file=filename.bin 2219
 jstat -gccapacity  2219
 
-S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survi">
+S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Surv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM系列一">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/03/JVM系列一/index.html">
@@ -23,9 +23,9 @@ jmap -heap pid 可以获取当前内存的使用状态和最大限制信息
 jmap -dump:live,format=b,file=filename.bin 2219
 jstat -gccapacity  2219
 
-S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survi">
+S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Surv">
 <meta property="og:image" content="http://thinkhejie.github.io/img/20160504110524.png">
-<meta property="og:updated_time" content="2016-05-05T12:13:57.000Z">
+<meta property="og:updated_time" content="2016-05-11T08:55:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列一">
 <meta name="twitter:description" content="Old区大小等于 -Xmx 减去 -Xmn
@@ -34,7 +34,7 @@ jmap -heap pid 可以获取当前内存的使用状态和最大限制信息
 jmap -dump:live,format=b,file=filename.bin 2219
 jstat -gccapacity  2219
 
-S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Survi">
+S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap上的 Surv">
 <meta name="twitter:image" content="http://thinkhejie.github.io/img/20160504110524.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -220,7 +220,8 @@ S0  — Heap上的 Survivor space 0 区已使用空间的百分比S1  — Heap�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Old区大小等于 -Xmx 减去 -Xmn</p>
+        <a id="more"></a>
+<p>Old区大小等于 -Xmx 减去 -Xmn</p>
 <p>jps 查到pid后</p>
 <p>jmap -heap pid 可以获取当前内存的使用状态和最大限制信息</p>
 <p>jmap -dump:live,format=b,file=filename.bin 2219</p>
