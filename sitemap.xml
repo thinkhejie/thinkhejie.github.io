@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://thinkhejie.github.io/2013/05/04/MAVEN%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2016-05-11T08:51:13.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://thinkhejie.github.io/2014/05/12/Dubbo_12/</loc>
+    
+    <lastmod>2016-05-10T11:22:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://thinkhejie.github.io/2014/05/01/Dubbo_01/</loc>
     
     <lastmod>2016-05-09T13:26:14.000Z</lastmod>
@@ -79,13 +93,6 @@
   </url>
   
   <url>
-    <loc>http://thinkhejie.github.io/2014/05/12/Dubbo_12/</loc>
-    
-    <lastmod>2016-05-09T07:52:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://thinkhejie.github.io/2014/05/15/Dubbo_15/</loc>
     
     <lastmod>2016-05-09T07:51:45.000Z</lastmod>
@@ -138,13 +145,6 @@
     <loc>http://thinkhejie.github.io/2016/05/03/JVM%E7%B3%BB%E5%88%97%E4%B8%80/</loc>
     
     <lastmod>2016-05-05T12:13:57.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://thinkhejie.github.io/2016/05/04/MAVEN%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/</loc>
-    
-    <lastmod>2016-05-04T03:31:34.000Z</lastmod>
     
   </url>
   

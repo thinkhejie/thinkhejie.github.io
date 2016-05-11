@@ -168,66 +168,6 @@
 
       <div class="body-wrap">
   
-    <article id="post-MAVEN命令总结" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/04/MAVEN命令总结/" class="article-date">
-  	<time datetime="2016-05-04T03:30:43.000Z" itemprop="datePublished">2016-05-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/04/MAVEN命令总结/">MAVEN命令总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<p>如果想跳过测试阶段，可用：<br>mvn package -DskipTests</p>
-<p>想临时性跳过测试代码的编译，可用：<br>mvn package -Dmaven.test.skip=true<br>maven.test.skip同时控制maven-compiler-plugin和maven-surefire-plugin两个插件的行为，即跳过编译，又跳过测试。</p>
-<p>指定测试类<br>mvn test -Dtest=RandomGeneratorTest</p>
-<p>以Random开头，Test结尾的测试类<br>mvn test -Dtest=Random*Test</p>
-<p>用逗号分隔指定多个测试用例<br>mvn test -Dtest=ATest,BTest</p>
-<p>test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。<br>mvn test -Dtest -DfailIfNoTests = false</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Java-NIO解析" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -768,6 +708,71 @@
       
         <p class="article-more-link">
           <a  href="/2014/05/16/Dubbo_16/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Dubbo_15" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/05/15/Dubbo_15/" class="article-date">
+  	<time datetime="2014-05-15T13:04:38.000Z" itemprop="datePublished">2014-05-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/15/Dubbo_15/">Dubbo框架(十五)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Dubbo 解码Decode</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dubbo/">dubbo</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/dubbo/">dubbo</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2014/05/15/Dubbo_15/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
