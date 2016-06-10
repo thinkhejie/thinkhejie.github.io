@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Linux命令总结">
 <meta property="og:image" content="http://thinkhejie.github.io/img/vmstatview.png">
-<meta property="og:updated_time" content="2016-05-11T08:57:54.000Z">
+<meta property="og:updated_time" content="2016-06-10T21:01:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux命令总结">
 <meta name="twitter:description" content="Linux命令总结">
@@ -212,12 +212,14 @@
       
         <p>Linux命令总结</p>
 <a id="more"></a>
-<p>SHELL</p>
-<p>unzip -v text.zip  查看压缩包<br>du -h  看文件夹和文件大小<br>df -lh<br>du -h –max-depth=1 work/testing</p>
-<p>du -sh ./*</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more  /proc/version</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more  /proc/cpuinfo</span><br></pre></td></tr></table></figure>
-<p>查看系统负载vmstat<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看压缩包"><a href="#查看压缩包" class="headerlink" title="查看压缩包"></a>查看压缩包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -v text.zip</span><br></pre></td></tr></table></figure>
+<h3 id="看文件夹和文件大小"><a href="#看文件夹和文件大小" class="headerlink" title="看文件夹和文件大小"></a>看文件夹和文件大小</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h</span><br></pre></td></tr></table></figure>
+<p>###<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -lh</span><br></pre></td></tr></table></figure></p>
+<p>###<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -h --max-depth=1 work/testing</span><br></pre></td></tr></table></figure></p>
+<p>###<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh ./*</span><br></pre></td></tr></table></figure></p>
+<p>###<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more  /proc/version</span><br></pre></td></tr></table></figure></p>
+<p>###<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more  /proc/cpuinfo</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看系统负载vmstat"><a href="#查看系统负载vmstat" class="headerlink" title="查看系统负载vmstat"></a>查看系统负载vmstat</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmstat</span><br></pre></td></tr></table></figure>
 <p><img src="/img/vmstatview.png" alt="vmstat view"></p>
 <p>procs ———–memory———- —swap– —–io—- –system– —-cpu—-<br>r b swpd free buff cache si so bi bo in cs us sy id wa<br>0 0 100152 2436 97200 289740 0 1 34 45 99 33 0 0 99 0<br>procs<br>r 列表示运行和等待cpu时间片的进程数，如果长期大于1，说明cpu不足，需要增加cpu。<br>b 列表示在等待资源的进程数，比如正在等待I/O、或者内存交换等。<br>cpu 表示cpu的使用状态<br>us 列显示了用户方式下所花费 CPU 时间的百分比。us的值比较高时，说明用户进程消耗的cpu时间多，但是如果长期大于50%，需要考虑优化用户的程序。<br>sy 列显示了内核进程所花费的cpu时间的百分比。这里us + sy的参考值为80%，如果us+sy 大于 80%说明可能存在CPU不足。<br>wa 列显示了IO等待所占用的CPU时间的百分比。这里wa的参考值为30%，如果wa超过30%，说明IO等待严重，这可能是磁盘大量随机访问造成的，也可能磁盘或者磁盘访问控制器的带宽瓶颈造成的(主要是块操作)。<br>id 列显示了cpu处在空闲状态的时间百分比<br>system 显示采集间隔内发生的中断数<br>in 列表示在某一时间间隔中观测到的每秒设备中断数。<br>cs列表示每秒产生的上下文切换次数，如当 cs 比磁盘 I/O 和网络信息包速率高得多，都应进行进一步调查。<br>memory<br>swpd 切换到内存交换区的内存数量(k表示)。如果swpd的值不为0，或者比较大，比如超过了100m，只要si、so的值长期为0，系统性能还是正常<br>free 当前的空闲页面列表中内存数量(k表示)<br>buff 作为buffer cache的内存数量，一般对块设备的读写才需要缓冲。<br>cache: 作为page cache的内存数量，一般作为文件系统的cache，如果cache较大，说明用到cache的文件较多，如果此时IO中bi比较小，说明文件系统效率比较好。<br>swap<br>si 由内存进入内存交换区数量。<br>so由内存交换区进入内存数量。<br>IO<br>bi 从块设备读入数据的总量（读磁盘）（每秒kb）。<br>bo 块设备写入数据的总量（写磁盘）（每秒kb）<br>这里我们设置的bi+bo参考值为1000，如果超过1000，而且wa值较大应该考虑均衡磁盘负载，可以结合iostat输出来分析。</p>
 
