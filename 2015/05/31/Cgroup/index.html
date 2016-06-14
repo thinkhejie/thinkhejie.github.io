@@ -12,10 +12,12 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2015/05/31/Cgroup/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="常用的Cgroup相关命令和配置文件">
-<meta property="og:updated_time" content="2016-06-10T21:04:58.000Z">
+<meta property="og:image" content="http://thinkhejie.github.io/img/catcgroups.png">
+<meta property="og:updated_time" content="2016-06-14T08:37:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cgroup相关命令和配置文件">
 <meta name="twitter:description" content="常用的Cgroup相关命令和配置文件">
+<meta name="twitter:image" content="http://thinkhejie.github.io/img/catcgroups.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -241,6 +243,54 @@
 <tr>
 <td>cgconfig配置文件：</td>
 <td>/etc/cgconfig.conf</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-Cgroup介绍"><a href="#1-Cgroup介绍" class="headerlink" title="1 Cgroup介绍"></a>1 Cgroup介绍</h3><p>Cgroup实现包含一个主框架和若干subsystem. 主框架实现了进程组的管理, 包括维护进程组的树状结构, 进程的加入和退出; 而每个subsystems实现一种具体资源的控制器.</p>
+<p>在具体实现中, cgroup巧妙的利用了Linux的文件系统来实现进程组树状组织关系, 对于subsystem的资源配置也由配置文件的读写来完成. 在mount这个文件系统时可以一个subsystem组合, 表示是否需要启用对应的subsystem. LXC实现一般会选择加载所有的subsystem.</p>
+<p>通过/proc/cgroups可以查看内核支持哪些subsys</p>
+<p><img src="/img/catcgroups.png" alt="cgroups—view"></p>
+<h3 id="下面的命令即可加载cgroup文件系统并启用所有的subsystem"><a href="#下面的命令即可加载cgroup文件系统并启用所有的subsystem" class="headerlink" title="下面的命令即可加载cgroup文件系统并启用所有的subsystem"></a>下面的命令即可加载cgroup文件系统并启用所有的subsystem</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t cgroup none /cgroup</span><br></pre></td></tr></table></figure>
+<h3 id="下面的命令即可创建一个cgroup"><a href="#下面的命令即可创建一个cgroup" class="headerlink" title="下面的命令即可创建一个cgroup"></a>下面的命令即可创建一个cgroup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /cgroup/LXC010209071200</span><br></pre></td></tr></table></figure>
+<h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><p>物理内存被所有的容器共享, 一个异常的容器可能会消耗大量的物理内存, 影响其他容器的表现. 使用memory, 我们可以限制每个容器可以使用的物理内存大小.该subsys的配置文件如下:</p>
+<table>
+<thead>
+<tr>
+<th>配置文件</th>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>memory.usage_in_bytes</td>
+<td>只读</td>
+<td>容器占用的物理内存</td>
+</tr>
+<tr>
+<td>memory.max_usage_in_bytes</td>
+<td>只读</td>
+<td>容器占用的物理内存的历史峰值</td>
+</tr>
+<tr>
+<td>memory.limit_in_bytes</td>
+<td>读写</td>
+<td>容器允许使用的物理内存大小</td>
+</tr>
+<tr>
+<td>memory.memsw.usage_in_bytes</td>
+<td>只读</td>
+<td>容器占用的物理内存+交换空间</td>
+</tr>
+<tr>
+<td>memory.memsw.max_usage_in_bytes</td>
+<td>只读</td>
+<td>容器占用物理内存+交换空间的历史峰值</td>
+</tr>
+<tr>
+<td>memory.memsw.limit_in_bytes</td>
+<td>读写</td>
+<td>容器允许使用的物理内存+交换空间大小</td>
 </tr>
 </tbody>
 </table>
