@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="常用的Cgroup相关命令和配置文件">
 <meta property="og:image" content="http://thinkhejie.github.io/img/catcgroups.png">
-<meta property="og:updated_time" content="2016-06-14T08:40:05.000Z">
+<meta property="og:updated_time" content="2016-06-14T09:02:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cgroup相关命令和配置文件">
 <meta name="twitter:description" content="常用的Cgroup相关命令和配置文件">
@@ -250,7 +250,7 @@
 <p>在具体实现中, cgroup巧妙的利用了Linux的文件系统来实现进程组树状组织关系, 对于subsystem的资源配置也由配置文件的读写来完成. 在mount这个文件系统时可以一个subsystem组合, 表示是否需要启用对应的subsystem. LXC实现一般会选择加载所有的subsystem.</p>
 <p>通过/proc/cgroups可以查看内核支持哪些subsys</p>
 <p><img src="/img/catcgroups.png" alt="cgroups—view"></p>
-<h3 id="下面的命令即可加载cgroup文件系统并启用所有的subsystem"><a href="#下面的命令即可加载cgroup文件系统并启用所有的subsystem" class="headerlink" title="下面的命令即可加载cgroup文件系统并启用所有的subsystem"></a>下面的命令即可加载cgroup文件系统并启用所有的subsystem</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t cgroup none /cgroup</span><br></pre></td></tr></table></figure>
+<h3 id="下面的命令即可加载cgroup文件系统并启用所有的subsystem"><a href="#下面的命令即可加载cgroup文件系统并启用所有的subsystem" class="headerlink" title="下面的命令即可加载cgroup文件系统并启用所有的subsystem"></a>下面的命令即可加载cgroup文件系统并启用所有的subsystem</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mount -t cgroup none /cgroup</span><br><span class="line">$ mount -t cgroup none /subsysname</span><br></pre></td></tr></table></figure>
 <h3 id="下面的命令即可创建一个cgroup"><a href="#下面的命令即可创建一个cgroup" class="headerlink" title="下面的命令即可创建一个cgroup"></a>下面的命令即可创建一个cgroup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /cgroup/LXC201509015</span><br></pre></td></tr></table></figure>
 <h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><p>物理内存被所有的容器共享, 一个异常的容器可能会消耗大量的物理内存, 影响其他容器的表现. 使用memory, 我们可以限制每个容器可以使用的物理内存大小.该subsys的配置文件如下:</p>
 <table>
@@ -294,6 +294,10 @@
 </tr>
 </tbody>
 </table>
+<p>子系统介绍：<br>blkio 子系统为块设备设定输入/输出限制，比如物理设备（磁盘，固态硬盘，USB 等等）。<br>cpu子系统使用调度程序提供对 CPU 的 cgroup 任务访问。<br>cpuacct 子系统自动生成 cgroup 中任务所使用的 CPU 报告。<br>cpuset子系统为 cgroup 中的任务分配独立 CPU（在多核系统）和内存节点。<br>devices 子系统可允许或者拒绝 cgroup 中的任务访问设备。<br>freezer子系统挂起或者恢复 cgroup 中的任务。<br>memory子系统设定 cgroup 中任务使用的内存限制，并自动生成由那些任务使用的内存资源报告。<br>net_cls 子系统使用等级识别符（classid）标记网络数据包，可允许 Linux 流量控制程序（tc）识别从具体 cgroup 中生成的数据包。<br>ns子系统负责名称空间。</p>
+<p>4.启动限制机制，限制内存</p>
+<h1 id="echo-1048576-gt-cgroup-GroupA-memory-limit-in-bytes"><a href="#echo-1048576-gt-cgroup-GroupA-memory-limit-in-bytes" class="headerlink" title="echo 1048576 &gt; /cgroup/GroupA/memory.limit_in_bytes"></a>echo 1048576 &gt; /cgroup/GroupA/memory.limit_in_bytes</h1><h1 id="echo-8340-gt-cgroup-GroupA-tasks"><a href="#echo-8340-gt-cgroup-GroupA-tasks" class="headerlink" title="echo 8340 &gt; /cgroup/GroupA/tasks"></a>echo 8340 &gt; /cgroup/GroupA/tasks</h1><p>4.启动资源控制机制，设置内存、CPU、IO限制等。</p>
+<h1 id="mount-t-cgroup-o-memory-memcg-cgroup-cgroup是memcg-subsys的挂载点，就是一个hierarchy"><a href="#mount-t-cgroup-o-memory-memcg-cgroup-cgroup是memcg-subsys的挂载点，就是一个hierarchy" class="headerlink" title="mount -t cgroup -o memory memcg /cgroup #/cgroup是memcg subsys的挂载点，就是一个hierarchy"></a>mount -t cgroup -o memory memcg /cgroup #/cgroup是memcg subsys的挂载点，就是一个hierarchy</h1><h1 id="mkdir-cgroup-GroupA-在hierarchy下创建了一个名为GroupA的cgroup"><a href="#mkdir-cgroup-GroupA-在hierarchy下创建了一个名为GroupA的cgroup" class="headerlink" title="mkdir /cgroup/GroupA #在hierarchy下创建了一个名为GroupA的cgroup"></a>mkdir /cgroup/GroupA #在hierarchy下创建了一个名为GroupA的cgroup</h1><h1 id="echo-10M-gt-cgroup-GroupA-memory-limit-in-bytes-为控制组GroupA分配内存大小，这是强制限制，当进程试图占用的内存超过了cgroups的限制，会触发out-of-memory，导致进程被kill掉"><a href="#echo-10M-gt-cgroup-GroupA-memory-limit-in-bytes-为控制组GroupA分配内存大小，这是强制限制，当进程试图占用的内存超过了cgroups的限制，会触发out-of-memory，导致进程被kill掉" class="headerlink" title="echo 10M &gt; /cgroup/GroupA/memory.limit_in_bytes #为控制组GroupA分配内存大小，这是强制限制，当进程试图占用的内存超过了cgroups的限制，会触发out of memory，导致进程被kill掉"></a>echo 10M &gt; /cgroup/GroupA/memory.limit_in_bytes #为控制组GroupA分配内存大小，这是强制限制，当进程试图占用的内存超过了cgroups的限制，会触发out of memory，导致进程被kill掉</h1><h1 id="echo-gt-cgroup-GroupA-tasks-控制的进程，写入PID"><a href="#echo-gt-cgroup-GroupA-tasks-控制的进程，写入PID" class="headerlink" title="echo $$ &gt; /cgroup/GroupA/tasks #控制的进程，写入PID"></a>echo $$ &gt; /cgroup/GroupA/tasks #控制的进程，写入PID</h1><p>2.启动cgconfig服务。cgconfig默认是不随系统启动的可手工启动，也可以使用 chkconfig cgconfig on 来配置它随系统启动。<br>service cgconfig restart</p>
 
       
     </div>
