@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="常用的Cgroup相关命令和配置文件">
 <meta property="og:image" content="http://thinkhejie.github.io/img/catcgroups.png">
-<meta property="og:updated_time" content="2016-06-14T08:37:44.000Z">
+<meta property="og:updated_time" content="2016-06-14T08:40:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cgroup相关命令和配置文件">
 <meta name="twitter:description" content="常用的Cgroup相关命令和配置文件">
@@ -251,7 +251,7 @@
 <p>通过/proc/cgroups可以查看内核支持哪些subsys</p>
 <p><img src="/img/catcgroups.png" alt="cgroups—view"></p>
 <h3 id="下面的命令即可加载cgroup文件系统并启用所有的subsystem"><a href="#下面的命令即可加载cgroup文件系统并启用所有的subsystem" class="headerlink" title="下面的命令即可加载cgroup文件系统并启用所有的subsystem"></a>下面的命令即可加载cgroup文件系统并启用所有的subsystem</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t cgroup none /cgroup</span><br></pre></td></tr></table></figure>
-<h3 id="下面的命令即可创建一个cgroup"><a href="#下面的命令即可创建一个cgroup" class="headerlink" title="下面的命令即可创建一个cgroup"></a>下面的命令即可创建一个cgroup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /cgroup/LXC010209071200</span><br></pre></td></tr></table></figure>
+<h3 id="下面的命令即可创建一个cgroup"><a href="#下面的命令即可创建一个cgroup" class="headerlink" title="下面的命令即可创建一个cgroup"></a>下面的命令即可创建一个cgroup</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /cgroup/LXC201509015</span><br></pre></td></tr></table></figure>
 <h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><p>物理内存被所有的容器共享, 一个异常的容器可能会消耗大量的物理内存, 影响其他容器的表现. 使用memory, 我们可以限制每个容器可以使用的物理内存大小.该subsys的配置文件如下:</p>
 <table>
 <thead>
