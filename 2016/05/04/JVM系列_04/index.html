@@ -6,16 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>JVM系列四(GC分析) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="jvm 命令">
+  <meta name="description" content="jdk 命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM系列四(GC分析)">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/04/JVM系列_04/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="jvm 命令">
-<meta property="og:updated_time" content="2017-02-06T10:17:07.000Z">
+<meta property="og:description" content="jdk 命令">
+<meta property="og:updated_time" content="2017-02-06T10:26:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列四(GC分析)">
-<meta name="twitter:description" content="jvm 命令">
+<meta name="twitter:description" content="jdk 命令">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -204,22 +204,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>jvm 命令</p>
+        <p>jdk 命令</p>
 <a id="more"></a>
-<p>1、jinfo</p>
+<p>1、jinfo <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jinfo.html" target="_blank" rel="external">官方文档</a></p>
 <p>jinfo主要用于查看系统配置信息<br>jinfo的用法：</p>
-<p>2、jstack</p>
+<p>2、jstack <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jstack.html" target="_blank" rel="external">官方文档</a></p>
 <p>jstack用于打印java线程的堆栈信息，使用-m参数可以打印出java和本地方法的堆栈信息。<br>jstack的用法：</p>
-<p>3、jmap</p>
+<p>3、jmap <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jmap.html" target="_blank" rel="external">官方文档</a></p>
 <p>用于打印共享对象的内存映射或堆内存的详细信息<br>jmap的用法</p>
-<p>4、jstat</p>
+<p>4、jstat <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jstat.html" target="_blank" rel="external">官方文档</a></p>
 <p>用于展现jvm的性能统计数据<br>jstat的用法</p>
-<p>5、jps</p>
+<p>5、jps <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jps.html" target="_blank" rel="external">官方文档</a></p>
 <p>JVM进程状态工具</p>
 <p>命令格式： jps [ options ] [ hostid ]</p>
-<p>注意：<br>1  jps返回当前用户的lvmid , lvmid 通常是操作系统的JVM进程的进程标识符<br>2  不指定hostid, 默认是本地主机<br>3  定制jvm launcher 返回类名和参数会是Unknown<br>4  jps读取的 /tmp/hsperfdata_user/user/pid 目录  该目录的权限、磁盘、文件是否被清理  会影响jps命令的使用<br>5  程序设置 -Djava.io.tmpdir 参数后可能会使jps获取不到<br>6  不支持Windows 98 和 Windows ME平台</p>
-<p>6、javap</p>
-<p>用于反编译class文件，对于JVM指令集，这里有完整的文档。<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html/" target="_blank" rel="external">完整的文档</a></p>
+<p>注意：<br>| 序号 | 描述 |<br>| ————- | ————- |<br>| 1 | jps返回当前用户的lvmid , lvmid 通常是操作系统的JVM进程的进程标识符 |<br>| 2 | 不指定hostid, 默认是本地主机 |<br>| 3 | 定制jvm launcher 返回类名和参数会是Unknown |<br>| 4 | jps读取的 /tmp/hsperfdata_user/user/pid 目录  该目录的权限、磁盘、文件是否被清理  会影响jps命令的使用 |<br>| 5 | 程序设置 -Djava.io.tmpdir 参数后可能会使jps获取不到 |<br>| 6 | 不支持Windows 98 和 Windows ME平台 |</p>
+<p>6、javap <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html" target="_blank" rel="external">官方文档</a></p>
+<p>用于反编译class文件，对于JVM指令集，这里有完整的文档。</p>
 <p>7、javac</p>
 <p>编译的Java程序，生成.class文件</p>
 <p>8、javaw</p>
