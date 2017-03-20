@@ -587,74 +587,6 @@
 
 
   
-    <article id="post-hbase_01" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/15/hbase_01/" class="article-date">
-  	<time datetime="2015-04-15T04:26:38.000Z" itemprop="datePublished">2015-04-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/15/hbase_01/">基本CRUD操作</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<p>1、Get API Example: Get, Get List<br>2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock<br>3、Delete API Example : Delete, Delete List<br>4、Scan API Example: Scan, Scan with caching and batch<br>5、Other:</p>
-<p><1>所有基于列表的操作都会被API重排，按照region分组以提升性能。</1></p>
-<p><2>基于列表的操作不是原子性的，所以会部分失败。</2></p>
-<p><3>CheckAndXXX方法可以在检测成功后再执行Put/Delete。</3></p>
-<p><4>列表操作都是基于batch()实现的，可以说是特殊的批处理操作。</4></p>
-<p><5>get是特殊的scan。</5></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hbase/">Hbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Hbase/">Hbase</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-hbase_07" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -706,6 +638,74 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ali.pe3.hbase.demo.crud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTableInterface;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Result;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.ResultScanner;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Scan;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ali.pe3.hbase.demo.util.HBaseHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScanExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        HBaseHelper helper = HBaseHelper.getHelper(HBaseConfiguration.create());</span><br><span class="line">        System.out.println(<span class="string">"Adding rows to table..."</span>);</span><br><span class="line">        helper.fillTable(<span class="string">"testtable"</span>, <span class="number">1</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="string">"colfam1"</span>, <span class="string">"colfam2"</span>);</span><br><span class="line"></span><br><span class="line">        HTableInterface table = helper.getTable(<span class="string">"testtable"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Scanning table #1..."</span>);</span><br><span class="line">        Scan scan1 = <span class="keyword">new</span> Scan();</span><br><span class="line">        ResultScanner scanner1 = table.getScanner(scan1);</span><br><span class="line">        <span class="keyword">for</span> (Result res : scanner1) &#123;</span><br><span class="line">            System.out.println(res);</span><br><span class="line">        &#125;</span><br><span class="line">        scanner1.close();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Scanning table #2..."</span>);</span><br><span class="line">        Scan scan2 = <span class="keyword">new</span> Scan();</span><br><span class="line">        scan2.addFamily(Bytes.toBytes(<span class="string">"colfam1"</span>));</span><br><span class="line">        ResultScanner scanner2 = table.getScanner(scan2);</span><br><span class="line">        <span class="keyword">for</span> (Result res : scanner2) &#123;</span><br><span class="line">            System.out.println(res);</span><br><span class="line">        &#125;</span><br><span class="line">        scanner2.close();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Scanning table #3..."</span>);</span><br><span class="line">        Scan scan3 = <span class="keyword">new</span> Scan();</span><br><span class="line">        scan3.addColumn(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"col-5"</span>))</span><br><span class="line">                .addColumn(Bytes.toBytes(<span class="string">"colfam2"</span>), Bytes.toBytes(<span class="string">"col-33"</span>))</span><br><span class="line">                .setStartRow(Bytes.toBytes(<span class="string">"row-10"</span>))</span><br><span class="line">                .setStopRow(Bytes.toBytes(<span class="string">"row-20"</span>));</span><br><span class="line">        ResultScanner scanner3 = table.getScanner(scan3);</span><br><span class="line">        <span class="keyword">for</span> (Result res : scanner3) &#123;</span><br><span class="line">            System.out.println(res);</span><br><span class="line">        &#125;</span><br><span class="line">        scanner3.close();</span><br><span class="line"></span><br><span class="line">        table.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Scan with caching and batch<br>扫描迭代器的next方法本质上和get请求一样是一次RPC请求，那么也和每次put小单元数据一样，会需要缓冲技术来提升性能。缓存分3个层面，全局(hbase-site.xml中的hbase.client.scanner.caching)、表级(HTable.setScannerCaching)和扫描器级(Scan.setCaching)，优先级依次增大。RPC请求次数和服务器及客户端的缓存大小是有折中的。若RPC请求越多，说明缓存越小，这样比较适合get大单元数据，因为在网络传输上所耗费的延迟比较大，而RPC请求的往返时间则可忽略不计；RPC请求越少，说明使用了大量缓存，这比较适合get小单元数据，但是这样每次next调用的时间会很长，而且返回的数据超出了 client端JVM堆大小，则会out of memory。而且当传输和处理数据时间超过配置的扫描器租约时间则会抛出ScannerTimeoutException。批处理技术，针对的是数据量非常大的行，甚至超过了客户端进程的内存容量。面向列，允许用户每次next返回若干列，例如在扫描器中设置setBatch(5)，则每次返回5列。灵活结合缓存和批处理技术，可以控制扫描器的RPC次数。RPC count = row count * column count / Min(column count, batch size) / scan caching size</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ali.pe3.hbase.demo.crud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTableInterface;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Result;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.ResultScanner;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Scan;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Appender;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.AppenderSkeleton;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Level;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.spi.LoggingEvent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ali.pe3.hbase.demo.util.HBaseHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScanCacheBatchExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HTableInterface table = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">scan</span><span class="params">(<span class="keyword">int</span> caching, <span class="keyword">int</span> batch)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Logger log = Logger.getLogger(<span class="string">"org.apache.hadoop"</span>);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span>[] counters = &#123; <span class="number">0</span>, <span class="number">0</span> &#125;;</span><br><span class="line">        Appender appender = <span class="keyword">new</span> AppenderSkeleton() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">append</span><span class="params">(LoggingEvent event)</span> </span>&#123;</span><br><span class="line">                String msg = event.getMessage().toString();</span><br><span class="line">                <span class="keyword">if</span> (msg != <span class="keyword">null</span> &amp;&amp; msg.contains(<span class="string">"Call: next"</span>)) &#123;</span><br><span class="line">                    counters[<span class="number">0</span>]++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">requiresLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        log.removeAllAppenders();</span><br><span class="line">        log.setAdditivity(<span class="keyword">false</span>);</span><br><span class="line">        log.addAppender(appender);</span><br><span class="line">        log.setLevel(Level.DEBUG);</span><br><span class="line"></span><br><span class="line">        Scan scan = <span class="keyword">new</span> Scan();</span><br><span class="line">        scan.setCaching(caching);</span><br><span class="line">        scan.setBatch(batch);</span><br><span class="line">        ResultScanner scanner = table.getScanner(scan);</span><br><span class="line">        <span class="keyword">for</span> (<span class="meta">@SuppressWarnings</span>(<span class="string">"unused"</span>)</span><br><span class="line">        Result result : scanner) &#123;</span><br><span class="line">            counters[<span class="number">1</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        scanner.close();</span><br><span class="line">        System.out.println(<span class="string">"Caching: "</span> + caching + <span class="string">", Batch: "</span> + batch</span><br><span class="line">                + <span class="string">", Results: "</span> + counters[<span class="number">1</span>] + <span class="string">", RPCs: "</span> + counters[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        HBaseHelper helper = HBaseHelper.getHelper(HBaseConfiguration.create());</span><br><span class="line">        helper.fillTable(<span class="string">"testtable"</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="string">"colfam1"</span>, <span class="string">"colfam2"</span>);</span><br><span class="line"></span><br><span class="line">        table = helper.getTable(<span class="string">"testtable"</span>);</span><br><span class="line"></span><br><span class="line">        scan(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        scan(<span class="number">200</span>, <span class="number">1</span>);</span><br><span class="line">        scan(<span class="number">2000</span>, <span class="number">100</span>);</span><br><span class="line">        scan(<span class="number">2</span>, <span class="number">100</span>);</span><br><span class="line">        scan(<span class="number">2</span>, <span class="number">10</span>);</span><br><span class="line">        scan(<span class="number">5</span>, <span class="number">100</span>);</span><br><span class="line">        scan(<span class="number">5</span>, <span class="number">20</span>);</span><br><span class="line">        scan(<span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hbase/">Hbase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Hbase/">Hbase</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-hbase_01" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/15/hbase_01/" class="article-date">
+  	<time datetime="2015-04-15T04:26:38.000Z" itemprop="datePublished">2015-04-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/15/hbase_01/">基本CRUD操作</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>1、Get API Example: Get, Get List<br>2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock<br>3、Delete API Example : Delete, Delete List<br>4、Scan API Example: Scan, Scan with caching and batch<br>5、Other:</p>
+<p><1>所有基于列表的操作都会被API重排，按照region分组以提升性能。</1></p>
+<p><2>基于列表的操作不是原子性的，所以会部分失败。</2></p>
+<p><3>CheckAndXXX方法可以在检测成功后再执行Put/Delete。</3></p>
+<p><4>列表操作都是基于batch()实现的，可以说是特殊的批处理操作。</4></p>
+<p><5>get是特殊的scan。</5></p>
 
       
     </div>
