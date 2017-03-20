@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/04/JVM系列_04/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="jdk 命令">
-<meta property="og:updated_time" content="2017-03-20T03:56:28.000Z">
+<meta property="og:updated_time" content="2017-03-20T03:58:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列四(GC分析)">
 <meta name="twitter:description" content="jdk 命令">
@@ -212,6 +212,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:format=b,file=heap.bin <span class="variable">$pid</span></span><br><span class="line">这个命令执行，JVM会将整个heap的信息dump写入到一个文件，heap如果比较大的话，就会导致这个过程比较耗时，并且执行的过程中为了保证dump的信息是可靠的，所以会暂停应用。</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这个命令执行，JVM会去统计perm区的状况，这整个过程也会比较的耗时，并且同样也会暂停应用。</span><br><span class="line">jmap -permstat <span class="variable">$pid</span></span><br></pre></td></tr></table></figure>
 <h2 id="4、jstat-官方文档"><a href="#4、jstat-官方文档" class="headerlink" title="4、jstat 官方文档"></a>4、jstat <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jstat.html" target="_blank" rel="external">官方文档</a></h2><p>用于展现jvm的性能统计数据<br>jstat的用法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1000，10]代表每1秒输入一次JVM资源使用情况，共输出10次。</span><br><span class="line">jstat -gcutil <span class="variable">$pid</span> 1000 10</span><br></pre></td></tr></table></figure>
 <h2 id="5、jps-官方文档"><a href="#5、jps-官方文档" class="headerlink" title="5、jps 官方文档"></a>5、jps <a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jps.html" target="_blank" rel="external">官方文档</a></h2><p>JVM进程状态工具</p>
 <p>命令格式： jps [ options ] [ hostid ]</p>
 <table>
