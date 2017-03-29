@@ -6,28 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>JVM系列二(JVM内存模型) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java有四种类型的垃圾回收器：
-串行垃圾回收器（Serial Garbage Collector）通过JVM参数-XX:+UseSerialGC可以使用串行垃圾回收器。
-并行垃圾回收器也叫做 throughput collector 。它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。
-相似的是，它也会冻结所有的应用程序线程当执行垃圾回收的时候
-并行垃圾回收器（Par">
+  <meta name="description" content="Java垃圾回收器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM系列二(JVM内存模型)">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/02/JVM系列_02/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Java有四种类型的垃圾回收器：
-串行垃圾回收器（Serial Garbage Collector）通过JVM参数-XX:+UseSerialGC可以使用串行垃圾回收器。
-并行垃圾回收器也叫做 throughput collector 。它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。
-相似的是，它也会冻结所有的应用程序线程当执行垃圾回收的时候
-并行垃圾回收器（Par">
-<meta property="og:updated_time" content="2017-03-29T08:03:44.000Z">
+<meta property="og:description" content="Java垃圾回收器">
+<meta property="og:updated_time" content="2017-03-29T08:41:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列二(JVM内存模型)">
-<meta name="twitter:description" content="Java有四种类型的垃圾回收器：
-串行垃圾回收器（Serial Garbage Collector）通过JVM参数-XX:+UseSerialGC可以使用串行垃圾回收器。
-并行垃圾回收器也叫做 throughput collector 。它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。
-相似的是，它也会冻结所有的应用程序线程当执行垃圾回收的时候
-并行垃圾回收器（Par">
+<meta name="twitter:description" content="Java垃圾回收器">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -216,7 +204,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>Java垃圾回收器</p>
+<a id="more"></a>
 <p>Java有四种类型的垃圾回收器：</p>
 <h2 id="串行垃圾回收器（Serial-Garbage-Collector）"><a href="#串行垃圾回收器（Serial-Garbage-Collector）" class="headerlink" title="串行垃圾回收器（Serial Garbage Collector）"></a>串行垃圾回收器（Serial Garbage Collector）</h2><p>通过JVM参数-XX:+UseSerialGC可以使用串行垃圾回收器。</p>
 <p>并行垃圾回收器也叫做 throughput collector 。它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。</p>
