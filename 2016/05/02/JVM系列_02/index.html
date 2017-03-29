@@ -20,7 +20,7 @@
 并行垃圾回收器也叫做 throughput collector 。它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。
 相似的是，它也会冻结所有的应用程序线程当执行垃圾回收的时候
 并行垃圾回收器（Par">
-<meta property="og:updated_time" content="2017-03-29T08:01:19.000Z">
+<meta property="og:updated_time" content="2017-03-29T08:03:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列二(JVM内存模型)">
 <meta name="twitter:description" content="Java有四种类型的垃圾回收器：
@@ -257,7 +257,36 @@
 </tr>
 </tbody>
 </table>
-<h2 id="GC的优化配置"><a href="#GC的优化配置" class="headerlink" title="GC的优化配置"></a>GC的优化配置</h2><p>| 配置    | 描述 |<br>| -Xms    | 初始化堆内存大小 |<br>| -Xmx    | 堆内存最大值 |<br>| -Xmn    | 新生代大小 |<br>| -XX:PermSize    | 初始化永久代大小 |<br>| -XX:MaxPermSize    | 永久代最大容量 |</p>
+<h2 id="GC的优化配置"><a href="#GC的优化配置" class="headerlink" title="GC的优化配置"></a>GC的优化配置</h2><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-Xms</td>
+<td>初始化堆内存大小</td>
+</tr>
+<tr>
+<td>-Xmx</td>
+<td>堆内存最大值</td>
+</tr>
+<tr>
+<td>-Xmn</td>
+<td>新生代大小</td>
+</tr>
+<tr>
+<td>-XX:PermSize</td>
+<td>初始化永久代大小</td>
+</tr>
+<tr>
+<td>-XX:MaxPermSize</td>
+<td>永久代最大容量</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
