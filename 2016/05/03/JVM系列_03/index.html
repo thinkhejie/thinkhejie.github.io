@@ -6,16 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>JVM系列三(参数设置) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="jvm 参数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM系列三(参数设置)">
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/03/JVM系列_03/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-05-14T06:48:25.000Z">
+<meta property="og:description" content="jvm 参数">
+<meta property="og:updated_time" content="2017-04-06T03:22:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列三(参数设置)">
-<meta name="twitter:description">
+<meta name="twitter:description" content="jvm 参数">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -204,7 +204,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>jvm 参数</p>
+<a id="more"></a>
+<p>缓存预热</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+AlwaysPreTouch</span><br></pre></td></tr></table></figure>
+<p>Consider using this when you have a big heap or are using large page. It pretouchs and set zero all the pages you have allocated during the initialization of your application. Normally a page is touched when it is used, but in the cases where you have big heap or big page size, this may increase your startup time, but is probably better than doing the pretouch in run time with performance impact.</p>
 
       
     </div>
