@@ -4,18 +4,17 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>ulimit命令 | Hexo</title>
+  <title>Tag: IDEA | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ulimit命令使用">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ulimit命令">
-<meta property="og:url" content="http://thinkhejie.github.io/2015/06/01/ulimit命令/index.html">
+  <meta name="description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://thinkhejie.github.io/tags/IDEA/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="ulimit命令使用">
-<meta property="og:updated_time" content="2016-06-10T20:36:09.000Z">
+<meta property="og:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ulimit命令">
-<meta name="twitter:description" content="ulimit命令使用">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="thinkhejie&apos;s blog | java | scala | bi | hexo | git">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -167,203 +166,57 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-ulimit命令" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2015/06/01/ulimit命令/" class="article-date">
-  	<time datetime="2015-06-01T13:04:38.000Z" itemprop="datePublished">2015-06-01</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2014" class="archive-year">2014</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2014/05/01/idea/" class="archive-article-date">
+  	<time datetime="2014-05-01T13:04:38.000Z" itemprop="datePublished">5月 1</time>
 </a>
-    </div>
+        </div>
+    	 
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      ulimit命令
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2014/05/01/idea/">Intellij IDEA 快捷键整理</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ulimit/">ulimit</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/">IDEA</a></li></ul>
 	</div>
 
-        
+          
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Linux/">Linux</a>
+	<a class="article-category-link" href="/categories/IDEA/">IDEA</a>
 	</div>
 
 
+        </div>
         <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ulimit命令使用</p>
-<a id="more"></a>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Synopsis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ulimit -u 10240</td>
-<td>可以运行的最大并发进程数</td>
-</tr>
-<tr>
-<td>ulimit -n xx</td>
-<td>每个进程可以同时打开的最大文件数</td>
-</tr>
-<tr>
-<td>ulimit -d unlimited</td>
-<td>数据段长度</td>
-</tr>
-<tr>
-<td>ulimit -m unlimited</td>
-<td>最大内存大小</td>
-</tr>
-<tr>
-<td>ulimit -s 512</td>
-<td>限制线程栈的大小为 512 Kbytes。</td>
-</tr>
-<tr>
-<td>ulimit -t unlimited</td>
-<td>CPU 时间</td>
-</tr>
-<tr>
-<td>ulimit -v unlimited</td>
-<td>虚拟内存</td>
-</tr>
-<tr>
-<td>ulimit -c  unlimited</td>
-<td>设置core文件的最大值.单位:blocks</td>
-</tr>
-<tr>
-<td>ulimit -p  512</td>
-<td>设置管道的最大值，单位为block，1block=512bytes</td>
-</tr>
-<tr>
-<td>ulimit -a  unlimited</td>
-<td>显示当前所有的 limit 信息</td>
-</tr>
-</tbody>
-</table>
-<p>对于使用RPC框架的Java应用。一般都需要修改【文件描述符】的数量。一般步骤如下：</p>
-<h3 id="1、找出物理内存的值"><a href="#1、找出物理内存的值" class="headerlink" title="1、找出物理内存的值"></a>1、找出物理内存的值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/meminfo | grep MemTotal</span><br></pre></td></tr></table></figure>
-<h3 id="2、使用物理内存的值除以128K，等到一个结果"><a href="#2、使用物理内存的值除以128K，等到一个结果" class="headerlink" title="2、使用物理内存的值除以128K，等到一个结果"></a>2、使用物理内存的值除以128K，等到一个结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;3921732 / 128&quot; | bc</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/06/01/Linux中mmap技术/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Linux中mmap技术
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/05/31/Cgroup/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Cgroup相关命令和配置文件</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
-  
-	   <! -- 添加捐赠图标 -->
-<div class ="post-donate">
-    <div id="donate_board" class="donate_bar center">
-        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
-        <span class="donate_txt">
-           &uarr;<br>
-		   欣赏此文？求鼓励，求支持！
-        </span>
-        <br>
-      </div>
-	<div id="donate_guide" class="donate_bar center hidden" >
-		<!-- 支付宝打赏图案 -->
-		<img src="/img/zhifubao.jpg" alt="支付宝打赏">
-		<!-- 微信打赏图案 -->
-		<img src="/img/weixin.png" alt="微信打赏">
-    </div>
-	<script type="text/javascript">
-		document.getElementById('btn_donate').onclick = function(){
-			$('#donate_board').addClass('hidden');
-			$('#donate_guide').removeClass('hidden');
-		}
-	</script>
-</div>
-<! -- 添加捐赠图标 -->
-
-  
 </article>
+  
+  
+    </div></section>
+  
 
-
-<div class="share_jia">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
-		<a class="jiathis_button_facebook"></a> 
-    <a class="jiathis_button_twitter"></a>
-    <a class="jiathis_button_plus"></a> 
-    <a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ulimit命令" data-title="ulimit命令" data-url="http://thinkhejie.github.io/2015/06/01/ulimit命令/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
+    
 
 </div>
       <footer id="footer">
@@ -389,9 +242,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false
 	}
