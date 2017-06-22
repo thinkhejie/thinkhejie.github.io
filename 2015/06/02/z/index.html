@@ -4,21 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Dubbo框架(一) | Hexo</title>
+  <title>架构 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
+  <meta name="description" content="架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dubbo框架(一)">
-<meta property="og:url" content="http://thinkhejie.github.io/2014/05/01/Dubbo_01/index.html">
+<meta property="og:title" content="架构">
+<meta property="og:url" content="http://thinkhejie.github.io/2015/06/02/z/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
-<meta property="og:image" content="http://thinkhejie.github.io/img/20141230223041400.jpeg">
-<meta property="og:image" content="http://thinkhejie.github.io/img/dubbo-architecture.png">
-<meta property="og:updated_time" content="2016-05-09T13:26:14.000Z">
+<meta property="og:description" content="架构">
+<meta property="og:updated_time" content="2017-06-22T15:00:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dubbo框架(一)">
-<meta name="twitter:description" content="Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。">
-<meta name="twitter:image" content="http://thinkhejie.github.io/img/20141230223041400.jpeg">
+<meta name="twitter:title" content="架构">
+<meta name="twitter:description" content="架构">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -170,11 +167,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-Dubbo_01" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-z" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2014/05/01/Dubbo_01/" class="article-date">
-  	<time datetime="2014-05-01T13:04:38.000Z" itemprop="datePublished">2014-05-01</time>
+      <a href="/2015/06/02/z/" class="article-date">
+  	<time datetime="2015-06-02T13:04:38.000Z" itemprop="datePublished">2015-06-02</time>
 </a>
     </div>
   
@@ -187,7 +184,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Dubbo框架(一)
+      架构
     </h1>
   
 
@@ -196,12 +193,12 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dubbo/">dubbo</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csa/">csa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/dubbo/">dubbo</a>
+	<a class="article-category-link" href="/categories/架构/">架构</a>
 	</div>
 
 
@@ -211,41 +208,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Dubbo 是一个服务治理的框架，集成了服务的发布、发现、注册、监控、流量控制等一系列功能。</p>
+        <p>架构</p>
 <a id="more"></a>
-<p>官方的Dubbo架构路线图来概括,如下:</p>
-<p><img src="/img/20141230223041400.jpeg" alt="Dubbo roadmap"></p>
-<p>Dubbo的总体架构，如图所示：</p>
-<p><img src="/img/dubbo-architecture.png" alt="Dubbo"></p>
-<p>Dubbo框架设计一共划分了10个层，而最上面的Service层是留给实际想要使用Dubbo开发分布式服务的开发者实现业务逻辑的接口层。图中左边淡蓝背景的为服务消费方使用的接口，右边淡绿色背景的为服务提供方使用的接口， 位于中轴线上的为双方都用到的接口。</p>
-<p>服务接口层（Service）：该层是与实际业务逻辑相关的，根据服务提供方和服务消费方的业务设计对应的接口和实现。</p>
-<p>配置层（Config）：对外配置接口，以ServiceConfig和ReferenceConfig为中心，可以直接new配置类，也可以通过spring解析配置生成配置类。</p>
-<p>服务代理层（Proxy）：服务接口透明代理，生成服务的客户端Stub和服务器端Skeleton，以ServiceProxy为中心，扩展接口为ProxyFactory。</p>
-<p>服务注册层（Registry）：封装服务地址的注册与发现，以服务URL为中心，扩展接口为RegistryFactory、Registry和RegistryService。可能没有服务注册中心，此时服务提供方直接暴露服务。</p>
-<p>集群层（Cluster）：封装多个提供者的路由及负载均衡，并桥接注册中心，以Invoker为中心，扩展接口为Cluster、Directory、Router和LoadBalance。将多个服务提供方组合为一个服务提供方，实现对服务消费方来透明，只需要与一个服务提供方进行交互。</p>
-<p>监控层（Monitor）：RPC调用次数和调用时间监控，以Statistics为中心，扩展接口为MonitorFactory、Monitor和MonitorService。</p>
-<p>远程调用层（Protocol）：封将RPC调用，以Invocation和Result为中心，扩展接口为Protocol、Invoker和Exporter。Protocol是服务域，它是Invoker暴露和引用的主功能入口，它负责Invoker的生命周期管理。Invoker是实体域，它是Dubbo的核心模型，其它模型都向它靠扰，或转换成它，它代表一个可执行体，可向它发起invoke调用，它有可能是一个本地的实现，也可能是一个远程的实现，也可能一个集群实现。</p>
-<p>信息交换层（Exchange）：封装请求响应模式，同步转异步，以Request和Response为中心，扩展接口为Exchanger、ExchangeChannel、ExchangeClient和ExchangeServer。</p>
-<p>网络传输层（Transport）：抽象mina和netty为统一接口，以Message为中心，扩展接口为Channel、Transporter、Client、Server和Codec。</p>
-<p>数据序列化层（Serialize）：可复用的一些工具，扩展接口为Serialization、 ObjectInput、ObjectOutput和ThreadPool。</p>
-<p>从上图可以看出，Dubbo对于服务提供方和服务消费方，从框架的10层中分别提供了各自需要关心和扩展的接口，构建整个服务生态系统（服务提供方和服务消费方本身就是一个以服务为中心的）。</p>
-<p>根据官方提供的，对于上述各层之间关系的描述，如下所示：</p>
-<p>在RPC中，Protocol是核心层，也就是只要有Protocol + Invoker + Exporter就可以完成非透明的RPC调用，然后在Invoker的主过程上Filter拦截点。</p>
-<p>图中的Consumer和Provider是抽象概念，只是想让看图者更直观的了解哪些类分属于客户端与服务器端，不用Client和Server的原因是Dubbo在很多场景下都使用Provider、Consumer、Registry、Monitor划分逻辑拓普节点，保持统一概念。</p>
-<p>而Cluster是外围概念，所以Cluster的目的是将多个Invoker伪装成一个Invoker，这样其它人只要关注Protocol层Invoker即可，加上Cluster或者去掉Cluster对其它层都不会造成影响，因为只有一个提供者时，是不需要Cluster的。</p>
-<p>Proxy层封装了所有接口的透明化代理，而在其它层都以Invoker为中心，只有到了暴露给用户使用时，才用Proxy将Invoker转成接口，或将接口实现转成Invoker，也就是去掉Proxy层RPC是可以Run的，只是不那么透明，不那么看起来像调本地服务一样调远程服务。</p>
-<p>而Remoting实现是Dubbo协议的实现，如果你选择RMI协议，整个Remoting都不会用上，Remoting内部再划为Transport传输层和Exchange信息交换层，Transport层只负责单向消息传输，是对Mina、Netty、Grizzly的抽象，它也可以扩展UDP传输，而Exchange层是在传输层之上封装了Request-Response语义。</p>
-<p>Registry和Monitor实际上不算一层，而是一个独立的节点，只是为了全局概览，用层的方式画在一起。</p>
-<p>从上面的架构图中，我们可以了解到，Dubbo作为一个分布式服务框架，主要具有如下几个核心的要点：</p>
-<p>服务定义</p>
-<p>服务是围绕服务提供方和服务消费方的，服务提供方实现服务，而服务消费方调用服务。</p>
-<p>服务注册</p>
-<p>对于服务提供方，它需要发布服务，而且由于应用系统的复杂性，服务的数量、类型也不断膨胀；对于服务消费方，它最关心如何获取到它所需要的服务，而面对复杂的应用系统，需要管理大量的服务调用。而且，对于服务提供方和服务消费方来说，他们还有可能兼具这两种角色，即既需要提供服务，有需要消费服务。</p>
-<p>通过将服务统一管理起来，可以有效地优化内部应用对服务发布/使用的流程和管理。服务注册中心可以通过特定协议来完成服务对外的统一。Dubbo提供的注册中心有如下几种类型可供选择：Multicast注册中心、Zookeeper注册中心、Redis注册中心、Simple注册中心</p>
-<p>服务监控</p>
-<p>无论是服务提供方，还是服务消费方，他们都需要对服务调用的实际状态进行有效的监控，从而改进服务质量。</p>
-<p>远程通信与信息交换</p>
-<p>远程通信需要指定通信双方所约定的协议，在保证通信双方理解协议语义的基础上，还要保证高效、稳定的消息传输。Dubbo继承了当前主流的网络通信框架，主要包括如下几个：<a href="https://mina.apache.org/" target="_blank" rel="external">Mina</a> <a href="netty.io">Netty</a> <a href="https://grizzly.java.net/" target="_blank" rel="external">Grizzly</a></p>
+<p>一、JAVA基础和开源框架了解程序。</p>
+<p>1.JVM的内存模型及垃圾回收算法？</p>
+<p>2.ClassLoader机制？</p>
+<p>3.Spring的核心技术IOC,AOP的理解。</p>
+<p>4.代理有几种实现方式？</p>
+<p>三、架构设计过程方法</p>
+<p>1、聊一下你做架构设计的过程是怎样的？</p>
+<p>2、什么因素确定架构设计？是否要关注全部功能？</p>
+<p>3.怎么确定关键功能？ 核心功能　，必做，高风险，独特的功能。</p>
+<p>4.业界有哪些常见的多视图方法？ RUP、SEI</p>
+<p>5.怎么进行子系统划分？根据什么？</p>
+<p>6.接口由什么来决定？POC？决策表？</p>
+<p>7.设计文档包括哪些内容？</p>
+<p>三、架构典型场景化</p>
+<p>1.你如何看待服务化？ 什么样的业务需要做服务化？</p>
+<p>2.分布式事务怎么来实现？ XA? CAP？BASE？</p>
+<p>3.WEB 的session存储方案</p>
+<p>4.分布式缓存系统？开源的有哪些？Sharding方案有哪些？优缺点？</p>
+<p>5、门户集成方面-SSO方面？同域及跨跨怎么实现？Portlet规范，商业软件？</p>
+<p>四、大数据方面</p>
+<p>hadoop,yarn MR过程是怎样的？ solr ES？ spark RDD? mongoDB、Redis？ 业内生态？</p>
+<p>五、开放性问题 你目前做过系统最大的并发有多少？架构是怎样的？如果系统并发增涨100倍，谈谈怎样保障可用性的？</p>
 
       
     </div>
@@ -255,18 +241,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2014/05/01/idea/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/02/14/LXC命令列表/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Intellij IDEA 快捷键整理
+          LXC命令列表
         
       </div>
     </a>
   
   
-    <a href="/2013/05/04/MAVEN命令总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MAVEN命令总结</div>
+    <a href="/2015/06/02/zookeeper/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">zookeeper</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -328,7 +314,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Dubbo_01" data-title="Dubbo框架(一)" data-url="http://thinkhejie.github.io/2014/05/01/Dubbo_01/"></div>
+	<div class="ds-thread" data-thread-key="z" data-title="架构" data-url="http://thinkhejie.github.io/2015/06/02/z/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
