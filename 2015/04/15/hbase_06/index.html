@@ -8,19 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>一种HBase上Region级别的二级索引存储 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们会经常谈及二级索引，这是对全表数据进行另外一种方式的组织存储，是针对table级别的。如果要为HBase上的表实现一个强一致性的二级索引，那么就无法逃避分布式事务，而这一直是用户最期待的功能。 而即使只需要保证最终一致性，这个索引也并不好实现，因为你需要额外的表以存储过程数据，需要解决宕机恢复问题等
-撇开分布式事务，我们是否可以考虑对索引的要求进行降级，比如把Region看成是全表下的子表，">
+  <meta name="description" content="一种HBase上Region级别的二级索引存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一种HBase上Region级别的二级索引存储">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_06/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="我们会经常谈及二级索引，这是对全表数据进行另外一种方式的组织存储，是针对table级别的。如果要为HBase上的表实现一个强一致性的二级索引，那么就无法逃避分布式事务，而这一直是用户最期待的功能。 而即使只需要保证最终一致性，这个索引也并不好实现，因为你需要额外的表以存储过程数据，需要解决宕机恢复问题等
-撇开分布式事务，我们是否可以考虑对索引的要求进行降级，比如把Region看成是全表下的子表，">
-<meta property="og:updated_time" content="2017-03-02T09:57:14.000Z">
+<meta property="og:description" content="一种HBase上Region级别的二级索引存储">
+<meta property="og:updated_time" content="2017-06-22T16:01:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种HBase上Region级别的二级索引存储">
-<meta name="twitter:description" content="我们会经常谈及二级索引，这是对全表数据进行另外一种方式的组织存储，是针对table级别的。如果要为HBase上的表实现一个强一致性的二级索引，那么就无法逃避分布式事务，而这一直是用户最期待的功能。 而即使只需要保证最终一致性，这个索引也并不好实现，因为你需要额外的表以存储过程数据，需要解决宕机恢复问题等
-撇开分布式事务，我们是否可以考虑对索引的要求进行降级，比如把Region看成是全表下的子表，">
+<meta name="twitter:description" content="一种HBase上Region级别的二级索引存储">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +69,8 @@
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -135,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,17 +152,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -196,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>一种HBase上Region级别的二级索引存储</p>
+<a id="more"></a>
 <p>我们会经常谈及二级索引，这是对全表数据进行另外一种方式的组织存储，是针对table级别的。如果要为HBase上的表实现一个强一致性的二级索引，那么就无法逃避分布式事务，而这一直是用户最期待的功能。 而即使只需要保证最终一致性，这个索引也并不好实现，因为你需要额外的表以存储过程数据，需要解决宕机恢复问题等</p>
 <p>撇开分布式事务，我们是否可以考虑对索引的要求进行降级，比如把Region看成是全表下的子表，实现一套Region级别的索引，通过功能上的牺牲以换取实现的简易及稳定。</p>
 <p>在某些存在用户概念的场景下，比如消费记录，我们总是会在确定的用户下，进行数据查找。这意味着，在此类场景中，我们只需要一个用户级别的索引。</p>

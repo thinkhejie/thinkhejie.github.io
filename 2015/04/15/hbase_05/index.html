@@ -8,19 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>HBase Java API Guide HTablePool | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HTablePool可以解决HTable存在的线程不安全问题，同时通过维护固定数量的HTable对象，能够在程序运行期间复用这些HTable资源对象。HTablePool可以自动创建HTable对象，而且对客户端来说使用上是完全透明的，可以避免多线程间数据并发修改问题。HTablePool中的HTable对象之间是公用Configuration连接的，能够减少网络开销。
-HTablePool的使">
+  <meta name="description" content="HBase Java API Guide HTablePool">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HBase Java API Guide HTablePool">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_05/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="HTablePool可以解决HTable存在的线程不安全问题，同时通过维护固定数量的HTable对象，能够在程序运行期间复用这些HTable资源对象。HTablePool可以自动创建HTable对象，而且对客户端来说使用上是完全透明的，可以避免多线程间数据并发修改问题。HTablePool中的HTable对象之间是公用Configuration连接的，能够减少网络开销。
-HTablePool的使">
-<meta property="og:updated_time" content="2017-03-02T09:57:10.000Z">
+<meta property="og:description" content="HBase Java API Guide HTablePool">
+<meta property="og:updated_time" content="2017-06-22T16:01:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase Java API Guide HTablePool">
-<meta name="twitter:description" content="HTablePool可以解决HTable存在的线程不安全问题，同时通过维护固定数量的HTable对象，能够在程序运行期间复用这些HTable资源对象。HTablePool可以自动创建HTable对象，而且对客户端来说使用上是完全透明的，可以避免多线程间数据并发修改问题。HTablePool中的HTable对象之间是公用Configuration连接的，能够减少网络开销。
-HTablePool的使">
+<meta name="twitter:description" content="HBase Java API Guide HTablePool">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +69,8 @@ HTablePool的使">
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -135,6 +134,8 @@ HTablePool的使">
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,17 +152,19 @@ HTablePool的使">
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -196,7 +199,8 @@ HTablePool的使">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>HBase Java API Guide HTablePool</p>
+<a id="more"></a>
 <p>HTablePool可以解决HTable存在的线程不安全问题，同时通过维护固定数量的HTable对象，能够在程序运行期间复用这些HTable资源对象。HTablePool可以自动创建HTable对象，而且对客户端来说使用上是完全透明的，可以避免多线程间数据并发修改问题。HTablePool中的HTable对象之间是公用Configuration连接的，能够减少网络开销。</p>
 <p>HTablePool的使用很简单：每次进行操作前，通过HTablePool的getTable方法取得一个HTable对象，然后进行put/get/scan/delete等操作，最后通过HTablePool的putTable方法将HTable对象放回到HTablePool中。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTableInterface;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTablePool;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Result;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.ResultScanner;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Scan;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HTablePoolExample</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> HTablePool pool;</span><br><span class="line">    <span class="keyword">static</span> Configuration conf;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        conf = HBaseConfiguration.create();</span><br><span class="line">        conf.set(<span class="string">"hbase.zookeeper.quorum"</span>,</span><br><span class="line">                <span class="string">"ZK_QUORUM"</span>);</span><br><span class="line">        conf.set(<span class="string">"zookeeper.znode.parent"</span>, <span class="string">"ZNODE_PARENT"</span>);</span><br><span class="line">        pool = <span class="keyword">new</span> HTablePool(conf, <span class="number">30</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        HTableInterface table = pool.getTable(<span class="string">"TABLE_NAME"</span>);</span><br><span class="line">        Scan scan = <span class="keyword">new</span> Scan();</span><br><span class="line">        ResultScanner resultScanner = table.getScanner(scan);</span><br><span class="line">        <span class="keyword">for</span> (Result r : resultScanner) &#123;</span><br><span class="line">            System.out.println(r);</span><br><span class="line">        &#125;</span><br><span class="line">        resultScanner.close();</span><br><span class="line">        pool.putTable(table);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

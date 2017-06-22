@@ -8,22 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>HBase 日常 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日常业务逻辑中编程的建议：
-
-使用HTablePool而不是new HTable，并做好HTableInterface的及时回收；尽量不要使用显式行锁，详情见MR Scan或扫描量大时请关闭blockCache；Scan时请酌情配置hbase.scanner.client.caching参数，达到RPC延迟和本地JVM内存管理的折衷；请根据业务场景酌情配置hbase.client.pause(">
+  <meta name="description" content="HBase 日常">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HBase 日常">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_03/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="日常业务逻辑中编程的建议：
-
-使用HTablePool而不是new HTable，并做好HTableInterface的及时回收；尽量不要使用显式行锁，详情见MR Scan或扫描量大时请关闭blockCache；Scan时请酌情配置hbase.scanner.client.caching参数，达到RPC延迟和本地JVM内存管理的折衷；请根据业务场景酌情配置hbase.client.pause(">
-<meta property="og:updated_time" content="2017-03-02T09:57:01.000Z">
+<meta property="og:description" content="HBase 日常">
+<meta property="og:updated_time" content="2017-06-22T16:00:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase 日常">
-<meta name="twitter:description" content="日常业务逻辑中编程的建议：
-
-使用HTablePool而不是new HTable，并做好HTableInterface的及时回收；尽量不要使用显式行锁，详情见MR Scan或扫描量大时请关闭blockCache；Scan时请酌情配置hbase.scanner.client.caching参数，达到RPC延迟和本地JVM内存管理的折衷；请根据业务场景酌情配置hbase.client.pause(">
+<meta name="twitter:description" content="HBase 日常">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -75,6 +69,8 @@
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -138,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -154,17 +152,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -199,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>HBase 日常</p>
+<a id="more"></a>
 <ol>
 <li>日常业务逻辑中编程的建议：</li>
 </ol>

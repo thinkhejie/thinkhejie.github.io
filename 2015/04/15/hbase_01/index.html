@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>基本CRUD操作 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、Get API Example: Get, Get List2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock3、Delete API Example : Delete, Delete List4、Scan API Example: Scan, Scan with caching a">
+  <meta name="description" content="基本CRUD操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基本CRUD操作">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_01/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1、Get API Example: Get, Get List2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock3、Delete API Example : Delete, Delete List4、Scan API Example: Scan, Scan with caching a">
-<meta property="og:updated_time" content="2017-03-02T09:56:54.000Z">
+<meta property="og:description" content="基本CRUD操作">
+<meta property="og:updated_time" content="2017-06-22T16:00:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本CRUD操作">
-<meta name="twitter:description" content="1、Get API Example: Get, Get List2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock3、Delete API Example : Delete, Delete List4、Scan API Example: Scan, Scan with caching a">
+<meta name="twitter:description" content="基本CRUD操作">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -69,6 +69,8 @@
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -132,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -148,17 +152,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -193,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>基本CRUD操作</p>
+<a id="more"></a>
 <p>1、Get API Example: Get, Get List<br>2、Put API Example: Put, Put List, Put Write Buffer, MultiThread Put with RowLock<br>3、Delete API Example : Delete, Delete List<br>4、Scan API Example: Scan, Scan with caching and batch<br>5、Other:</p>
 <p><1>所有基于列表的操作都会被API重排，按照region分组以提升性能。</1></p>
 <p><2>基于列表的操作不是原子性的，所以会部分失败。</2></p>

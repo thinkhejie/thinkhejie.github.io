@@ -8,19 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>HBase Java API Guide Put | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="如果不是刻意需要单条写入的话，推荐使用Put List而不是写缓存，因为语义上更友好。锁管理采取隐式加锁，不建议主动加锁。
-1234567891011121314151617181920212223242526package com.ali.pe3.hbase.demo.crud;import org.apache.hadoop.hbase.HBaseConfiguration;import o">
+  <meta name="description" content="HBase Java API Guide Put">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HBase Java API Guide Put">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_07/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="如果不是刻意需要单条写入的话，推荐使用Put List而不是写缓存，因为语义上更友好。锁管理采取隐式加锁，不建议主动加锁。
-1234567891011121314151617181920212223242526package com.ali.pe3.hbase.demo.crud;import org.apache.hadoop.hbase.HBaseConfiguration;import o">
-<meta property="og:updated_time" content="2017-03-02T09:56:50.000Z">
+<meta property="og:description" content="HBase Java API Guide Put">
+<meta property="og:updated_time" content="2017-06-22T16:01:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HBase Java API Guide Put">
-<meta name="twitter:description" content="如果不是刻意需要单条写入的话，推荐使用Put List而不是写缓存，因为语义上更友好。锁管理采取隐式加锁，不建议主动加锁。
-1234567891011121314151617181920212223242526package com.ali.pe3.hbase.demo.crud;import org.apache.hadoop.hbase.HBaseConfiguration;import o">
+<meta name="twitter:description" content="HBase Java API Guide Put">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +69,8 @@
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -135,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,17 +152,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -196,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>HBase Java API Guide Put</p>
+<a id="more"></a>
 <p>如果不是刻意需要单条写入的话，推荐使用Put List而不是写缓存，因为语义上更友好。锁管理采取隐式加锁，不建议主动加锁。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ali.pe3.hbase.demo.crud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTableInterface;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Put;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ali.pe3.hbase.demo.util.HBaseHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PutExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        HBaseHelper helper = HBaseHelper.getHelper(HBaseConfiguration.create());</span><br><span class="line"></span><br><span class="line">        HTableInterface table = helper.getTable(<span class="string">"testtable"</span>);</span><br><span class="line">        Put put = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"row1"</span>));</span><br><span class="line">        put.add(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"qual1"</span>),</span><br><span class="line">                Bytes.toBytes(<span class="string">"val1"</span>));</span><br><span class="line">        put.add(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"qual2"</span>),</span><br><span class="line">                Bytes.toBytes(<span class="string">"val2"</span>));</span><br><span class="line">        table.put(put);</span><br><span class="line">        table.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ali.pe3.hbase.demo.crud;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.conf.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.HBaseConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.HTableInterface;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.client.Put;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hbase.util.Bytes;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ali.pe3.hbase.demo.util.HBaseHelper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PutListExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Configuration conf = HBaseConfiguration.create();</span><br><span class="line">        HBaseHelper helper = HBaseHelper.getHelper(conf);</span><br><span class="line">        HTableInterface table = helper.getTable(<span class="string">"testtable"</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;Put&gt; puts = <span class="keyword">new</span> ArrayList&lt;Put&gt;();</span><br><span class="line">        Put put1 = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"row1"</span>));</span><br><span class="line">        put1.add(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"qual1"</span>), Bytes.toBytes(<span class="string">"val1"</span>));</span><br><span class="line">        puts.add(put1);</span><br><span class="line">        Put put2 = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"row2"</span>));</span><br><span class="line">        put2.add(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"qual1"</span>), Bytes.toBytes(<span class="string">"val2"</span>));</span><br><span class="line">        puts.add(put2);</span><br><span class="line">        Put put3 = <span class="keyword">new</span> Put(Bytes.toBytes(<span class="string">"row2"</span>));</span><br><span class="line">        put3.add(Bytes.toBytes(<span class="string">"colfam1"</span>), Bytes.toBytes(<span class="string">"qual2"</span>), Bytes.toBytes(<span class="string">"val3"</span>));</span><br><span class="line">        puts.add(put3);</span><br><span class="line">        table.put(puts);</span><br><span class="line">        table.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

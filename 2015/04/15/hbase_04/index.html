@@ -8,19 +8,16 @@
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
   <title>FuzzyRowFilter 的说明和使用 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FuzzyRowFilter是模糊查询row（指定rowkey里面部分值可以不是前缀，​指定符合前缀的可以用PrefixFilter）的filter，能够在scan的时候快速向前扫描。
-举例：存到hbase里面的数据，很多时候rowkey是由多个部分组合而成，而各个部分又是固定长度。比如userId_actionId_year_month组成key，userId 是固定的4字节，actionId">
+  <meta name="description" content="FuzzyRowFilter 的说明和使用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FuzzyRowFilter 的说明和使用">
 <meta property="og:url" content="http://thinkhejie.github.io/2015/04/15/hbase_04/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="FuzzyRowFilter是模糊查询row（指定rowkey里面部分值可以不是前缀，​指定符合前缀的可以用PrefixFilter）的filter，能够在scan的时候快速向前扫描。
-举例：存到hbase里面的数据，很多时候rowkey是由多个部分组合而成，而各个部分又是固定长度。比如userId_actionId_year_month组成key，userId 是固定的4字节，actionId">
-<meta property="og:updated_time" content="2017-03-02T09:57:06.000Z">
+<meta property="og:description" content="FuzzyRowFilter 的说明和使用">
+<meta property="og:updated_time" content="2017-06-22T16:00:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FuzzyRowFilter 的说明和使用">
-<meta name="twitter:description" content="FuzzyRowFilter是模糊查询row（指定rowkey里面部分值可以不是前缀，​指定符合前缀的可以用PrefixFilter）的filter，能够在scan的时候快速向前扫描。
-举例：存到hbase里面的数据，很多时候rowkey是由多个部分组合而成，而各个部分又是固定长度。比如userId_actionId_year_month组成key，userId 是固定的4字节，actionId">
+<meta name="twitter:description" content="FuzzyRowFilter 的说明和使用">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +69,8 @@
 				<li><a href="/categories/Git">Git</a></li>
 	        
 				<li><a href="/categories/zookeeper">zookeeper</a></li>
+	        
+				<li><a href="/categories/Hbase">hbase</a></li>
 	        
 			</ul>
 		</nav>
@@ -135,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,17 +152,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/">主页</a></li>
+					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/archives">所有文章</a></li>
+					<li style="width: 14.285714285714286%"><a href="/archives">所有文章</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Java">Java</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Java">Java</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/dubbo">Dubbo</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/dubbo">Dubbo</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Git">Git</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Git">Git</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/zookeeper">zookeeper</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/zookeeper">zookeeper</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/Hbase">hbase</a></li>
 		        
 				</ul>
 			</nav>
@@ -196,7 +199,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>FuzzyRowFilter 的说明和使用</p>
+<a id="more"></a>
 <p>FuzzyRowFilter是模糊查询row（指定rowkey里面部分值可以不是前缀，​指定符合前缀的可以用PrefixFilter）的filter，能够在scan的时候快速向前扫描。</p>
 <p>举例：存到hbase里面的数据，很多时候rowkey是由多个部分组合而成，而各个部分又是固定长度。比如userId_actionId_year_month组成key，userId 是固定的4字节，actionId 是2字节，year 是4字节，month 是2字节。</p>
 <p>如果想查某个action类型比如99，并且在1月份的所有用户出来，<br>那么我们需要获取的数据是rowkey为 “????<em>99</em>????_01”  “?”代表任意值（一个字节长）。</p>
