@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="通过一篇文章，讲清楚关于zookeeper的内容">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
-<meta property="og:updated_time" content="2017-06-22T15:52:07.000Z">
+<meta property="og:updated_time" content="2017-06-22T15:53:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description" content="通过一篇文章，讲清楚关于zookeeper的内容">
@@ -450,8 +450,9 @@
 </tbody>
 </table>
 <p>4、用法举例</p>
-<p>echo stat | nc 127.0.0.1 2181 查看哪个节点被选择作为follower或者leader<br>echo ruok | nc 127.0.0.1 2181 测试是否启动了该Server，若回复imok表示已经启动。<br>echo dump | nc 127.0.0.1 2181 列出未经处理的会话和临时节点。<br>echo kill | nc 127.0.0.1 2181 关掉server<br>echo conf | nc 127.0.0.1 2181 输出相关服务配置的详细信息。<br>echo cons | nc 127.0.0.1 2181 列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息。<br>echo envi | nc 127.0.0.1 2181 输出关于服务环境的详细信息（区别于 conf 命令）。<br>echo reqs | nc 127.0.0.1 2181 列出未经处理的请求。<br>echo wchs | nc 127.0.0.1 2181 列出服务器watch的详细信息。<br>echo wchc | nc 127.0.0.1 2181 通过session列出服务器watch的详细信息，它的输出是一个与 watch 相关的会话的列表。<br>echo wchp | nc 127.0.0.1 2181 通过路径列出服务器watch的详细信息。它输出一个与 session 相关的路径。</p>
-<p>5、启停命令<br>./zkServer.sh restart<br>./zkServer.sh start<br>./zkServer.sh stop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">echo stat | nc 127.0.0.1 2181 查看哪个节点被选择作为follower或者leader</span><br><span class="line">echo ruok | nc 127.0.0.1 2181 测试是否启动了该Server，若回复imok表示已经启动。</span><br><span class="line">echo dump | nc 127.0.0.1 2181 列出未经处理的会话和临时节点。</span><br><span class="line">echo kill | nc 127.0.0.1 2181 关掉server</span><br><span class="line">echo conf | nc 127.0.0.1 2181 输出相关服务配置的详细信息。</span><br><span class="line">echo cons | nc 127.0.0.1 2181 列出所有连接到服务器的客户端的完全的连接 / 会话的详细信息。</span><br><span class="line">echo envi | nc 127.0.0.1 2181 输出关于服务环境的详细信息（区别于 conf 命令）。</span><br><span class="line">echo reqs | nc 127.0.0.1 2181 列出未经处理的请求。</span><br><span class="line">echo wchs | nc 127.0.0.1 2181 列出服务器watch的详细信息。</span><br><span class="line">echo wchc | nc 127.0.0.1 2181 通过session列出服务器watch的详细信息，它的输出是一个与 watch 相关的会话的列表。</span><br><span class="line">echo wchp | nc 127.0.0.1 2181 通过路径列出服务器watch的详细信息。它输出一个与 session 相关的路径。</span><br></pre></td></tr></table></figure>
+<p>5、启停命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh restart</span><br><span class="line">./zkServer.sh start</span><br><span class="line">./zkServer.sh stop</span><br></pre></td></tr></table></figure>
 <p>6、启用全部四字命令</p>
 <p><1>、在conf目录下创建文件java.env(如果不存在的话)</1></p>
 <p><2>、添加语句: export JVMFLAGS=”-Dzookeeper.4lw.commands.whitelist=* $JVMFLAGS”</2></p>
@@ -848,6 +849,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -856,15 +865,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -888,7 +889,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -896,11 +901,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
               <li class="article-tag-list-item">
