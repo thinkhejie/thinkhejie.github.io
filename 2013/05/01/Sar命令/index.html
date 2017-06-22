@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Sar命令 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="sar命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sar命令">
+<meta property="og:url" content="http://thinkhejie.github.io/2013/05/01/Sar命令/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="sar命令">
+<meta property="og:updated_time" content="2017-06-11T07:28:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sar命令">
+<meta name="twitter:description" content="sar命令">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">thinkhejie</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">热爱大海与冷笑话</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/Java">Java</a></li>
+				        
+							<li><a href="/categories/dubbo">Dubbo</a></li>
+				        
+							<li><a href="/categories/Git">Git</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/thinkhejie" title="github">github</a>
+					        
+								<a class="mail" target="_blank" href="/thinkhejie@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Cgroup/" style="font-size: 10px;">Cgroup</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Guava/" style="font-size: 10px;">Guava</a> <a href="/tags/Hbase/" style="font-size: 16px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/LXC/" style="font-size: 10px;">LXC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/NIO/" style="font-size: 12px;">NIO</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/docker/" style="font-size: 12px;">docker</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a> <a href="/tags/execption/" style="font-size: 10px;">execption</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 14px;">jvm</a> <a href="/tags/kill/" style="font-size: 12px;">kill</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/navicat/" style="font-size: 10px;">navicat</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/sar/" style="font-size: 10px;">sar</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/ulimit/" style="font-size: 10px;">ulimit</a> <a href="/tags/zab/" style="font-size: 10px;">zab</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/令牌桶/" style="font-size: 10px;">令牌桶</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">thinkhejie</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/author.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">thinkhejie</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">热爱大海与冷笑话</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/Java">Java</a></li>
+		        
+					<li><a href="/categories/dubbo">Dubbo</a></li>
+		        
+					<li><a href="/categories/Git">Git</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/thinkhejie" title="github">github</a>
+			        
+						<a class="mail" target="_blank" href="/thinkhejie@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Sar命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/05/01/Sar命令/" class="article-date">
+  	<time datetime="2013-05-01T13:04:38.000Z" itemprop="datePublished">2013-05-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Sar命令
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sar/">sar</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Sar/">Sar</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>sar命令</p>
+<a id="more"></a>
+<h3 id="sar命令"><a href="#sar命令" class="headerlink" title="sar命令"></a>sar命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sar 命令行的常用格式：</span><br><span class="line">sar [options] [-A] [-o file] t [n]</span><br></pre></td></tr></table></figure>
+<p>在命令行中，n 和t 两个参数组合起来定义采样间隔和次数，t为采样间隔，是必须有的参数，n为采样次数，是可选的，默认值是1，-o file表示将命令结果以二进制格式存放在文件中，<br>file 在此处不是关键字，是文件名。options 为命令行选项，sar命令的选项很多，下面只列出常用选项：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>Command</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>sar -A</td>
+<td>所有报告的总和</td>
+</tr>
+<tr>
+<td>2</td>
+<td>sar -u</td>
+<td>CPU利用率</td>
+</tr>
+<tr>
+<td>3</td>
+<td>sar -v</td>
+<td>进程、I节点、文件和锁表状态。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>sar -d</td>
+<td>硬盘使用报告。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>sar -r</td>
+<td>没有使用的内存页面和硬盘块</td>
+</tr>
+<tr>
+<td>6</td>
+<td>sar -g</td>
+<td>串口I/O的情况。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>sar -b</td>
+<td>缓冲区使用情况。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>sar -a</td>
+<td>文件读写情况。</td>
+</tr>
+<tr>
+<td>9</td>
+<td>sar -C</td>
+<td>系统调用情况。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>sar -R</td>
+<td>进程的活动情况</td>
+</tr>
+<tr>
+<td>11</td>
+<td>sar -y</td>
+<td>终端设备活动情况</td>
+</tr>
+<tr>
+<td>12</td>
+<td>sar -w</td>
+<td>系统交换活动</td>
+</tr>
+<tr>
+<td>13</td>
+<td>sar -n</td>
+<td>记录网络使用情况</td>
+</tr>
+</tbody>
+</table>
+<p>默认监控: sar 5 5     //  CPU和IOWAIT统计状态<br>(1) sar -b 5 5        // IO传送速率<br>(2) sar -B 5 5        // 页交换速率<br>(3) sar -c 5 5        // 进程创建的速率<br>(4) sar -d 5 5        // 块设备的活跃信息<br>(5) sar -n DEV 5 5    // 网路设备的状态信息<br>(6) sar -n SOCK 5 5   // SOCK的使用情况<br>(7) sar -n ALL 5 5    // 所有的网络状态信息<br>(8) sar -P ALL 5 5    // 每颗CPU的使用状态信息和IOWAIT统计状态<br>(9) sar -q 5 5        // 队列的长度（等待运行的进程数）和负载的状态<br>(10) sar -r 5 5       // 内存和swap空间使用情况<br>(11) sar -R 5 5       // 内存的统计信息（内存页的分配和释放、系统每秒作为BUFFER使用内存页、每秒被cache到的内存页）<br>(12) sar -u 5 5       // CPU的使用情况和IOWAIT信息（同默认监控）<br>(13) sar -v 5 5       // inode, file and other kernel tablesd的状态信息<br>(14) sar -w 5 5       // 每秒上下文交换的数目<br>(15) sar -W 5 5       // SWAP交换的统计信息(监控状态同iostat 的si so)<br>(16) sar -x 2906 5 5  // 显示指定进程(2906)的统计信息，信息包括：进程造成的错误、用户级和系统级用户CPU的占用情况、运行在哪颗CPU上<br>(17) sar -y 5 5       // TTY设备的活动状态<br>(18) 将输出到文件(-o)和读取记录信息(-f)<br>例1：oracle@oracle [/home/oracle] sar -u 1 0 -e 16:00:00 &gt;data.txt   //每隔1秒记录CPU的使用情况，直到15点，数据将保存到data.txt文件中。(-e 参数表示结束时间，注意时间格式：必须为hh:mm:ss格式)<br>Linux 2.6.18-194.el5 (oracle)   10/11/2011<br>02:20:28 PM       CPU     %user     %nice   %system   %iowait    %steal     %idle<br>02:20:29 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:30 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:31 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:32 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:33 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:34 PM       all      0.00      0.00      0.25      0.00      0.00     99.75<br>02:20:35 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:36 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>02:20:37 PM       all      0.25      0.00      0.00      0.00      0.00     99.75<br>02:20:38 PM       all      0.00      0.00      0.00      0.00      0.00    100.00<br>Average:          all      0.02      0.00      0.02      0.00      0.00     99.95<br>在不使用参数的情况下，系统默认打印CPU使用情况<br>%user：     CPU处在用户模式下的时间百分比。<br>%system：CPU处在系统模式下的时间百分比。<br>%iowait：   CPU等待输入输出完成时间的百分比。<br>%idle：       CPU空闲时间百分比。<br>在所有的显示中，我们应主要注意%iowait和%idle，%iowait的值过高，表示硬盘存在I/O瓶颈，%idle值高，表示CPU较空闲，如果%idle值高但系统响应慢时，有可能是CPU等待分配内存，此时应加大内存容量。%idle值如果持续低于10，那么系统的CPU处理能力相对较低，表明系统中最需要解决的资源是CPU。<br>在多CPU Linux系统中，sar命令也可以为每个CPU分解该信息，采用如下命令：sar -u -P ALL 5 5<br>oracle@oracle [/home/oracle] sar -u -P ALL 5 2<br>Linux 2.6.18-194.el5 (oracle)   10/11/2011<br>02:41:20 PM       CPU     %user     %nice   %system   %iowait    %steal     %idle<br>02:41:25 PM       all      0.00      0.00      0.10      0.00      0.00     99.90<br>02:41:25 PM         0      0.00      0.00      0.20      0.00      0.00     99.80<br>02:41:25 PM         1      0.00      0.00      0.00      0.00      0.00    100.00<br>02:41:25 PM         2      0.20      0.00      0.20      0.00      0.00     99.60<br>02:41:25 PM         3      0.00      0.00      0.00      0.00      0.00    100.00<br>02:41:25 PM       CPU     %user     %nice   %system   %iowait    %steal     %idle<br>02:41:30 PM       all      0.00      0.00      0.05      0.00      0.00     99.95<br>02:41:30 PM         0      0.00      0.00      0.00      0.00      0.00    100.00<br>02:41:30 PM         1      0.00      0.00      0.00      0.00      0.00    100.00<br>02:41:30 PM         2      0.00      0.00      0.00      0.00      0.00    100.00<br>02:41:30 PM         3      0.00      0.00      0.00      0.00      0.00    100.0</p>
+<p>例2： 使用命令 sar -v t n<br>oracle@oracle [/home/oracle] sar -v 30 5       //进程、I节点、文件和锁表状态<br>Linux 2.6.18-194.el5 (oracle)   10/11/2011<br>02:28:45 PM dentunusd   file-sz  inode-sz  super-sz %super-sz  dquot-sz %dquot-sz  rtsig-sz %rtsig-sz<br>02:29:15 PM      8675      9690      7119         0      0.00         0      0.00         0      0.00<br>02:29:45 PM      8676      9690      7119         0      0.00         0      0.00         0      0.00<br>02:30:15 PM      8677      9690      7119         0      0.00         0      0.00         0      0.00<br>02:30:45 PM      8684      9690      7126         0      0.00         0      0.00         0      0.00<br>02:31:15 PM      8685      9690      7126         0      0.00         0      0.00         0      0.00<br>Average:         8679      9690      7122         0      0.00         0      0.00         0      0.00<br>dentunusd:在缓冲目录条目中没有使用的条目数量.<br>file-nr:被系统使用的文件句柄数量.<br>inode-nr:使用的索引节点数量.<br>pty-nr:使用的pty数量.<br>例3： 使用命令 sar -d t n<br>oracle@oracle [/home/oracle] sar -d 30 2          //查看设备使用情况<br>Linux 2.6.18-194.el5 (oracle)   10/11/2011<br>02:30:33 PM       DEV       tps  rd_sec/s  wr_sec/s  avgrq-sz  avgqu-sz     await     svctm     %util<br>02:31:03 PM    dev8-0     47.95  12099.97     58.38    253.56      0.08      1.74      1.03      4.95<br>02:31:03 PM    dev8-1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:31:03 PM    dev8-2      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:31:03 PM    dev8-3     47.95  12099.97     58.38    253.56      0.08      1.74      1.03      4.95<br>02:31:03 PM       DEV       tps  rd_sec/s  wr_sec/s  avgrq-sz  avgqu-sz     await     svctm     %util<br>02:31:33 PM    dev8-0     38.67   9648.00     62.93    251.14      0.07      1.75      1.01      3.89<br>02:31:33 PM    dev8-1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:31:33 PM    dev8-2      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:31:33 PM    dev8-3     38.67   9648.00     62.93    251.14      0.07      1.75      1.01      3.89<br>DEV            磁盘设备<br>用参数-p可以打印出sda,hdc等磁盘设备名称,如果不用参数-p,设备节点则有可能是dev8-0,dev22-0<br>tps:每秒从物理磁盘I/O的次数.多个逻辑请求会被合并为一个I/O磁盘请求,一次传输的大小是不确定的.<br>rd_sec/s:每秒读扇区的次数.<br>wr_sec/s:每秒写扇区的次数.<br>avgrq-sz:平均每次设备I/O操作的数据大小(扇区).<br>avgqu-sz:磁盘请求队列的平均长度.<br>await:从请求磁盘操作到系统完成处理,每次请求的平均消耗时间,包括请求队列等待时间,单位是毫秒(1秒=1000毫秒).<br>svctm:系统处理每次请求的平均时间,不包括在请求队列中消耗的时间.<br>%util:I/O请求占CPU的百分比,比率越大,说明越饱</p>
+<p>例4： 使用命令 sar -n t n<br>oracle@oracle [/home/oracle] sar -n ALL 5 2<br>Linux 2.6.18-194.el5 (oracle)   10/11/2011<br>02:52:49 PM     IFACE   rxpck/s   txpck/s   rxbyt/s   txbyt/s   rxcmp/s   txcmp/ s  rxmcst/s<br>02:52:54 PM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM      eth0    127.15    112.57  38894.41  20819.16      0.00      0.00      0.00<br>02:52:54 PM      eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM      sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:49 PM     IFACE   rxerr/s   txerr/s    coll/s  rxdrop/s  txdrop/s  txcarr/s  rxfram/s  rxfifo/s  txfifo/s<br>02:52:54 PM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM      eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM      eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM      sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:49 PM    call/s retrans/s    read/s   write/s  access/s  getatt/s<br>02:52:54 PM      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:49 PM   scall/s badcall/s  packet/s     udp/s     tcp/s     hit/s    miss/s   sread/s  swrite/s saccess/s sgetatt/s<br>02:52:54 PM      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:49 PM    totsck    tcpsck    udpsck    rawsck   ip-frag<br>02:52:54 PM       274        99        41         0         0<br>02:52:54 PM     IFACE   rxpck/s   txpck/s   rxbyt/s   txbyt/s   rxcmp/s   txcmp/s  rxmcst/s<br>02:52:59 PM        lo      0.40      0.40     20.00     20.00      0.00      0.00      0.00<br>02:52:59 PM      eth0    139.00    120.60  47988.20  22587.00      0.00      0.00      0.00<br>02:52:59 PM      eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:59 PM      sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM     IFACE   rxerr/s   txerr/s    coll/s  rxdrop/s  txdrop/s  txcarr/ s  rxfram/s  rxfifo/s  txfifo/s<br>02:52:59 PM        lo      0.00      0.00      0.00      0.00      0.00      0.0 0      0.00      0.00      0.00<br>02:52:59 PM      eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:59 PM      eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:59 PM      sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM    call/s retrans/s    read/s   write/s  access/s  getatt/s<br>02:52:59 PM      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM   scall/s badcall/s  packet/s     udp/s     tcp/s     hit/s    miss/s   sread/s  swrite/s saccess/s sgetatt/s<br>02:52:59 PM      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>02:52:54 PM    totsck    tcpsck    udpsck    rawsck   ip-frag<br>02:52:59 PM       274        99        41         0         0<br>Average:        IFACE   rxpck/s   txpck/s   rxbyt/s   txbyt/s   rxcmp/s   txcmp/ s  rxmcst/s<br>Average:           lo      0.20      0.20      9.99      9.99      0.00      0.00      0.00<br>Average:         eth0    133.07    116.58  43436.76  21702.20      0.00      0.00      0.00<br>Average:         eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:         sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:        IFACE   rxerr/s   txerr/s    coll/s  rxdrop/s  txdrop/s  txcarr/s  rxfram/s  rxfifo/s  txfifo/s<br>Average:           lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:         eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:         eth1      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:         sit0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:       call/s retrans/s    read/s   write/s  access/s  getatt/s<br>Average:         0.00      0.00      0.00      0.00      0.00      0.00<br>Average:      scall/s badcall/s  packet/s     udp/s     tcp/s     hit/s    miss/s   sread/s  swrite/s saccess/s sgetatt/s<br>Average:         0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00<br>Average:       totsck    tcpsck    udpsck    rawsck   ip-frag<br>Average:          274        99        41         0         0<br>sar提供四种不同的语法选项来显示网络信息。-n选项使用四个不同的开关：DEV、EDEV、SOCK和FULL。DEV显示网络接口信 息，EDEV显示关于网络错误的统计数据，SOCK显示套接字信息，<br>FULL显示所有三个开关。它们可以单独或者一起使用。<br>字段          说明<br>IFACE        LAN接口<br>rxpck/s      每秒钟接收的数据包<br>txpck/s      每秒钟发送的数据包<br>rxbyt/s       每秒钟接收的字节数<br>txbyt/s       每秒钟发送的字节数<br>rxcmp/s    每秒钟接收的压缩数据包<br>txcmp/s    每秒钟发送的压缩数据包<br>rxmcst/s   每秒钟接收的多播数据包</p>
+<p>后面的只针对每一个命令做解释，不做测试<br>例5：   sar -r 5 5       // 内存和swap空间使用情况<br>kbmemfree:这个值和free命令中的free值基本一致,所以它不包括buffer和cache的空间.<br>kbmemused:这个值和free命令中的used值基本一致,所以它包括buffer和cache的空间.<br>%memused:这个值是kbmemused和内存总量(不包括swap)的一个百分比.<br>kbbuffers和kbcached:这两个值就是free命令中的buffer和cache.<br>kbcommit:保证当前系统所需要的内存,即为了确保不溢出而需要的内存(RAM+swap).<br>%commit:这个值是kbcommit与内存总量(包括swap)的一个百分比.</p>
+<p>例6：   sar -B 5 5        // 页交换速率<br>pgpgin/s:表示每秒从磁盘或SWAP置换到内存的字节数(KB)<br>pgpgout/s:表示每秒从内存置换到磁盘或SWAP的字节数(KB)<br>fault/s:每秒钟系统产生的缺页数,即主缺页与次缺页之和(major + minor)<br>majflt/s:每秒钟产生的主缺页数.<br>pgfree/s:每秒被放入空闲队列中的页个数<br>pgscank/s:每秒被kswapd扫描的页个数<br>pgscand/s:每秒直接被扫描的页个数<br>pgsteal/s:每秒钟从cache中被清除来满足内存需要的页个数<br>%vmeff:每秒清除的页(pgsteal)占总扫描页(pgscank+pgscand)的百分比</p>
+<p>例7： sar -q 5 5        // 队列的长度（等待运行的进程数）和负载的状态<br>runq-sz:处于运行或就绪的进程数量<br>plist-sz:现在进程的总数(包括线程).<br>ldavg-1:最近一分钟的负载.<br>ldavg-5:最近五分钟的负载.<br>ldavg-15:最近十分钟的负载.<br>平均负载和队列的数据来源于/proc/loadavg</p>
+<p>例8： sar -n NFS 5 5  //NFS客户端的监控<br>call/s:每秒成功的RPC调用都会使call/s的值增长,比如对NFS的一次读/写.<br>retrans/s:每秒重传的RPC次数,比如因为服务器的问题,产生timeout,这时客户端需要重新传输.<br>read/s:每秒从NFS服务端读取的次数.<br>write/s:每秒写入到NFS服务端的次数.<br>access/s:每秒访问NFS的次数,比如从NFS服务端COPY文件.<br>getatt/s:每秒获取NFS服务端文件属性的次数,比如ls -l /NFSSERVER/,如果NFSSERVER有300个文件,将产生300次这样的请求.</p>
+<p>例9： sar -b 5 5        // IO传送速率<br>tps:每秒从物理磁盘I/O的次数.多个逻辑请求会被合并为一个I/O磁盘请求,一次传输的大小是不确定的.<br>rtps:每秒的读请求数<br>wtps:每秒的写请求数<br>bread/s:每秒读磁盘的数据块数(in blocks  1 block = 512B, 2.4以后内核)<br>bwrtn/s:每秒写磁盘的数据块数(in blocks  1 block = 512B, 2.4以后内核)<br>一般情况下tps=(rtps+wtps)</p>
+<p>sar也可以监控非实时数据，通过cron周期的运行到指定目录下<br>例如:我们想查看本月27日,从0点到23点的内存资源.<br>sa27就是本月27日,指定具体的时间可以通过-s(start)和-e(end)来指定.<br>sar -f /var/log/sa/sa27 -s 00:00:00 -e 23:00:00 -r</p>
+<h3 id="tsar-命令"><a href="#tsar-命令" class="headerlink" title="tsar 命令"></a>tsar 命令</h3><p><a href="http://code.taobao.org/p/tsar/wiki/index/" target="_blank" rel="external">http://code.taobao.org/p/tsar/wiki/index/</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/05/04/Navicat/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Navicat For Mac OS 快捷键
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/05/01/流量控制和流量整形/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">流量控制和流量整形</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+  
+	   <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   欣赏此文？求鼓励，求支持！
+        </span>
+        <br>
+      </div>
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" alt="支付宝打赏">
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.png" alt="微信打赏">
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Sar命令" data-title="Sar命令" data-url="http://thinkhejie.github.io/2013/05/01/Sar命令/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 thinkhejie
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

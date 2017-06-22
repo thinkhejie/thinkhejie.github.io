@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2013/05/04/MAVEN命令总结/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="MAVEN命令总结">
-<meta property="og:updated_time" content="2016-06-10T21:07:46.000Z">
+<meta property="og:updated_time" content="2017-06-18T15:06:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MAVEN命令总结">
 <meta name="twitter:description" content="MAVEN命令总结">
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Cgroup/" style="font-size: 10px;">Cgroup</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Guava/" style="font-size: 10px;">Guava</a> <a href="/tags/Hbase/" style="font-size: 16px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/LXC/" style="font-size: 10px;">LXC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a> <a href="/tags/execption/" style="font-size: 10px;">execption</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 14px;">jvm</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/navicat/" style="font-size: 10px;">navicat</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/ulimit/" style="font-size: 10px;">ulimit</a> <a href="/tags/令牌桶/" style="font-size: 10px;">令牌桶</a>
+						<a href="/tags/Cgroup/" style="font-size: 10px;">Cgroup</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Guava/" style="font-size: 10px;">Guava</a> <a href="/tags/Hbase/" style="font-size: 16px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/LXC/" style="font-size: 10px;">LXC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/NIO/" style="font-size: 12px;">NIO</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/docker/" style="font-size: 12px;">docker</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a> <a href="/tags/execption/" style="font-size: 10px;">execption</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 14px;">jvm</a> <a href="/tags/kill/" style="font-size: 12px;">kill</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/navicat/" style="font-size: 10px;">navicat</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/sar/" style="font-size: 10px;">sar</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/ulimit/" style="font-size: 10px;">ulimit</a> <a href="/tags/zab/" style="font-size: 10px;">zab</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/令牌桶/" style="font-size: 10px;">令牌桶</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
 					</div>
 				</section>
 				
@@ -215,7 +215,7 @@
 <h3 id="用逗号分隔指定多个测试用例"><a href="#用逗号分隔指定多个测试用例" class="headerlink" title="用逗号分隔指定多个测试用例"></a>用逗号分隔指定多个测试用例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test -Dtest=ATest,BTest</span><br></pre></td></tr></table></figure>
 <h3 id="test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。"><a href="#test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。" class="headerlink" title="test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。"></a>test参数必须匹配至少一个测试类，否则会报错并导致构建失败。此时可使用以下配置来指定即使没有任何测试用例也不要报错。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test -Dtest -DfailIfNoTests = false</span><br></pre></td></tr></table></figure>
 <h3 id="Build-Lifecycle中介绍的命令"><a href="#Build-Lifecycle中介绍的命令" class="headerlink" title="Build Lifecycle中介绍的命令"></a>Build Lifecycle中介绍的命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mvn test-compile 编译测试代码</span><br><span class="line">mvn test 运行程序中的单元测试</span><br><span class="line">mvn compile 编译项目</span><br><span class="line">mvn package 打包，此时target目录下会出现maven-quickstart-1.0-SNAPSHOT.jar文件，即为打包后文件</span><br><span class="line">mvn install 打包并安装到本地仓库，此时本机仓库会新增maven-quickstart-1.0-SNAPSHOT.jar文件。</span><br><span class="line">每个phase都可以作为goal，也可以联合，如之前介绍的mvn clean install</span><br></pre></td></tr></table></figure>
-<h3 id="maven-日常使用命令"><a href="#maven-日常使用命令" class="headerlink" title="maven 日常使用命令"></a>maven 日常使用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mvn archetype:generate 创建maven项目</span><br><span class="line">$ mvn package 打包</span><br><span class="line">$ mvn package -Prelease打包，并生成部署用的包，比如deploy/*.tgz</span><br><span class="line">$ mvn install 打包并安装到本地库</span><br><span class="line">$ mvn eclipse:eclipse 生成eclipse项目文件</span><br><span class="line">$ mvn eclipse:clean 清除eclipse项目文件</span><br><span class="line">$ mvn site 生成项目相关信息的网站</span><br></pre></td></tr></table></figure>
+<h3 id="maven-日常使用命令"><a href="#maven-日常使用命令" class="headerlink" title="maven 日常使用命令"></a>maven 日常使用命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ mvn archetype:generate 创建maven项目</span><br><span class="line">$ mvn clean package 打包</span><br><span class="line">$ mvn package -Prelease打包，并生成部署用的包，比如deploy/*.tgz</span><br><span class="line">$ mvn install 打包并安装到本地库</span><br><span class="line">$ mvn clean source:jar install -Dmaven.test.skip=true</span><br><span class="line">$ mvn eclipse:clean eclipse:eclipse -DdownloadSources=true -Dwtpversion=2.0</span><br><span class="line">$ mvn eclipse:eclipse 生成eclipse项目文件</span><br><span class="line">$ mvn eclipse:clean 清除eclipse项目文件</span><br><span class="line">$ mvn site 生成项目相关信息的网站</span><br><span class="line">$ mvn clean source:jar install -Dmaven.test.skip=true</span><br><span class="line">$ mvn clean install -Dmaven.test.skip=true</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -225,11 +225,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2014/05/01/idea/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/05/01/docker/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Intellij IDEA 快捷键整理
+          docker(一)
         
       </div>
     </a>

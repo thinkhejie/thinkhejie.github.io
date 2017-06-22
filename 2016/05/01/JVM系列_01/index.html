@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="jvm 命令">
 <meta property="og:image" content="http://thinkhejie.github.io/img/20160504110524.png">
-<meta property="og:updated_time" content="2016-05-14T06:49:26.000Z">
+<meta property="og:updated_time" content="2017-06-08T10:03:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列一(JVM命令解析)">
 <meta name="twitter:description" content="jvm 命令">
@@ -107,7 +107,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Cgroup/" style="font-size: 10px;">Cgroup</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Guava/" style="font-size: 10px;">Guava</a> <a href="/tags/Hbase/" style="font-size: 16px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/LXC/" style="font-size: 10px;">LXC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a> <a href="/tags/execption/" style="font-size: 10px;">execption</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 14px;">jvm</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/navicat/" style="font-size: 10px;">navicat</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/ulimit/" style="font-size: 10px;">ulimit</a> <a href="/tags/令牌桶/" style="font-size: 10px;">令牌桶</a>
+						<a href="/tags/Cgroup/" style="font-size: 10px;">Cgroup</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Guava/" style="font-size: 10px;">Guava</a> <a href="/tags/Hbase/" style="font-size: 16px;">Hbase</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 18px;">Java</a> <a href="/tags/LXC/" style="font-size: 10px;">LXC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/NIO/" style="font-size: 12px;">NIO</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/docker/" style="font-size: 12px;">docker</a> <a href="/tags/dubbo/" style="font-size: 20px;">dubbo</a> <a href="/tags/execption/" style="font-size: 10px;">execption</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 14px;">jvm</a> <a href="/tags/kill/" style="font-size: 12px;">kill</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mmap/" style="font-size: 10px;">mmap</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/navicat/" style="font-size: 10px;">navicat</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/sar/" style="font-size: 10px;">sar</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/ulimit/" style="font-size: 10px;">ulimit</a> <a href="/tags/zab/" style="font-size: 10px;">zab</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/令牌桶/" style="font-size: 10px;">令牌桶</a> <a href="/tags/分布式/" style="font-size: 10px;">分布式</a>
 					</div>
 				</section>
 				
@@ -212,7 +212,7 @@
 <p>jps 查到pid后</p>
 <p>jmap -heap pid 可以获取当前内存的使用状态和最大限制信息</p>
 <p>jmap -dump:live,format=b,file=filename.bin 2219</p>
-<p>jstat -gccapacity  2219</p>
+<p>jstat -gccapacity 2219</p>
 <p><img src="/img/20160504110524.png" alt="jstat gcutil"></p>
 <p>S0  — Heap上的 Survivor space 0 区已使用空间的百分比<br>S1  — Heap上的 Survivor space 1 区已使用空间的百分比<br>E   — Heap上的 Eden space 区已使用空间的百分比<br>O   — Heap上的 Old space 区已使用空间的百分比<br>P   — Perm space 区已使用空间的百分比<br>YGC — 从应用程序启动到采样时发生 Young GC 的次数<br>YGCT– 从应用程序启动到采样时 Young GC 所用的时间(单位秒)<br>FGC — 从应用程序启动到采样时发生 Full GC 的次数<br>FGCT– 从应用程序启动到采样时 Full GC 所用的时间(单位秒)<br>GCT — 从应用程序启动到采样时用于垃圾回收的总时间(单位秒)</p>
 <p>CMS，全称Concurrent Low Pause Collector，是jdk1.4后期版本开始引入的新gc算法，在jdk5和jdk6中得到了进一步改进，它的主要适合场景是对响应时间的重要性需求大于对吞吐量的要求，能够承受垃圾回收线程和应用线程共享处理器资源，并且应用中存在比较多的长生命周期的对象的应用。CMS是用于对tenured generation的回收，也就是年老代的回收，目标是尽量减少应用的暂停时间，减少full gc发生的几率，利用和应用程序线程并发的垃圾回收线程来标记清除年老代。在我们的应用中，因为有缓存的存在，并且对于响应时间也有比较高的要求，因此希望能尝试使用CMS来替代默认的server型JVM使用的并行收集器，以便获得更短的垃圾回收的暂停时间，提高程序的响应性。</p>
@@ -221,6 +221,9 @@
 <p>弱依赖“并发请求数阀值”这个值设置多少合适？<br>    “并发请求数阀值”在大部分情况下可以理解为同时工作的线程数阀值，这个值不是越大越好，也不是越小越好，而是在最高QPS输出的情况下这个值越小越好。这个也是系统性能优化的一个方向，高QPS，少线程。<br>    线程它是驱动业务逻辑执行的载体，在执行逻辑的生命周期中，它会申请各种各样的资源，会占有CPU，会申请内存对象并持有，会申请锁并持有，会申请IO资源并持有，然后再完成一些工作之后，在恰当的时间释放这些资源。如果这个生命周期越长，那么直接导致这些资源被持有的时间越长。导致资源的竞争更加厉害。在java应用中，一个明显的场景就是由于内存申请之后长时间不能释放，导致FULLgC非常频繁。<br>    另一个角度，因为响应时间变长之后，会直接导致需要更多的线程数来满足不变的QPS，由于线程越多，导致对资源的持有和竞争更加激烈，表现CPU占用很高，Load很高，这是一个恶性循环，需要打破这个环。<br>    以cache访问为例<br>    假设客户端app（相对cache而言）本身的输入QPS为200（平均每秒有100个用户请求到此系统），每次业务请求会调用2次Cache，相当于对cache请求的QPS是200*2=400，也就是说如果要满足客户端app 200的qps，那么需要客户端app对Cache有400qps的访问能力，假设客户端app访问cache的平均响应时间为1ms。</p>
 <pre><code>用户–1次请求–&gt;[APP]–2次请求–&gt;[Cache]
 </code></pre><p>根据公式：QPS=1000ms/RT(平均响应时间) <em> threadNum(并行线程数)<br>threadNum=QPS/1000 </em> RT = 400/1000 <em> 1<br>                    = 1<br>Cache响应时间为1ms，那么只需要一个线程就足以提供每秒400次的请求服务，其实理论上1个线程可以提供1000的qps，当然前提条件是cacheServer有非常高的吞吐容量<br>        我们模拟一下故障<br>        此时CacheServer发生了故障，对CacheServer的调用全部超时，响应时间变成了3000ms<br>根据公式计算：threadNum=QPS/1000 </em> RT = 400/1000 * 3000 =1200<br>此时需要1200个线程才能满足400QPS的流量 ，换而言之就是客户端会有1200个线程堵塞在CacheServer的访问请求上。这个线程数量早就超过了客户端配置的线程数量，app系统表现为hung住，几乎不能处理任何用户的请求，如果客户端配置的线程数是200，那么根据之前对detail，hesper等java应用系统的压测，200个app线程，会导致系统频繁的发生FullGC(原因是线程数量多，每个线程执行的时间长)，此时app的实际QPS反而会比系统极限QPS低很多。<br>对于APP来说，此时应该是减少对cache的访问量，让少量的线程去试探是否恢复，而不是所有线程都堵塞在这里，原则上来说不管对什么资源的访问，都不能出现大量线程堵塞的情况。<br>最佳的做法是，限制对cache访问请求的线程数量。比如限制为10: 此时我们再来看一下上面的故障</p>
+<p>jvisualvm</p>
+<p>jmc</p>
+<p>jdb</p>
 
       
     </div>
