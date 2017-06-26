@@ -15,8 +15,15 @@
 <meta property="og:site_name" content="异志说">
 <meta property="og:description">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/030055532945996.png">
+<meta property="og:image" content="http://thinkhejie.github.io/030055100139484.png">
+<meta property="og:image" content="http://thinkhejie.github.io/3b5a590f5e8d40bbb2.jpeg">
+<meta property="og:image" content="http://thinkhejie.github.io/5ed2b62c0b48083b.png">
+<meta property="og:image" content="http://thinkhejie.github.io/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/278.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
-<meta property="og:updated_time" content="2017-06-26T04:01:09.000Z">
+<meta property="og:updated_time" content="2017-06-26T04:11:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -238,7 +245,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
+<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/zookeeper-1-638.jpg" alt="zookeeper"><br><img src="030055532945996.png" alt="zookeeper"><br><img src="030055100139484.png" alt="zookeeper"><br><img src="3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="278.jpg" alt="zookeeper"></p>
+<h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
 <table>
 <thead>
 <tr>
@@ -272,7 +280,7 @@
 <h2 id="zookeeper-文件与快照"><a href="#zookeeper-文件与快照" class="headerlink" title="zookeeper 文件与快照"></a>zookeeper 文件与快照</h2><p>日志路径:/datalog/version-2<br>快照路径:/data/version-2</p>
 <p>1、当开始第一次运行的时候，首先会产生一个snapshot，这个时候是没有log的。当第一次有操作的时候开始log文件产生的时候，这时候不会产生snapshot。<br>当第一个log文件体积达到预设值时候，这时候系统需要snapshot，然后创建新的日志文件，以此不断交替。<br>2、生成snapshot触发条件: logcount &gt; (snapcount/2 + randroll)  randroll是随机数范围在[1, snapcount/2]</p>
 <h2 id="zookeeper网络相关"><a href="#zookeeper网络相关" class="headerlink" title="zookeeper网络相关"></a>zookeeper网络相关</h2><p>1、zookeeper的网络请求与连接实现方式有两种，一种是通过netty实现，另外一种是通过Java原生NIO实现。</p>
-<h2 id="zookeeper会话管理管理"><a href="#zookeeper会话管理管理" class="headerlink" title="zookeeper会话管理管理"></a>zookeeper会话管理管理</h2><h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令。通过所说的四字命令，指的是服务端的命令。</p>
+<h2 id="zookeeper会话管理"><a href="#zookeeper会话管理" class="headerlink" title="zookeeper会话管理"></a>zookeeper会话管理</h2><h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令。通过所说的四字命令，指的是服务端的命令。</p>
 <p>2、客户端命令</p>
 <table>
 <thead>
@@ -517,35 +525,36 @@
 </table>
 <p>按照ZooKeeperServer的文档中所示，事务处理的大体流程链应该为<br>PrepRequestProcessor -&gt; SyncRequestProcessor -&gt; FinalRequestProcessor</p>
 <h2 id="zookeeper-相关问题"><a href="#zookeeper-相关问题" class="headerlink" title="zookeeper 相关问题"></a>zookeeper 相关问题</h2><p>1.zookeeper数据同步原理</p>
-<p>读取的时候不需要数据同步，写操作时，follower的FollowerRequestProcessor会将该操作作为LEADER.REQEST发给leader。leader发起投票，由followers进行投票，leader对投票结果进行计算决定是否通过该决议，如果通过执行该决议（事务），否则什么也不做。</p>
-<p>在Docker环境下，通常虚机会比较多，我们发现ZooKeeper不能承受太多节点。我们的游戏平台是一个多租户场景，需要频繁进行创建及删除，在这种情况下如果超过3000虚拟机，ZooKeeper就不行了。<br>当ZooKeeper挂了后，meta数据也会跟着丢了。Meta数据和和监控功能在ZooKeeper当初设计时并没有考虑的问题，因此后来我们打算自己造轮子，将这个需求实现。<br>我也并非说ZooKeeper一无是处，ZooKeeper有它适合使用的场景，比如Hadoop那种场景ZooKeeper就可以工作得很好，但并不是所有场景都适用。Tim说过一句经典的话，Redis是把好锤子，但不能把所有存储的问题都当做钉子。ZooKeeper也是一样，不是所有的配置的问题都适合拿它来解决。<br>其他一些网友的看法。<br>Z: 同意ZooKeeper是有很多运维的问题，一个解决方法是自己实现一个single node all in memory的lock service，然后运行在多个机器上，用ZooKeeper当作一个distributed lock来选一个master，这样ZooKeeper上的压力就小多了，而且不会随着集群大小增加而增加。<br>Y: Kafka里使用ZooKeeper的方式有好几个地方可以借鉴。除了上面说的选一个master处理的方式外，为了避免订阅大量节点，也可以单设置一个变更节点，然后只订阅这个变更节点。<br>G: Kafka集群依赖于ZooKeeper，但ZooKeeper也是Kafka的瓶颈。</p>
-<p>某知名大型互联网公司的架构师也基本认可上述观点，其新开发的服务框架中不再采用ZooKeeper作为注册中心，主要说明如下<br>1.随着部署规模增大，客户端增多，ZooKeeper服务器中节点数量大增，核心ZooKeeper集群5台，每台服务器15000左右的长链接，近43万个节点，平均30余万watch。每个上线日，ZooKeeper服务器的流量都能上200mb/s，通过mntr的观察zk_outstanding_requests经常达到300M以上;</p>
-<p>2.有业务方报告，应用启动后连上ZooKeeper但一直读失败(读数据返回为null)，也就是取服务列表失败，一段时间如半小时后自动恢复，查看zk server端日志，只看到一堆session过期的警告，没有其他异常;</p>
-<p>3.由于历史原因，ZooKeeper服务器与其他应用共用，40万+节点中60%是我们的，其他应用也是重度依赖zookeeper，互相之间有影响;</p>
-<p>4.ZooKeeper推送的频率、内容，我们自己不能控制，比如一个600 provider，12000 consumer的服务，如果新增一个provider，其实并不是每个consumer都需要通知的，但目前的机制下consumer监听一个目录，每个consumer都会得到一次provider列表推送;还有我们想在推送前根据一定的规则对provider列表做动态过滤排序，这个需求在zookeeper服务端也没法实现。</p>
-<p>5.ZooKeeper客户端使用的是 172.17.xx.yy,172.17.xx.yz:2181 这样的ip串方式连接，后期想添加服务器分散主集群读写压力，也不好实现，因为需要更改地址串，需要update配置的客户端太多了;</p>
-<p>6.跨机房容灾方面，一旦出现机房间通信问题，另一个机房的部署的Observer节点，就不可读写了;</p>
-<p>7.provider约6万实例，consumer22万实例;<br>基于以上的原因，新的方案实现也很简单，自己实现了一个服务用来做注册中心的，实现的是服务注册/订阅方面的功能。它负责接收长链接并推送，数据存储在MySQL。</p>
-<p>Q：使用ZooKeeper主要是它实现了强一致性，你这个注册中心是单点的吧?master election用ZooKeeper?注册中心会成为新的瓶颈和故障点?<br>A：性能方面完全够用，因为这个服务也是集群部署的，客户端首先访问一个http接口拿到所有服务器的地址，并优先访问本机房的注册中心。注册中心基本读多写少，内存里面也缓存provider列表，不会有太大压力到MySQL;存储上通过MySQL实现一致性保证。</p>
-<p>Q：跨机房容灾方面有什么优化吗?如果网络没有足够的redundency，一旦出现network partiton，那么有一个机房就没办法到quorum了?<br>A：通过多机房部署，每个机房保证至少2个节点，本机房挂了还可以访问其它机房，并且在客户端本地还有缓存文件。</p>
-<p>Q：当配置变化，client以http轮询方式去感知吗?<br>A：Session过期那个，开始我们设的是很短，后来发现不对，网络一闪断，大量掉节点。现在我们自己实现的服务，半分钟一心跳，几个心跳没收到我才认为下线了。如果provider列表发生变化，我这边服务端会主动推送的，因为用的是TCP长连接。</p>
-<p>Q: Client有没有主动发现本地cache与服务端数据不一致的机制?例如当provider列表发生变化且服务端通过TCP长连给client推送失败的场景。<br>A：有，我们心跳带本地版本号的，如果与服务端不一致的话，会触发服务端再次推送;</p>
-<p>而另外一知名大公司架构师认为如果consumer数量没有那么多，用ZooKeeper也能较好满足要求。其业务场景的ZooKeepr使用及运行情况如下。<br>线上的单个ZooKeeper节点平均连接数是6K，watcher是30万，netIO不高，ZooKeeper的机器配置比较差，用的是4G 4CPU 的虚拟机，5个节点，最多的consumer不超过200，平均consumer数量就5，6个左右。<br>目前线上provider数3万左右实例数，consumer数10万左右，目前运行的没什么问题。3万个，如果每个服务10个实例，也就3,000个服务，全公司的，也没多少。看起来是多了点。 跟公司发展历史及使用场景关系很大。<br>之前关于ZooKeeper踩坑最多的是在客户端上，最开始用的是netflix的curator(后来贡献给apache，但是我们用的是老的，没升级)，遇到网络闪断重连不上，然后死循环一样，升级到apache curator就好了。<br>后来遇到一个问题是，如果注册watcher太多，发生重连的时候，zk client会自动注册之前的所有watcher，这样会导致一个包的大小超过1M，然后也就重连不上又不断地重连，后来hack了zk client解决了这个问题，这个bug到目前为止zk官方仍然没有修复。<br>不过这些坑基本上遇到一个可以解决一个，但是目前有一个问题目前也没找到好的解决方案，那就是业务方系统load变高，或者发生长时间gc，导致zk重连甚至session过期。<br>另外关于zk连接，我们在最底下做了连接共享，因为好多服务都依赖zk，这个也降低了不少连接数。</p>
-<p>1.客户端对ServerList的轮询机制是什么<br> 随机，客户端在初始化( new ZooKeeper(String connectString, int sessionTimeout, Watcher watcher) )的过程中，将所有Server保存在一个List中，然后随机打散，形成一个环。之后从0号位开始一个一个使用。<br>两个注意点：1. Server地址能够重复配置，这样能够弥补客户端无法设置Server权重的缺陷，但是也会加大风险。（比如: 192.168.1.1:2181,192.168.1.1:2181,192.168.1.2:2181). 2. 如果客户端在进行Server切换过程中耗时过长，那么将会收到SESSION_EXPIRED. 这也是上面第1点中的加大风险之处。</p>
-<p>2.客户端如何正确处理CONNECTIONLOSS(连接断开) 和 SESSIONEXPIRED(Session 过期)两类连接异常<br>在ZooKeeper中，服务器和客户端之间维持的是一个长连接，在 SESSION_TIMEOUT 时间内，服务器会确定客户端是否正常连接(客户端会定时向服务器发送heart_beat),服务器重置下次SESSION_TIMEOUT时间。因此，在正常情况下，Session一直有效，并且zk集群所有机器上都保存这个Session信息。在出现问题情况下，客户端与服务器之间连接断了（客户端所连接的那台zk机器挂了，或是其它原因的网络闪断），这个时候客户端会主动在地址列表（初始化的时候传入构造方法的那个参数connectString）中选择新的地址进行连接。<br>好了，上面基本就是服务器与客户端之间维持长连接的过程了。在这个过程中，用户可能会看到两类客异常CONNECTIONLOSS(连接断开) 和SESSIONEXPIRED(Session 过期)。<br>CONNECTIONLOSS发生在上面红色文字部分，应用在进行操作A时，发生了CONNECTIONLOSS，此时用户不需要关心我的会话是否可用，应用所要做的就是等待客户端帮我们自动连接上新的zk机器，一旦成功连接上新的zk机器后，确认刚刚的操作A是否执行成功了。<br>SESSIONEXPIRED发生在上面蓝色文字部分，这个通常是zk客户端与服务器的连接断了，试图连接上新的zk机器，这个过程如果耗时过长，超过 SESSION_TIMEOUT 后还没有成功连接上服务器，那么服务器认为这个session已经结束了（服务器无法确认是因为其它异常原因还是客户端主动结束会话），开始清除和这个会话有关的信息，包括这个会话创建的临时节点和注册的Watcher。在这之后，客户端重新连接上了服务器在，但是很不幸，服务器会告诉客户端SESSIONEXPIRED。此时客户端要做的事情就看应用的复杂情况了，总之，要重新实例zookeeper对象，重新操作所有临时数据（包括临时节点和注册Watcher）。</p>
-<p>3.不同的客户端对同一个节点是否能获取相同的数据</p>
-<p>4.一个客户端修改了某个节点的数据，其它客户端能够马上获取到这个最新数据吗<br>ZooKeeper不能确保任何客户端能够获取（即Read Request）到一样的数据，除非客户端自己要求：方法是客户端在获取数据之前调用org.apache.zookeeper.AsyncCallback.VoidCallback, java.lang.Object) sync.<br>通常情况下（这里所说的通常情况满足：1. 对获取的数据是否是最新版本不敏感，2. 一个客户端修改了数据，其它客户端需要不需要立即能够获取最新），可以不关心这点。<br>在其它情况下，最清晰的场景是这样：ZK客户端A对 /my_test 的内容从 v1-&gt;v2, 但是ZK客户端B对 /my_test 的内容获取，依然得到的是 v1. 请注意，这个是实际存在的现象，当然延时很短。解决的方法是客户端B先调用 sync(), 再调用 getData().</p>
-<p>5.ZK为什么不提供一个永久性的Watcher注册机制<br>不支持用持久Watcher的原因很简单，ZK无法保证性能。</p>
-<p>6.使用watch需要注意的几点<br>   a. Watches通知是一次性的，必须重复注册.<br>   b. 发生CONNECTIONLOSS之后，只要在session_timeout之内再次连接上（即不发生SESSIONEXPIRED），那么这个连接注册的watches依然在。<br>   c. 节点数据的版本变化会触发NodeDataChanged，注意，这里特意说明了是版本变化。存在这样的情况，只要成功执行了setData()方法，无论内容是否和之前一致，都会触发NodeDataChanged。<br>   d. 对某个节点注册了watch，但是节点被删除了，那么注册在这个节点上的watches都会被移除。<br>   e. 同一个zk客户端对某一个节点注册相同的watch，只会收到一次通知。即</p>
+<p>读取的时候不需要数据同步，写操作时follower的FollowerRequestProcessor会将该操作作为LEADER.REQEST发给leader。leader发起投票，由followers进行投票，leader对投票结果进行计算决定是否通过该决议，如果通过执行该决议（事务），否则什么也不做。</p>
+<p>2.在Docker环境下，通常虚机会比较多，我们发现ZooKeeper不能承受太多节点。我们的游戏平台是一个多租户场景，需要频繁进行创建及删除，在这种情况下如果超过3000虚拟机，ZooKeeper就不行了。<br>当ZooKeeper挂了后，meta数据也会跟着丢了。Meta数据和和监控功能在ZooKeeper当初设计时并没有考虑的问题，因此后来我们打算自己造轮子，将这个需求实现。我也并非说ZooKeeper一无是处，ZooKeeper有它适合使用的场景，比如Hadoop那种场景ZooKeeper就可以工作得很好，但并不是所有场景都适用。Tim说过一句经典的话，Redis是把好锤子，但不能把所有存储的问题都当做钉子。ZooKeeper也是一样，不是所有的配置的问题都适合拿它来解决。</p>
+<p>3.同意ZooKeeper是有很多运维的问题，一个解决方法是自己实现一个single node all in memory的lock service，然后运行在多个机器上，用ZooKeeper当作一个distributed lock来选一个master，这样ZooKeeper上的压力就小多了，而且不会随着集群大小增加而增加。</p>
+<p>4.Kafka里使用ZooKeeper的方式有好几个地方可以借鉴。除了上面说的选一个master处理的方式外，为了避免订阅大量节点，也可以单设置一个变更节点，然后只订阅这个变更节点。<br>Kafka集群依赖于ZooKeeper，但ZooKeeper也是Kafka的瓶颈。</p>
+<p>5.随着部署规模增大，客户端增多，ZooKeeper服务器中节点数量大增，核心ZooKeeper集群5台，每台服务器15000左右的长链接，近43万个节点，平均30余万watch。每个上线日，ZooKeeper服务器的流量都能上200mb/s，通过mntr的观察zk_outstanding_requests经常达到300M以上;</p>
+<p>6.有业务方报告，应用启动后连上ZooKeeper但一直读失败(读数据返回为null)，也就是取服务列表失败，一段时间如半小时后自动恢复，查看zk server端日志，只看到一堆session过期的警告，没有其他异常;</p>
+<p>7.由于历史原因，ZooKeeper服务器与其他应用共用，40万+节点中60%是我们的，其他应用也是重度依赖zookeeper，互相之间有影响;</p>
+<p>8.ZooKeeper推送的频率、内容，我们自己不能控制，比如一个600 provider，12000 consumer的服务，如果新增一个provider，其实并不是每个consumer都需要通知的，但目前的机制下consumer监听一个目录，每个consumer都会得到一次provider列表推送;还有我们想在推送前根据一定的规则对provider列表做动态过滤排序，这个需求在zookeeper服务端也没法实现。</p>
+<p>9.ZooKeeper客户端使用的是 172.17.xx.yy,172.17.xx.yz:2181 这样的ip串方式连接，后期想添加服务器分散主集群读写压力，也不好实现，因为需要更改地址串，需要update配置的客户端太多了;</p>
+<p>10.跨机房容灾方面，一旦出现机房间通信问题，另一个机房的部署的Observer节点，就不可读写了;</p>
+<p>11.provider约6万实例，consumer22万实例;<br>基于以上的原因，新的方案实现也很简单，自己实现了一个服务用来做注册中心的，实现的是服务注册/订阅方面的功能。它负责接收长链接并推送，数据存储在MySQL。</p>
+<p>12.使用ZooKeeper主要是它实现了强一致性，你这个注册中心是单点的吧?master election用ZooKeeper?注册中心会成为新的瓶颈和故障点?<br>性能方面完全够用，因为这个服务也是集群部署的，客户端首先访问一个http接口拿到所有服务器的地址，并优先访问本机房的注册中心。注册中心基本读多写少，内存里面也缓存provider列表，不会有太大压力到MySQL;存储上通过MySQL实现一致性保证。</p>
+<p>13.跨机房容灾方面有什么优化吗?如果网络没有足够的redundency，一旦出现network partiton，那么有一个机房就没办法到quorum了?<br>通过多机房部署，每个机房保证至少2个节点，本机房挂了还可以访问其它机房，并且在客户端本地还有缓存文件。</p>
+<p>14.当配置变化，client以http轮询方式去感知吗?<br>A：Session过期那个，开始我们设的是很短，后来发现不对，网络一闪断，大量掉节点。现在我们自己实现的服务，半分钟一心跳，几个心跳没收到我才认为下线了。如果provider列表发生变化，我这边服务端会主动推送的，因为用的是TCP长连接。</p>
+<p>15.Client有没有主动发现本地cache与服务端数据不一致的机制?例如当provider列表发生变化且服务端通过TCP长连给client推送失败的场景。<br>有，我们心跳带本地版本号的，如果与服务端不一致的话，会触发服务端再次推送;</p>
+<p>16.而另外一知名大公司架构师认为如果consumer数量没有那么多，用ZooKeeper也能较好满足要求。其业务场景的ZooKeepr使用及运行情况如下。<br>线上的单个ZooKeeper节点平均连接数是6K，watcher是30万，netIO不高，ZooKeeper的机器配置比较差，用的是4G 4CPU 的虚拟机，5个节点，最多的consumer不超过200，平均consumer数量就5，6个左右。<br>目前线上provider数3万左右实例数，consumer数10万左右，目前运行的没什么问题。3万个，如果每个服务10个实例，也就3,000个服务，全公司的，也没多少。看起来是多了点。 跟公司发展历史及使用场景关系很大。<br>之前关于ZooKeeper踩坑最多的是在客户端上，最开始用的是netflix的curator(后来贡献给apache，但是我们用的是老的，没升级)，遇到网络闪断重连不上，然后死循环一样，升级到apache curator就好了。<br>后来遇到一个问题是，如果注册watcher太多，发生重连的时候，zk client会自动注册之前的所有watcher，这样会导致一个包的大小超过1M，然后也就重连不上又不断地重连，后来hack了zk client解决了这个问题，这个bug到目前为止zk官方仍然没有修复。<br>不过这些坑基本上遇到一个可以解决一个，但是目前有一个问题目前也没找到好的解决方案，那就是业务方系统load变高，或者发生长时间gc，导致zk重连甚至session过期。<br>另外关于zk连接，我们在最底下做了连接共享，因为好多服务都依赖zk，这个也降低了不少连接数。</p>
+<p>17.客户端对ServerList的轮询机制是什么<br> 随机，客户端在初始化( new ZooKeeper(String connectString, int sessionTimeout, Watcher watcher) )的过程中，将所有Server保存在一个List中，然后随机打散，形成一个环。之后从0号位开始一个一个使用。<br>两个注意点：1. Server地址能够重复配置，这样能够弥补客户端无法设置Server权重的缺陷，但是也会加大风险。（比如: 192.168.1.1:2181,192.168.1.1:2181,192.168.1.2:2181). 2. 如果客户端在进行Server切换过程中耗时过长，那么将会收到SESSION_EXPIRED. 这也是上面第1点中的加大风险之处。</p>
+<p>18.客户端如何正确处理CONNECTIONLOSS(连接断开) 和 SESSIONEXPIRED(Session 过期)两类连接异常<br>在ZooKeeper中，服务器和客户端之间维持的是一个长连接，在 SESSION_TIMEOUT 时间内，服务器会确定客户端是否正常连接(客户端会定时向服务器发送heart_beat),服务器重置下次SESSION_TIMEOUT时间。因此，在正常情况下，Session一直有效，并且zk集群所有机器上都保存这个Session信息。在出现问题情况下，客户端与服务器之间连接断了（客户端所连接的那台zk机器挂了，或是其它原因的网络闪断），这个时候客户端会主动在地址列表（初始化的时候传入构造方法的那个参数connectString）中选择新的地址进行连接。<br>好了，上面基本就是服务器与客户端之间维持长连接的过程了。在这个过程中，用户可能会看到两类客异常CONNECTIONLOSS(连接断开) 和SESSIONEXPIRED(Session 过期)。<br>CONNECTIONLOSS发生在上面红色文字部分，应用在进行操作A时，发生了CONNECTIONLOSS，此时用户不需要关心我的会话是否可用，应用所要做的就是等待客户端帮我们自动连接上新的zk机器，一旦成功连接上新的zk机器后，确认刚刚的操作A是否执行成功了。<br>SESSIONEXPIRED发生在上面蓝色文字部分，这个通常是zk客户端与服务器的连接断了，试图连接上新的zk机器，这个过程如果耗时过长，超过 SESSION_TIMEOUT 后还没有成功连接上服务器，那么服务器认为这个session已经结束了（服务器无法确认是因为其它异常原因还是客户端主动结束会话），开始清除和这个会话有关的信息，包括这个会话创建的临时节点和注册的Watcher。在这之后，客户端重新连接上了服务器在，但是很不幸，服务器会告诉客户端SESSIONEXPIRED。此时客户端要做的事情就看应用的复杂情况了，总之，要重新实例zookeeper对象，重新操作所有临时数据（包括临时节点和注册Watcher）。</p>
+<p>19.不同的客户端对同一个节点是否能获取相同的数据,一个客户端修改了某个节点的数据，其它客户端能够马上获取到这个最新数据吗?<br>ZooKeeper不能确保任何客户端能够获取（即Read Request）到一样的数据，除非客户端自己要求：方法是客户端在获取数据之前调用org.apache.zookeeper.AsyncCallback.VoidCallback, java.lang.Object) sync.<br>通常情况下（这里所说的通常情况满足：1. 对获取的数据是否是最新版本不敏感，2. 一个客户端修改了数据，其它客户端需要不需要立即能够获取最新），可以不关心这点。<br>在其它情况下，最清晰的场景是这样：ZK客户端A对 /my_test 的内容从 v1-&gt;v2, 但是ZK客户端B对 /my_test 的内容获取，依然得到的是 v1. 请注意，这个是实际存在的现象，当然延时很短。解决的方法是客户端B先调用 sync(), 再调用 getData().</p>
+<p>20.ZK为什么不提供一个永久性的Watcher注册机制<br>不支持用持久Watcher的原因很简单，ZK无法保证性能。</p>
+<p>21.使用watch需要注意的几点<br>   a. Watches通知是一次性的，必须重复注册.<br>   b. 发生CONNECTIONLOSS之后，只要在session_timeout之内再次连接上（即不发生SESSIONEXPIRED），那么这个连接注册的watches依然在。<br>   c. 节点数据的版本变化会触发NodeDataChanged，注意，这里特意说明了是版本变化。存在这样的情况，只要成功执行了setData()方法，无论内容是否和之前一致，都会触发NodeDataChanged。<br>   d. 对某个节点注册了watch，但是节点被删除了，那么注册在这个节点上的watches都会被移除。<br>   e. 同一个zk客户端对某一个节点注册相同的watch，只会收到一次通知。即</p>
 <p>for( int i = 0; i &lt; 3; i++ ){<br>    zk.getData( path, true, null );<br>    zk.getChildren( path, true );<br>}</p>
-<p>7.我能否收到每次节点变化的通知？<br>如果节点数据的更新频率很高的话，不能。原因在于：当一次数据修改，通知客户端，客户端再次注册watch，在这个过程中，可能数据已经发生了许多次数据修改，因此，千万不要做这样的测试：”数据被修改了n次，一定会收到n次通知”来测试server是否正常工作。（我曾经就做过这样的傻事，发现Server一直工作不正常？其实不是）。即使你使用了GitHub上这个客户端也一样。</p>
-<p>8.能为临时节点创建子节点吗?<br>不能。</p>
-<p>9.是否可以拒绝单个IP对ZK的访问,操作<br>ZK本身不提供这样的功能，它仅仅提供了对单个IP的连接数的限制。你可以通过修改iptables来实现对单个ip的限制，当然，你也可以通过这样的方式来解决。<a href="https://issues.apache.org/jira/browse/ZOOKEEPER-1320" target="_blank" rel="external">https://issues.apache.org/jira/browse/ZOOKEEPER-1320</a></p>
-<p>10.在getChildren(String path, boolean watch)这个API中，是注册了对节点子节点的变化，那么子节点的子节点变化能通知吗<br>不能</p>
-<p>11.创建的临时节点什么时候会被删除，是连接一断就删除吗？延时是多少？<br>连接断了之后，ZK不会马上移除临时数据，只有当SESSIONEXPIRED之后，才会把这个会话建立的临时数据移除。因此，用户需要谨慎设置Session_TimeOut</p>
-<p>12.zookeeper是否支持动态进行机器扩容？如果目前不支持，那么要如何扩容呢？<br>截止2012-03-15，3.4.3版本的zookeeper，还不支持这个功能，在3.5.0版本开始，支持动态加机器了，期待下吧: <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-107" target="_blank" rel="external">https://issues.apache.org/jira/browse/ZOOKEEPER-107</a><br>目前只能通过修改zoo.cfg配置文件，然后逐台重启机器来实现扩容</p>
-<p>13.echo stat | nc localhost $port<br>This ZooKeeper instance is not currently serving requests<br>这是最常见的问题了，一般可能有以下原因。<br>1、数据正在同步，需要等几分钟再试<br>2、可用节点数少于(n/2 + 1)，剩余的节点也无法服务（比如三个节点的zk集群，剩下一个节点，就无法服务了）<br>3、myid的数据错误了，需要zoo.cfg中的server.1(server.2,server.3)保持一致<br>4、java的通信端口不对，检查下zoo.cfg中serverlist中的端口是否每个机器一致，单机多部署时，查看是否和其他集群冲突</p>
-<p>14.启动失败，进程退出<br>1、配置的log目录不存在，或者权限不够</p>
+<p>22.我能否收到每次节点变化的通知？<br>如果节点数据的更新频率很高的话，不能。原因在于：当一次数据修改，通知客户端，客户端再次注册watch，在这个过程中，可能数据已经发生了许多次数据修改，因此，千万不要做这样的测试：”数据被修改了n次，一定会收到n次通知”来测试server是否正常工作。（我曾经就做过这样的傻事，发现Server一直工作不正常？其实不是）。即使你使用了GitHub上这个客户端也一样。</p>
+<p>23.能为临时节点创建子节点吗?<br>不能。</p>
+<p>24.是否可以拒绝单个IP对ZK的访问,操作<br>ZK本身不提供这样的功能，它仅仅提供了对单个IP的连接数的限制。你可以通过修改iptables来实现对单个ip的限制，当然，你也可以通过这样的方式来解决。<a href="https://issues.apache.org/jira/browse/ZOOKEEPER-1320" target="_blank" rel="external">https://issues.apache.org/jira/browse/ZOOKEEPER-1320</a></p>
+<p>25.在getChildren(String path, boolean watch)这个API中，是注册了对节点子节点的变化，那么子节点的子节点变化能通知吗<br>不能</p>
+<p>26.创建的临时节点什么时候会被删除，是连接一断就删除吗？延时是多少？<br>连接断了之后，ZK不会马上移除临时数据，只有当SESSIONEXPIRED之后，才会把这个会话建立的临时数据移除。因此，用户需要谨慎设置Session_TimeOut</p>
+<p>27.zookeeper是否支持动态进行机器扩容？如果目前不支持，那么要如何扩容呢？<br>截止2012-03-15，3.4.3版本的zookeeper，还不支持这个功能，在3.5.0版本开始，支持动态加机器了，期待下吧: <a href="https://issues.apache.org/jira/browse/ZOOKEEPER-107" target="_blank" rel="external">https://issues.apache.org/jira/browse/ZOOKEEPER-107</a><br>目前只能通过修改zoo.cfg配置文件，然后逐台重启机器来实现扩容</p>
+<p>28.echo stat | nc localhost $port<br>This ZooKeeper instance is not currently serving requests<br>这是最常见的问题了，一般可能有以下原因。<br>1、数据正在同步，需要等几分钟再试<br>2、可用节点数少于(n/2 + 1)，剩余的节点也无法服务（比如三个节点的zk集群，剩下一个节点，就无法服务了）<br>3、myid的数据错误了，需要zoo.cfg中的server.1(server.2,server.3)保持一致<br>4、java的通信端口不对，检查下zoo.cfg中serverlist中的端口是否每个机器一致，单机多部署时，查看是否和其他集群冲突</p>
+<p>29.启动失败，进程退出<br>1、配置的log目录不存在，或者权限不够</p>
 <h3 id="zookeeper动态更换机器-更换zk节点"><a href="#zookeeper动态更换机器-更换zk节点" class="headerlink" title="zookeeper动态更换机器 更换zk节点"></a>zookeeper动态更换机器 更换zk节点</h3><p>假设：目前有ip1，ip2，ip3机器，ip3坏掉了，需要更换为ip4<br>1、在ip4安装zk，同时配置文件和ip1完全一致（如果你拷贝的ip1的整个目录，记得清理数据目录）<br>2、修改ip4上myid文件，id号和坏掉的机器一致<br>3、修改ip4上zoo.cfg文件，把server.3修改为ip4<br>4、启动ip4的zk服务，这个时候ip4上不会同步任何数据<br>5、修改ip1的zoo.cfg文件，把server.3修改为ip4，重启。重启后，你仍然看不到ip4上有任何数据同步过来。<br>6、修改ip2的zoo.cfg文件，把server.3修改为ip4，重启。重启后，你现在可以看到data目录和log都有数据同步过来，一般同步几分钟就完成了，使用echo stat | nc localhost $port可以检查下。</p>
 <h3 id="其它资料"><a href="#其它资料" class="headerlink" title="其它资料"></a>其它资料</h3><p><a href="https://my.oschina.net/pingpangkuangmo/blog/799041" target="_blank" rel="external">zk资料1</a></p>
 <p><a href="https://my.oschina.net/pingpangkuangmo/blog/799041" target="_blank" rel="external">zk资料2</a></p>
@@ -860,15 +869,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cgroup</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -888,6 +897,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -896,15 +909,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -912,15 +917,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">navicat</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -936,15 +933,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">navicat</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -957,6 +962,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
               </li>
              
               <li class="article-tag-list-item">
