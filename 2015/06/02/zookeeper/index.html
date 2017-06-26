@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/278.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
-<meta property="og:updated_time" content="2017-06-26T04:40:47.000Z">
+<meta property="og:updated_time" content="2017-06-26T07:37:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -251,7 +251,10 @@
 </tr>
 </tbody>
 </table>
-<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/030055532945996.png" alt="zookeeper"><br><img src="/img/030055100139484.png" alt="zookeeper"><br><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
+<p>阶段(选举 –&gt; 恢复 –&gt; 广播)</p>
+<p>ZAB协议定义了选举（election）、发现（discovery）、同步（sync）、广播(Broadcast) 四个阶段；ZAB选举（election）时当Follower存在ZXID（事务ID）时判断所有Follower节点的事务日志，只有lastZXID的节点才有资格成为Leader，这种情况下选举出来的Leader总有最新的事务日志，基于这个原因所以ZooKeeper实现的时候把 发现（discovery）与同步（sync）合并为恢复（recovery） 阶段；</p>
+<p>1.Election：在Looking状态中选举出Leader节点，Leader的lastZXID总是最新的;<br>2.Discovery：Follower节点向准Leader推送FOllOWERINFO，该信息中包含了上一周期的epoch，接受准Leader的NEWLEADER指令，检查newEpoch有效性，准Leader要确保Follower的epoch与ZXID小于或等于自身的;<br>3.sync：将Follower与Leader的数据进行同步，由Leader发起同步指令，最总保持集群数据的一致性;<br>5.Recovery：在Election阶段选举出Leader后本阶段主要工作就是进行数据的同步，使Leader具有highestZXID，集群保持数据的一致性;<br>4.Broadcast：Leader广播Proposal与Commit，Follower接受Proposal与Commit;</p>
+<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/030055532945996.png" alt="写数据"><br><img src="/img/030055100139484.png" alt="读数据"><br><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
 <h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
 <table>
 <thead>
@@ -286,7 +289,7 @@
 <h2 id="zookeeper-文件与快照"><a href="#zookeeper-文件与快照" class="headerlink" title="zookeeper 文件与快照"></a>zookeeper 文件与快照</h2><p>日志路径:/datalog/version-2<br>快照路径:/data/version-2</p>
 <p>1、当开始第一次运行的时候，首先会产生一个snapshot，这个时候是没有log的。当第一次有操作的时候开始log文件产生的时候，这时候不会产生snapshot。<br>当第一个log文件体积达到预设值时候，这时候系统需要snapshot，然后创建新的日志文件，以此不断交替。<br>2、生成snapshot触发条件: logcount &gt; (snapcount/2 + randroll)  randroll是随机数范围在[1, snapcount/2]</p>
 <h2 id="zookeeper网络相关"><a href="#zookeeper网络相关" class="headerlink" title="zookeeper网络相关"></a>zookeeper网络相关</h2><p>1、zookeeper的网络请求与连接实现方式有两种，一种是通过netty实现，另外一种是通过Java原生NIO实现。</p>
-<h2 id="zookeeper会话管理"><a href="#zookeeper会话管理" class="headerlink" title="zookeeper会话管理"></a>zookeeper会话管理</h2><h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令。通过所说的四字命令，指的是服务端的命令。</p>
+<h2 id="zookeeper会话管理"><a href="#zookeeper会话管理" class="headerlink" title="zookeeper会话管理"></a>zookeeper会话管理</h2><h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令,即四字命令，指的是服务端的命令。</p>
 <p>2、客户端命令</p>
 <table>
 <thead>
@@ -701,18 +704,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/06/02/z/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/02/14/LXC命令列表/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          架构
+          LXC命令列表
         
       </div>
     </a>
   
   
-    <a href="/2015/06/01/ulimit命令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ulimit命令</div>
+    <a href="/2015/06/02/z/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">架构</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -896,11 +899,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NIO</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -909,10 +916,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">execption</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -936,6 +939,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
@@ -944,7 +951,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -952,7 +959,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
+                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -969,10 +976,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
               </li>
              
               <li class="article-tag-list-item">
