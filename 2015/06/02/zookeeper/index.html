@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
-<meta property="og:updated_time" content="2017-06-26T08:12:14.000Z">
+<meta property="og:updated_time" content="2017-06-26T08:20:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -529,9 +529,12 @@
 <h3 id="客户端部分"><a href="#客户端部分" class="headerlink" title="客户端部分"></a>客户端部分</h3><p><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="客户端"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">WatchManager</span><br><span class="line">ClientCnxn</span><br><span class="line">ClientCnxnSocket</span><br><span class="line">ClientCnxnSocketNetty/ClientCnxnSocketNIO</span><br><span class="line">StaticHostProvider</span><br></pre></td></tr></table></figure>
 <p>Zookeeper考虑到第一次连接的时候，使用 StaticHostProvider#resolveAndShuffle方法进行一次 shuffle，避免第一台节点处于热点状态；而 Zookeeper的 Session连接断开之后，会使用 StaticHostProvider#next方法，从第一个连接地址开始逐个尝试；另外，在集群扩容/缩容的时候，使用 StaticHostProvider#updateServerList方法，更新服务器列表，并计算集群扩容的概率，对连接做重新分配，使得集群的负载更加均衡</p>
-<h3 id="服务端部分"><a href="#服务端部分" class="headerlink" title="服务端部分"></a>服务端部分</h3><p><img src="/img/030055532945996.png" alt="写数据"></p>
+<h3 id="服务端部分"><a href="#服务端部分" class="headerlink" title="服务端部分"></a>服务端部分</h3><h4 id="写数据写数据流程"><a href="#写数据写数据流程" class="headerlink" title="写数据写数据流程"></a>写数据写数据流程</h4><p><img src="/img/030055532945996.png" alt="写数据"></p>
+<h4 id="关键类"><a href="#关键类" class="headerlink" title="关键类"></a>关键类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NIOServerCnxn/NettyServerCnxn</span><br><span class="line">FollowerRequestProcessor | ObserverRequestProcessor</span><br><span class="line">PrepRequestProcessor</span><br><span class="line">SyncRequestProcessor</span><br><span class="line">FinalRequestProcessor</span><br></pre></td></tr></table></figure>
+<h4 id="Leader处理写请求"><a href="#Leader处理写请求" class="headerlink" title="Leader处理写请求"></a>Leader处理写请求</h4><p>按照ZooKeeperServer的文档中所示，事务处理的大体流程链应该为<br>PrepRequestProcessor -&gt; SyncRequestProcessor -&gt; FinalRequestProcessor</p>
+<h4 id="Follower、Observer处理写请求"><a href="#Follower、Observer处理写请求" class="headerlink" title="Follower、Observer处理写请求"></a>Follower、Observer处理写请求</h4><p>为了事务的一致性，所有 Follower、Observer接收到的事务请求，都会通过 Learner#request方法，将请求发送给Leader节点来处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// org.apache.zookeeper.server.quorum.FollowerRequestProcessor | ObserverRequestProcessor</span></span><br><span class="line"><span class="keyword">switch</span> (request.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> OpCode.sync:</span><br><span class="line">        zks.pendingSyncs.add(request);</span><br><span class="line">        zks.getFollower().request(request);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OpCode.create:</span><br><span class="line">    <span class="keyword">case</span> OpCode.create2:</span><br><span class="line">    <span class="keyword">case</span> OpCode.createTTL:</span><br><span class="line">    <span class="keyword">case</span> OpCode.createContainer:</span><br><span class="line">    <span class="keyword">case</span> OpCode.delete:</span><br><span class="line">    <span class="keyword">case</span> OpCode.deleteContainer:</span><br><span class="line">    <span class="keyword">case</span> OpCode.setData:</span><br><span class="line">    <span class="keyword">case</span> OpCode.reconfig:</span><br><span class="line">    <span class="keyword">case</span> OpCode.setACL:</span><br><span class="line">    <span class="keyword">case</span> OpCode.multi:</span><br><span class="line">    <span class="keyword">case</span> OpCode.check:</span><br><span class="line">        zks.getFollower().request(request);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OpCode.createSession:</span><br><span class="line">    <span class="keyword">case</span> OpCode.closeSession:</span><br><span class="line">        <span class="comment">// Don't forward local sessions to the leader.</span></span><br><span class="line">        <span class="keyword">if</span> (!request.isLocalSession()) &#123;</span><br><span class="line">            zks.getFollower().request(request);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="/img/030055100139484.png" alt="读数据"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NIOServerCnxn/NettyServerCnxn</span><br></pre></td></tr></table></figure>
 <h3 id="存储部分"><a href="#存储部分" class="headerlink" title="存储部分"></a>存储部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZKDatabase</span><br></pre></td></tr></table></figure>
 <h3 id="监控部分"><a href="#监控部分" class="headerlink" title="监控部分"></a>监控部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OSMXBean</span><br></pre></td></tr></table></figure>
 <h3 id="选举部分"><a href="#选举部分" class="headerlink" title="选举部分"></a>选举部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QuorumPeer</span><br><span class="line">FastLeaderElection</span><br></pre></td></tr></table></figure>
@@ -563,7 +566,6 @@
 </tr>
 </tbody>
 </table>
-<p>按照ZooKeeperServer的文档中所示，事务处理的大体流程链应该为<br>PrepRequestProcessor -&gt; SyncRequestProcessor -&gt; FinalRequestProcessor</p>
 <h2 id="zookeeper-相关问题"><a href="#zookeeper-相关问题" class="headerlink" title="zookeeper 相关问题"></a>zookeeper 相关问题</h2><p>1.zookeeper数据同步原理</p>
 <p>读取的时候不需要数据同步，写操作时follower的FollowerRequestProcessor会将该操作作为LEADER.REQEST发给leader。leader发起投票，由followers进行投票，leader对投票结果进行计算决定是否通过该决议，如果通过执行该决议（事务），否则什么也不做。</p>
 <p>2.在Docker环境下，通常虚机会比较多，我们发现ZooKeeper不能承受太多节点。我们的游戏平台是一个多租户场景，需要频繁进行创建及删除，在这种情况下如果超过3000虚拟机，ZooKeeper就不行了。<br>当ZooKeeper挂了后，meta数据也会跟着丢了。Meta数据和和监控功能在ZooKeeper当初设计时并没有考虑的问题，因此后来我们打算自己造轮子，将这个需求实现。我也并非说ZooKeeper一无是处，ZooKeeper有它适合使用的场景，比如Hadoop那种场景ZooKeeper就可以工作得很好，但并不是所有场景都适用。Tim说过一句经典的话，Redis是把好锤子，但不能把所有存储的问题都当做钉子。ZooKeeper也是一样，不是所有的配置的问题都适合拿它来解决。</p>
@@ -921,10 +923,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -933,11 +931,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NIO</a>
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NIO</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -949,15 +947,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -973,7 +979,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -985,35 +995,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1026,6 +1008,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
               </li>
             
             <div class="clearfix"></div>
