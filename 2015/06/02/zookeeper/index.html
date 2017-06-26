@@ -15,14 +15,16 @@
 <meta property="og:site_name" content="异志说">
 <meta property="og:description">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper/ZBnIfaV.pngweb.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/3b5a590f5e8d40bbb2.jpeg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/5ed2b62c0b48083b.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/278.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper/ZBnIfaV.pngweb.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
-<meta property="og:updated_time" content="2017-06-26T04:13:50.000Z">
+<meta property="og:updated_time" content="2017-06-26T04:28:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -217,34 +219,40 @@
 <p>Leader通过一个简化版的二段提交模式向其他Follower发送请求，但与二段提交有两个明显的不同之处：<br>• 因为只有一个Leader，Leader提交到Follower的请求一定会被接受（没有其他Leader干扰）<br>• 不需要所有的Follower都响应成功，只要一个多数派即可<br>通俗地说，如果有2f+1个节点，允许f个节点失败。因为任何两个多数派必有一个交集，当Leader切换时，通过这些交集节点可以获得当前系统的最新状态。如果没有一个多数派存在（存活节点数小于f+1）则，算法过程结束。但有一个特例：<br>如果有A、B、C三个节点，A是Leader，如果B Crash，则A、C能正常工作，因为A是Leader，A、C还构成多数派；如果A Crash则无法继续工作，因为Leader选举的多数派无法构成。</p>
 <p>2.Leader Election<br>Leader选举主要是依赖Paxos算法，Leader选举遇到的最大问题是，”新老交互“的问题，新Leader是否要继续老Leader的状态。这里要按老Leader Crash的时机点分几种情况：<br>1.老Leader在COMMIT前Crash（已经提交到本地）<br>2.老Leader在COMMIT后Crash，但有部分Follower接收到了Commit请求<br>第一种情况，这些数据只有老Leader自己知道，当老Leader重启后，需要与新Leader同步并把这些数据从本地删除，以维持状态一致。<br>第二种情况，新Leader应该能通过一个多数派获得老Leader提交的最新数据，老Leader重启后，可能还会认为自己是Leader，可能会继续发送未完成的请求，从而因为两个Leader同时存在导致算法过程失败，解决办法是把Leader信息加入每条消息的id中，Zookeeper中称为zxid，zxid为一64位数字，高32位为leader信息又称为epoch，每次leader转换时递增；低32位为消息编号，Leader转换时应该从0重新开始编号。通过zxid，Follower能很容易发现请求是否来自老Leader，从而拒绝老Leader的请求。<br>因为在老Leader中存在着数据删除（情况1），因此Zookeeper的数据存储要支持补偿操作，这也就需要像数据库一样记录log。</p>
 <p>3.Zab与Paxos<br>Zab的作者认为Zab与paxos并不相同，Zab就是Paxos的一种简化形式，Paxos保证不了全序顺序。<br>这里首要一点是Paxos的一致性不能达到ZooKeeper的要求。举个例子：假设一开始Paxos系统中的leader是P1，他发起了两个事务<t1, v1="">（表示序号为t1的事务要写的值是v1）和<t2, v2="">，过程中挂了。新来个leader是P2，他发起了事务<t1, v1'="">。而后又来个新leader是P3，他汇总了一下，得出最终的执行序列<t1, v1'="">和<t2, v2="">，即P2的t1在前，P1的t2在后。<br>分析为什么不满足ZooKeeper需求：<br>ZooKeeper是一个树形结构，很多操作都要先检查才能确定能不能执行，比如P1的事务t1可能是创建节点“/a”，t2可能是创建节点“/a/aa”，只有先创建了父节点“/a”，才能创建子节点“/a/aa”。而P2所发起的事务t1可能变成了创建“/b”。这样P3汇总后的序列是先创建“/b”再创建“/a/aa”，由于“/a”还没建，创建“a/aa”就搞不定了。<br>解决方案：<br>为了保证这一点，ZAB要保证同一个leader的发起的事务要按顺序被apply，同时还要保证只有先前的leader的所有事务都被apply之后，新选的leader才能在发起事务。</t2,></t1,></t1,></t2,></t1,></p>
-<p>ZAB的核心思想：形象的说就是保证任意时刻只有一个节点是leader，所有更新事务由leader发起去更新所有复本（称为follower），更新时用的就是两阶段提交协议，只要多数节点prepare成功，就通知他们commit。各follower要按当初leader让他们prepare的顺序来apply事务。因为ZAB处理的事务永远不会回滚，ZAB的2PC做了点优化，多个事务只要通知zxid最大的那个commit，之前的各follower会统统commit。<br>这里有几个关键点：<br>1、leader所follower之间通过心跳来检测异常；<br>2、检测到异常之后的节点若试图成为新的leader，首先要获得大多数节点的支持，然后从状态最新的节点同步事务，完成后才可正式成为leader发起事务；<br>3、区分新老leader的关键是一个会一直增长的epoch；</p>
-<h2 id="zookeeper-选举流程"><a href="#zookeeper-选举流程" class="headerlink" title="zookeeper 选举流程"></a>zookeeper 选举流程</h2><table>
+<p>ZAB的核心思想：形象的说就是保证任意时刻只有一个节点是leader，所有更新事务由leader发起去更新所有复本（称为follower），更新时用的就是两阶段提交协议，只要多数节点prepare成功，就通知他们commit。各follower要按当初leader让他们prepare的顺序来apply事务。因为ZAB处理的事务永远不会回滚，ZAB的2PC做了点优化，多个事务只要通知zxid最大的那个commit，之前的各follower会统统commit。<br>这里有几个关键点：<br>1、leader和follower之间通过心跳来检测异常<br>2、检测到异常之后的节点若试图成为新的leader，首先要获得大多数节点的支持，然后从状态最新的节点同步事务，完成后才可正式成为leader发起事务<br>3、区分新老leader的关键是一个会一直增长的epoch</p>
+<h2 id="zookeeper-选举流程"><a href="#zookeeper-选举流程" class="headerlink" title="zookeeper 选举流程"></a>zookeeper 选举流程</h2><p><img src="/img/zookeeper/ZBnIfaV.pngweb.png" alt="选举流程图"></p>
+<table>
 <thead>
 <tr>
+<th>角色</th>
 <th>角色</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Leader(领导者)</td>
-<td>为客户端提供读和写的服务，负责投票的发起和决议，更新系统状态。</td>
+<td>Leader</td>
+<td>领导者</td>
+<td>为客户端提供读和写的服务，负责投票的发起和决议，更新系统状态</td>
 </tr>
 <tr>
-<td>Follower（跟随者）</td>
-<td>为客户端提供读服务，如果是写服务则转发给Leader。在选举过程中参与投票。</td>
+<td>Follower</td>
+<td>跟随者</td>
+<td>提供读服务，如果是写服务则转发给Leader。在选举过程中参与投票</td>
 </tr>
 <tr>
-<td>Observe（观察者）</td>
-<td>为客户端提供读服务器，如果是写服务则转发给Leader。不参与选举过程中的投票，也不参与“过半写成功”策略。在不影响写性能的情况下提升集群的读性能。</td>
+<td>Observe</td>
+<td>观察者</td>
+<td>提供读服务器，如果是写服务则转发给Leader。不参与选举过程中的投票，也不参与“过半写成功”策略。在不影响写性能的情况下提升集群的读性能</td>
 </tr>
 <tr>
-<td>client（客户端）</td>
-<td>连接zookeeper服务器的使用着，请求的发起者。独立于zookeeper服务器集群之外的角色。</td>
+<td>client</td>
+<td>客户端</td>
+<td>连接zookeeper服务器的使用着，请求的发起者。独立于zookeeper服务器集群之外的角色</td>
 </tr>
 </tbody>
 </table>
-<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/030055532945996.png" alt="zookeeper"><br><img src="/img/030055100139484.png" alt="zookeeper"><br><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
+<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/030055532945996.png" alt="zookeeper"><br><img src="/img/030055100139484.png" alt="zookeeper"><br><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"><br><img src="/img/zookeeper/ZBnIfaV.pngweb.png" alt="zookeeper"></p>
 <h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
 <table>
 <thead>
@@ -896,19 +904,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">execption</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -932,7 +940,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -940,7 +948,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
