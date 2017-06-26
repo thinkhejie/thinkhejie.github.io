@@ -16,14 +16,14 @@
 <meta property="og:description">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper/ZBnIfaV.pngweb.png">
-<meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
-<meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/3b5a590f5e8d40bbb2.jpeg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/5ed2b62c0b48083b.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/278.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
-<meta property="og:updated_time" content="2017-06-26T07:37:07.000Z">
+<meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
+<meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
+<meta property="og:updated_time" content="2017-06-26T07:38:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -254,7 +254,7 @@
 <p>阶段(选举 –&gt; 恢复 –&gt; 广播)</p>
 <p>ZAB协议定义了选举（election）、发现（discovery）、同步（sync）、广播(Broadcast) 四个阶段；ZAB选举（election）时当Follower存在ZXID（事务ID）时判断所有Follower节点的事务日志，只有lastZXID的节点才有资格成为Leader，这种情况下选举出来的Leader总有最新的事务日志，基于这个原因所以ZooKeeper实现的时候把 发现（discovery）与同步（sync）合并为恢复（recovery） 阶段；</p>
 <p>1.Election：在Looking状态中选举出Leader节点，Leader的lastZXID总是最新的;<br>2.Discovery：Follower节点向准Leader推送FOllOWERINFO，该信息中包含了上一周期的epoch，接受准Leader的NEWLEADER指令，检查newEpoch有效性，准Leader要确保Follower的epoch与ZXID小于或等于自身的;<br>3.sync：将Follower与Leader的数据进行同步，由Leader发起同步指令，最总保持集群数据的一致性;<br>5.Recovery：在Election阶段选举出Leader后本阶段主要工作就是进行数据的同步，使Leader具有highestZXID，集群保持数据的一致性;<br>4.Broadcast：Leader广播Proposal与Commit，Follower接受Proposal与Commit;</p>
-<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/030055532945996.png" alt="写数据"><br><img src="/img/030055100139484.png" alt="读数据"><br><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
+<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
 <h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
 <table>
 <thead>
@@ -498,7 +498,9 @@
 <h2 id="zookeeper源码解析"><a href="#zookeeper源码解析" class="headerlink" title="zookeeper源码解析"></a>zookeeper源码解析</h2><p><img src="/img/zookeeper.jpg" alt="zookeeper架构图"></p>
 <h3 id="客户端部分"><a href="#客户端部分" class="headerlink" title="客户端部分"></a>客户端部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">WatchManager</span><br><span class="line">ClientCnxn</span><br><span class="line">ClientCnxnSocket</span><br><span class="line">ClientCnxnSocketNetty/ClientCnxnSocketNIO</span><br><span class="line">StaticHostProvider</span><br></pre></td></tr></table></figure>
 <p>Zookeeper考虑到第一次连接的时候，使用 StaticHostProvider#resolveAndShuffle方法进行一次 shuffle，避免第一台节点处于热点状态；而 Zookeeper的 Session连接断开之后，会使用 StaticHostProvider#next方法，从第一个连接地址开始逐个尝试；另外，在集群扩容/缩容的时候，使用 StaticHostProvider#updateServerList方法，更新服务器列表，并计算集群扩容的概率，对连接做重新分配，使得集群的负载更加均衡</p>
-<h3 id="服务端部分"><a href="#服务端部分" class="headerlink" title="服务端部分"></a>服务端部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NIOServerCnxn/NettyServerCnxn</span><br></pre></td></tr></table></figure>
+<h3 id="服务端部分"><a href="#服务端部分" class="headerlink" title="服务端部分"></a>服务端部分</h3><p><img src="/img/030055532945996.png" alt="写数据"></p>
+<p><img src="/img/030055100139484.png" alt="读数据"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NIOServerCnxn/NettyServerCnxn</span><br></pre></td></tr></table></figure>
 <h3 id="存储部分"><a href="#存储部分" class="headerlink" title="存储部分"></a>存储部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZKDatabase</span><br></pre></td></tr></table></figure>
 <h3 id="监控部分"><a href="#监控部分" class="headerlink" title="监控部分"></a>监控部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OSMXBean</span><br></pre></td></tr></table></figure>
 <h3 id="选举部分"><a href="#选举部分" class="headerlink" title="选举部分"></a>选举部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QuorumPeer</span><br><span class="line">FastLeaderElection</span><br></pre></td></tr></table></figure>
@@ -899,15 +901,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NIO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -916,6 +910,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">execption</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -939,10 +941,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
@@ -951,11 +949,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -964,6 +966,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">csa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">架构</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -976,14 +986,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">csa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">架构</a>
               </li>
              
               <li class="article-tag-list-item">
