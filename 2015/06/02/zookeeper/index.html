@@ -19,11 +19,12 @@
 <meta property="og:image" content="http://thinkhejie.github.io/img/3b5a590f5e8d40bbb2.jpeg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/5ed2b62c0b48083b.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/278.jpg">
+<meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper/302149592314604.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
-<meta property="og:updated_time" content="2017-06-26T07:39:26.000Z">
+<meta property="og:updated_time" content="2017-06-26T07:52:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -254,8 +255,31 @@
 <p>阶段(选举 –&gt; 恢复 –&gt; 广播)</p>
 <p>ZAB协议定义了选举（election）、发现（discovery）、同步（sync）、广播(Broadcast) 四个阶段；ZAB选举（election）时当Follower存在ZXID（事务ID）时判断所有Follower节点的事务日志，只有lastZXID的节点才有资格成为Leader，这种情况下选举出来的Leader总有最新的事务日志，基于这个原因所以ZooKeeper实现的时候把 发现（discovery）与同步（sync）合并为恢复（recovery） 阶段；</p>
 <p>1.Election：在Looking状态中选举出Leader节点，Leader的lastZXID总是最新的;<br>2.Discovery：Follower节点向准Leader推送FOllOWERINFO，该信息中包含了上一周期的epoch，接受准Leader的NEWLEADER指令，检查newEpoch有效性，准Leader要确保Follower的epoch与ZXID小于或等于自身的;<br>3.sync：将Follower与Leader的数据进行同步，由Leader发起同步指令，最总保持集群数据的一致性;<br>5.Recovery：在Election阶段选举出Leader后本阶段主要工作就是进行数据的同步，使Leader具有highestZXID，集群保持数据的一致性;<br>4.Broadcast：Leader广播Proposal与Commit，Follower接受Proposal与Commit;</p>
-<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"></p>
-<p><img src="/img/278.jpg" alt="zookeeper"></p>
+<h2 id="zookeeper-ACL"><a href="#zookeeper-ACL" class="headerlink" title="zookeeper ACL"></a>zookeeper ACL</h2><p>一个ZooKeeper 的节点存储两部分内容：数据和状态，状态中包含ACL 信息。创建一个znode 会产生一个ACL 列表，列表中每个ACL 包括：</p>
+<p>① 权限perms</p>
+<p>② 验证模式scheme</p>
+<p>③ 具体内容expression：Ids</p>
+<p>例如，当scheme=”digest” 时， Ids 为用户名密码， 即”root ：J0sTy9BCUKubtK1y8pkbL7qoxSw”。ZooKeeper 提供了如下几种验证模式：</p>
+<p>① Digest： Client 端由用户名和密码验证，譬如user:pwd</p>
+<p>② Host： Client 端由主机名验证，譬如localhost</p>
+<p>③ Ip：Client 端由IP 地址验证，譬如172.2.0.0/24</p>
+<p>④ World ：固定用户为anyone，为所有Client 端开放权限</p>
+<p>当会话建立的时候，客户端将会进行自我验证。</p>
+<p>权限许可集合如下：</p>
+<p>① Create 允许对子节点Create 操作</p>
+<p>② Read 允许对本节点GetChildren 和GetData 操作</p>
+<p>③ Write 允许对本节点SetData 操作</p>
+<p>④ Delete 允许对子节点Delete 操作</p>
+<p>⑤ Admin 允许对本节点setAcl 操作</p>
+<p>另外，ZooKeeper Java API支持三种标准的用户权限，它们分别为：</p>
+<p>① ZOO_PEN_ACL_UNSAFE：对于所有的ACL来说都是完全开放的，任何应用程序可以在节点上执行任何操作，比如创建、列出并删除子节点。<br>② ZOO_READ_ACL_UNSAFE：对于任意的应用程序来说，仅仅具有读权限。<br>③ ZOO_CREATOR_ALL_ACL：授予节点创建者所有权限。需要注意的是，设置此权限之前，创建者必须已经通了服务器的认证。</p>
+<p>Znode ACL 权限用一个int 型数字perms 表示，perms 的5 个二进制位分别表示setacl、delete、create、write、read。比如adcwr=0x1f，—-r=0x1，a-c-r=0x15。</p>
+<p>注意的是，exists操作和getAcl操作并不受ACL许可控制，因此任何客户端可以查询节点的状态和节点的ACL。</p>
+<h3 id="ACL代码示例"><a href="#ACL代码示例" class="headerlink" title="ACL代码示例"></a>ACL代码示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.Zookeeper.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.Zookeeper.server.auth.DigestAuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.apache.Zookeeper.data.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewDigest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//new一个acl</span></span><br><span class="line">        List&lt;ACL&gt; acls = <span class="keyword">new</span> ArrayList&lt;ACL&gt;();</span><br><span class="line">　　　　　<span class="comment">//添加第一个id，采用用户名密码形式</span></span><br><span class="line">        Id id1 = <span class="keyword">new</span> Id(<span class="string">"digest"</span>,DigestAuthenticationProvider.generateDigest(<span class="string">"admin:admin"</span>));</span><br><span class="line">        ACL acl1 = <span class="keyword">new</span> ACL(ZooDefs.Perms.ALL, id1);</span><br><span class="line">        acls.add(acl1);</span><br><span class="line">　　　　 <span class="comment">//添加第二个id，所有用户可读权限</span></span><br><span class="line">        Id id2 = <span class="keyword">new</span> Id(<span class="string">"world"</span>, <span class="string">"anyone"</span>);</span><br><span class="line">        ACL acl2 = <span class="keyword">new</span> ACL(ZooDefs.Perms.READ, id2);</span><br><span class="line">        acls.add(acl2);</span><br><span class="line">        <span class="comment">// Zk用admin认证，创建/test ZNode。</span></span><br><span class="line">　　　　　ZooKeeper Zk = <span class="keyword">new</span> ZooKeeper(<span class="string">"host1:2181,host2:2181,host3:2181"</span>,<span class="number">2000</span>, <span class="keyword">null</span>);</span><br><span class="line">　　　　　Zk.addAuthInfo(<span class="string">"digest"</span>, <span class="string">"admin:admin"</span>.getBytes());</span><br><span class="line">　　　　　Zk.create(<span class="string">"/test"</span>, <span class="string">"data"</span>.getBytes(), acls, CreateMode.PERSISTENT);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ACL超级权限"><a href="#ACL超级权限" class="headerlink" title="ACL超级权限"></a>ACL超级权限</h3><p>superDigest 设置的步骤：</p>
+<p>① 启动ZK 的时候( zkServer.sh ) ， 加入参数： Java”-Dzookeeper .DigestAuthenticationProvider.superDigest=super:D/InIHSb7yEEbrWz8b9l71RjZJU=” （无空格）。</p>
+<p>② 在客户端使用的时候， addAuthInfo(“digest”, “super:test”, 10, 0, 0); “ super:test” 为”super:D/InIHSb7yEEbrWz8b9l71RjZJU=”的明文表示，加密算法同setAcl。</p>
+<p><img src="/img/3b5a590f5e8d40bbb2.jpeg" alt="zookeeper"><br><img src="/img/5ed2b62c0b48083b.png" alt="zookeeper"><br><img src="/img/278.jpg" alt="zookeeper"></p>
 <h2 id="zookeeper-客户端"><a href="#zookeeper-客户端" class="headerlink" title="zookeeper 客户端"></a>zookeeper 客户端</h2><p>目前Curator有2.x.x和3.x.x两个系列的版本，支持不同版本的Zookeeper。其中Curator 2.x.x兼容Zookeeper的3.4.x和3.5.x。Curator 3.x.x只兼容Zookeeper 3.5.x，并且提供了一些诸如动态重新配置、watch删除等新特性。</p>
 <table>
 <thead>
@@ -290,7 +314,12 @@
 <h2 id="zookeeper-文件与快照"><a href="#zookeeper-文件与快照" class="headerlink" title="zookeeper 文件与快照"></a>zookeeper 文件与快照</h2><p>日志路径:/datalog/version-2<br>快照路径:/data/version-2</p>
 <p>1、当开始第一次运行的时候，首先会产生一个snapshot，这个时候是没有log的。当第一次有操作的时候开始log文件产生的时候，这时候不会产生snapshot。<br>当第一个log文件体积达到预设值时候，这时候系统需要snapshot，然后创建新的日志文件，以此不断交替。<br>2、生成snapshot触发条件: logcount &gt; (snapcount/2 + randroll)  randroll是随机数范围在[1, snapcount/2]</p>
 <h2 id="zookeeper网络相关"><a href="#zookeeper网络相关" class="headerlink" title="zookeeper网络相关"></a>zookeeper网络相关</h2><p>1、zookeeper的网络请求与连接实现方式有两种，一种是通过netty实现，另外一种是通过Java原生NIO实现。</p>
-<h2 id="zookeeper会话管理"><a href="#zookeeper会话管理" class="headerlink" title="zookeeper会话管理"></a>zookeeper会话管理</h2><h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令,即四字命令，指的是服务端的命令。</p>
+<h2 id="zookeeper会话管理"><a href="#zookeeper会话管理" class="headerlink" title="zookeeper会话管理"></a>zookeeper会话管理</h2><p><img src="/img/zookeeper/302149592314604.png" alt="session"></p>
+<h3 id="session连接"><a href="#session连接" class="headerlink" title="session连接"></a>session连接</h3><p>每个ZooKeeper客户端的配置中都包括集合体中服务器的列表。在启动时，客户端会尝试连接到列表中的一台服务器。如果连接失败，它会尝试连接另一台服务器，以此类推，直到成功与一台服务器建立连接或因为所有ZooKeeper服务器都不可用而失败。</p>
+<p>一旦客户端与一台ZooKeeper服务器建立连接，这台服务器就会为该客户端创建一个新的会话。每个会话都会有一个超时的时间设置，这个设置由创建会话的应用来设定。如果服务器在超时时间段内没有收到任何请求，则相应的会话会过期。一旦一个会话已经过期，就无法重新打开，并且任何与该会话相关联的短暂znode都会丢失。会话通常长期存在，而且会话过期是一种比较罕见的事件，但对应用来说，如何处理会话过期仍是非常重要的。</p>
+<p>只要一个会话空闲超过一定时间，都可以通过客户端发送ping请求（也称为心跳）保持会话不过期。ping请求由ZooKeeper的客户端库自动发送，因此在我们的代码中不需要考虑如何维护会话。这个时间长度的设置应当足够低，以便能档检测出服务器故障（由读超时体现），并且能够在会话超时的时间段内重新莲接到另外一台服务器。</p>
+<h3 id="故障切换"><a href="#故障切换" class="headerlink" title="故障切换"></a>故障切换</h3><p>ZooKeeper客户端可以自动地进行故障切换，切换至另一台ZooKeeper服务器。并且关键的一点是，在另一台服务器接替故障服务器之后，所有的会话和相关的短暂Znode仍然是有效的。在故障切换过程中，应用程序将收到断开连接和连接至服务的通知。当客户端断开连接时，观察通知将无法发送；但是当客户端成功恢复连接后，这些延迟的通知会被发送。当然，在客户端重新连接至另一台服务器的过程中，如果应用程序试图执行一个操作，这个操作将会失败。这充分体现了在真实的ZooKeeper应用中处理连接丢失异常的重要性。</p>
+<h2 id="zookeeper运维命令"><a href="#zookeeper运维命令" class="headerlink" title="zookeeper运维命令"></a>zookeeper运维命令</h2><p>1、zookeeper的命令分为两部分，一块是客户端命令，一块是服务端命令,即四字命令，指的是服务端的命令。</p>
 <p>2、客户端命令</p>
 <table>
 <thead>
@@ -947,11 +976,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -979,14 +1008,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">zab</a>
               </li>
              
@@ -996,6 +1017,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
               </li>
             
             <div class="clearfix"></div>
