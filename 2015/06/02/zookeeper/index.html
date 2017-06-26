@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://thinkhejie.github.io/img/overview-of-zookeeper-helix-and-kafka-oakjug-10-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055532945996.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/030055100139484.png">
-<meta property="og:updated_time" content="2017-06-26T07:52:27.000Z">
+<meta property="og:updated_time" content="2017-06-26T08:12:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -535,7 +535,8 @@
 <h3 id="存储部分"><a href="#存储部分" class="headerlink" title="存储部分"></a>存储部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZKDatabase</span><br></pre></td></tr></table></figure>
 <h3 id="监控部分"><a href="#监控部分" class="headerlink" title="监控部分"></a>监控部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OSMXBean</span><br></pre></td></tr></table></figure>
 <h3 id="选举部分"><a href="#选举部分" class="headerlink" title="选举部分"></a>选举部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QuorumPeer</span><br><span class="line">FastLeaderElection</span><br></pre></td></tr></table></figure>
-<p>在QuorumPeer启动时，服务端节点节点状态是初始状态LOOKING。随后通过选举可能会有如下的状态：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Vote <span class="title">lookForLeader</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * Loop in which we exchange notifications until we find a leader</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">while</span> ((self.getPeerState() == ServerState.LOOKING) &amp;&amp; (!stop))&#123;</span><br><span class="line">        <span class="comment">/*</span><br><span class="line">         * Sends more notifications if have not received enough.</span><br><span class="line">         * Otherwise processes new notification.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="keyword">if</span>(n == <span class="keyword">null</span>) &#123; <span class="comment">// ... &#125;</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (self.getCurrentAndNextConfigVoters().contains(n.sid)) &#123;</span><br><span class="line">            <span class="comment">/*</span><br><span class="line">             * Only proceed if the vote comes from a replica in the current or next voting view.</span><br><span class="line">             */</span></span><br><span class="line">            <span class="keyword">switch</span> (n.state) &#123;</span><br><span class="line">            <span class="keyword">case</span> LOOKING:</span><br><span class="line">                <span class="keyword">if</span> (getInitLastLoggedZxid() == -<span class="number">1</span>) &#123;</span><br><span class="line">                    LOG.debug(<span class="string">"Ignoring notification as our zxid is -1"</span>); <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (n.zxid == -<span class="number">1</span>) &#123;</span><br><span class="line">                    LOG.debug(<span class="string">"Ignoring notification from member with -1 zxid"</span> + n.sid); <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// If notification &gt; current, replace and send messages out</span></span><br><span class="line">                <span class="keyword">if</span> (n.electionEpoch &gt; logicalclock.get()) &#123;</span><br><span class="line">                    logicalclock.set(n.electionEpoch);</span><br><span class="line">                    recvset.clear();</span><br><span class="line">                    <span class="keyword">if</span> (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, getInitId(), getInitLastLoggedZxid(), getPeerEpoch())) &#123;</span><br><span class="line">                        updateProposal(n.leader, n.zxid, n.peerEpoch);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());</span><br><span class="line">                    &#125;</span><br><span class="line">                    sendNotifications();</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (n.electionEpoch &lt; logicalclock.get()) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(LOG.isDebugEnabled())&#123;</span><br><span class="line">                        LOG.debug(<span class="string">"Notification election epoch is smaller than logicalclock. n.electionEpoch = 0x"</span></span><br><span class="line">                                + Long.toHexString(n.electionEpoch)</span><br><span class="line">                                + <span class="string">", logicalclock=0x"</span> + Long.toHexString(logicalclock.get()));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (totalOrderPredicate(n.leader, n.zxid, n.peerEpoch, proposedLeader, proposedZxid, proposedEpoch)) &#123;</span><br><span class="line">                    updateProposal(n.leader, n.zxid, n.peerEpoch);</span><br><span class="line">                    sendNotifications();</span><br><span class="line">                &#125;</span><br><span class="line">                recvset.put(n.sid, <span class="keyword">new</span> Vote(n.leader, n.zxid, n.electionEpoch, n.peerEpoch)); <span class="comment">// ...</span></span><br><span class="line">            <span class="keyword">case</span> OBSERVING: <span class="comment">// ...</span></span><br><span class="line">            <span class="keyword">case</span> FOLLOWING: <span class="comment">// ...</span></span><br><span class="line">            <span class="keyword">case</span> LEADING: <span class="comment">// ...</span></span><br><span class="line">            <span class="keyword">default</span>: <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">totalOrderPredicate</span><span class="params">(<span class="keyword">long</span> newId, <span class="keyword">long</span> newZxid, <span class="keyword">long</span> newEpoch, <span class="keyword">long</span> curId, <span class="keyword">long</span> curZxid, <span class="keyword">long</span> curEpoch)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (self.getQuorumVerifier().getWeight(newId) == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * We return true if one of the following three cases hold:</span><br><span class="line">     * 1- New epoch is higher</span><br><span class="line">     * 2- New epoch is the same as current epoch, but new zxid is higher</span><br><span class="line">     * 3- New epoch is the same as current epoch, new zxid is the same as current zxid, but server id is higher.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">return</span> ((newEpoch &gt; curEpoch) ||</span><br><span class="line">            ((newEpoch == curEpoch) &amp;&amp;</span><br><span class="line">            ((newZxid &gt; curZxid) || ((newZxid == curZxid) &amp;&amp; (newId &gt; curId)))));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在QuorumPeer启动时，服务端节点节点状态是初始状态LOOKING。随后通过选举可能会有如下的状态。</p>
 <table>
 <thead>
 <tr>
@@ -577,7 +578,7 @@
 <p>11.provider约6万实例，consumer22万实例;<br>基于以上的原因，新的方案实现也很简单，自己实现了一个服务用来做注册中心的，实现的是服务注册/订阅方面的功能。它负责接收长链接并推送，数据存储在MySQL。</p>
 <p>12.使用ZooKeeper主要是它实现了强一致性，你这个注册中心是单点的吧?master election用ZooKeeper?注册中心会成为新的瓶颈和故障点?<br>性能方面完全够用，因为这个服务也是集群部署的，客户端首先访问一个http接口拿到所有服务器的地址，并优先访问本机房的注册中心。注册中心基本读多写少，内存里面也缓存provider列表，不会有太大压力到MySQL;存储上通过MySQL实现一致性保证。</p>
 <p>13.跨机房容灾方面有什么优化吗?如果网络没有足够的redundency，一旦出现network partiton，那么有一个机房就没办法到quorum了?<br>通过多机房部署，每个机房保证至少2个节点，本机房挂了还可以访问其它机房，并且在客户端本地还有缓存文件。</p>
-<p>14.当配置变化，client以http轮询方式去感知吗?<br>A：Session过期那个，开始我们设的是很短，后来发现不对，网络一闪断，大量掉节点。现在我们自己实现的服务，半分钟一心跳，几个心跳没收到我才认为下线了。如果provider列表发生变化，我这边服务端会主动推送的，因为用的是TCP长连接。</p>
+<p>14.当配置变化，client以http轮询方式去感知吗?<br>Session过期那个，开始我们设的是很短，后来发现不对，网络一闪断，大量掉节点。现在我们自己实现的服务，半分钟一心跳，几个心跳没收到我才认为下线了。如果provider列表发生变化，我这边服务端会主动推送的，因为用的是TCP长连接。</p>
 <p>15.Client有没有主动发现本地cache与服务端数据不一致的机制?例如当provider列表发生变化且服务端通过TCP长连给client推送失败的场景。<br>有，我们心跳带本地版本号的，如果与服务端不一致的话，会触发服务端再次推送;</p>
 <p>16.而另外一知名大公司架构师认为如果consumer数量没有那么多，用ZooKeeper也能较好满足要求。其业务场景的ZooKeepr使用及运行情况如下。<br>线上的单个ZooKeeper节点平均连接数是6K，watcher是30万，netIO不高，ZooKeeper的机器配置比较差，用的是4G 4CPU 的虚拟机，5个节点，最多的consumer不超过200，平均consumer数量就5，6个左右。<br>目前线上provider数3万左右实例数，consumer数10万左右，目前运行的没什么问题。3万个，如果每个服务10个实例，也就3,000个服务，全公司的，也没多少。看起来是多了点。 跟公司发展历史及使用场景关系很大。<br>之前关于ZooKeeper踩坑最多的是在客户端上，最开始用的是netflix的curator(后来贡献给apache，但是我们用的是老的，没升级)，遇到网络闪断重连不上，然后死循环一样，升级到apache curator就好了。<br>后来遇到一个问题是，如果注册watcher太多，发生重连的时候，zk client会自动注册之前的所有watcher，这样会导致一个包的大小超过1M，然后也就重连不上又不断地重连，后来hack了zk client解决了这个问题，这个bug到目前为止zk官方仍然没有修复。<br>不过这些坑基本上遇到一个可以解决一个，但是目前有一个问题目前也没找到好的解决方案，那就是业务方系统load变高，或者发生长时间gc，导致zk重连甚至session过期。<br>另外关于zk连接，我们在最底下做了连接共享，因为好多服务都依赖zk，这个也降低了不少连接数。</p>
 <p>17.客户端对ServerList的轮询机制是什么<br> 随机，客户端在初始化( new ZooKeeper(String connectString, int sessionTimeout, Watcher watcher) )的过程中，将所有Server保存在一个List中，然后随机打散，形成一个环。之后从0号位开始一个一个使用。<br>两个注意点：1. Server地址能够重复配置，这样能够弥补客户端无法设置Server权重的缺陷，但是也会加大风险。（比如: 192.168.1.1:2181,192.168.1.1:2181,192.168.1.2:2181). 2. 如果客户端在进行Server切换过程中耗时过长，那么将会收到SESSION_EXPIRED. 这也是上面第1点中的加大风险之处。</p>
@@ -936,6 +937,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -944,19 +949,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -980,11 +981,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1008,6 +1009,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">zab</a>
               </li>
              
@@ -1017,14 +1026,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Guava</a>
               </li>
             
             <div class="clearfix"></div>
