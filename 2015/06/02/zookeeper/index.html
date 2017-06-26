@@ -16,7 +16,7 @@
 <meta property="og:description">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper-1-638.jpg">
 <meta property="og:image" content="http://thinkhejie.github.io/img/zookeeper.jpg">
-<meta property="og:updated_time" content="2017-06-26T03:42:22.000Z">
+<meta property="og:updated_time" content="2017-06-26T03:56:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zookeeper">
 <meta name="twitter:description">
@@ -489,7 +489,33 @@
 <p>存储部分<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZKDatabase</span><br></pre></td></tr></table></figure></p>
 <p>监控部分<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OSMXBean</span><br></pre></td></tr></table></figure></p>
 <h3 id="选举部分"><a href="#选举部分" class="headerlink" title="选举部分"></a>选举部分</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QuorumPeer</span><br><span class="line">FastLeaderElection</span><br></pre></td></tr></table></figure>
-<p>在QuorumPeer启动时，服务端节点节点状态是初始状态LOOKING。随后通过选举可能会有如下的状态：<br>| 状态 | 描述 |<br>| ——– |  ——– |<br>| LOOKING |  正在选举中，未确定当前状态 |<br>| LEADING |  被选举为Leader，通知所有节点 |<br>| FOLLOWING | 被选举为Follower，回复Leader节点 |<br>| OBSERVING | 保持观察者状态，不参与选举 |</p>
+<p>在QuorumPeer启动时，服务端节点节点状态是初始状态LOOKING。随后通过选举可能会有如下的状态：</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOOKING</td>
+<td>正在选举中，未确定当前状态</td>
+</tr>
+<tr>
+<td>LEADING</td>
+<td>被选举为Leader，通知所有节点</td>
+</tr>
+<tr>
+<td>FOLLOWING</td>
+<td>被选举为Follower，回复Leader节点</td>
+</tr>
+<tr>
+<td>OBSERVING</td>
+<td>保持观察者状态，不参与选举</td>
+</tr>
+</tbody>
+</table>
 <p>按照ZooKeeperServer的文档中所示，事务处理的大体流程链应该为<br>PrepRequestProcessor -&gt; SyncRequestProcessor -&gt; FinalRequestProcessor</p>
 <h2 id="zookeeper-相关问题"><a href="#zookeeper-相关问题" class="headerlink" title="zookeeper 相关问题"></a>zookeeper 相关问题</h2><p>1.zookeeper数据同步原理</p>
 <p>读取的时候不需要数据同步，写操作时，follower的FollowerRequestProcessor会将该操作作为LEADER.REQEST发给leader。leader发起投票，由followers进行投票，leader对投票结果进行计算决定是否通过该决议，如果通过执行该决议（事务），否则什么也不做。</p>
@@ -835,15 +861,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cgroup</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -863,6 +889,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NIO</a>
               </li>
              
@@ -875,15 +905,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -911,15 +937,27 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">IDEA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">zab</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -940,18 +978,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Guava</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">zab</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">zookeeper</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
             
             <div class="clearfix"></div>
