@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://thinkhejie.github.io">
-  <title>Java常见异常总结 | 异志说</title>
+  <title>Groovy相关 | 异志说</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java常见异常总结">
+  <meta name="description" content="Groovy相关">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java常见异常总结">
-<meta property="og:url" content="http://thinkhejie.github.io/2012/01/01/Java常见异常总结/index.html">
+<meta property="og:title" content="Groovy相关">
+<meta property="og:url" content="http://thinkhejie.github.io/2013/05/31/groovy/index.html">
 <meta property="og:site_name" content="异志说">
-<meta property="og:description" content="Java常见异常总结">
-<meta property="og:updated_time" content="2016-06-10T20:57:48.000Z">
+<meta property="og:description" content="Groovy相关">
+<meta property="og:updated_time" content="2017-07-31T13:04:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java常见异常总结">
-<meta name="twitter:description" content="Java常见异常总结">
+<meta name="twitter:title" content="Groovy相关">
+<meta name="twitter:description" content="Groovy相关">
   
     <link rel="alternative" href="/atom.xml" title="异志说" type="application/atom+xml">
   
@@ -179,271 +179,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java常见异常总结" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-groovy" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Java常见异常总结
+      Groovy相关
     </h1>
   
 
         
-        <a href="/2012/01/01/Java常见异常总结/" class="archive-article-date">
-  	<time datetime="2012-01-01T13:59:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2012-01-01</time>
+        <a href="/2013/05/31/groovy/" class="archive-article-date">
+  	<time datetime="2013-05-31T13:04:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2013-05-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Java常见异常总结</p>
+        <p>Groovy相关</p>
 <a id="more"></a>
-<table>
-<thead>
-<tr>
-<th>异常类</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ArithmeticExecption</td>
-<td>算术异常类</td>
-</tr>
-<tr>
-<td>ClassCastException</td>
-<td>类型强制转换异常</td>
-</tr>
-<tr>
-<td>NegativeArrayException</td>
-<td>数组负下标异常</td>
-</tr>
-<tr>
-<td>ArrayIndexOutOfBoundsException</td>
-<td>数组下标越界异常</td>
-</tr>
-<tr>
-<td>SecturityException</td>
-<td>违背安全原则异常</td>
-</tr>
-<tr>
-<td>EOFException</td>
-<td>文件已结束异常</td>
-</tr>
-<tr>
-<td>FileNotFoundException</td>
-<td>文件未找到异常</td>
-</tr>
-<tr>
-<td>NumberFormatException</td>
-<td>字符串转换为数字异常：</td>
-</tr>
-<tr>
-<td>SQLException</td>
-<td>操作数据库异常</td>
-</tr>
-<tr>
-<td>IOException</td>
-<td>输入输出异常</td>
-</tr>
-<tr>
-<td>NoSuchMethodException</td>
-<td>方法未找到异常</td>
-</tr>
-<tr>
-<td>java.lang.AbstractMethodError</td>
-<td>抽象方法错误。当应用试图调用抽象方法时抛出。</td>
-</tr>
-<tr>
-<td>java.lang.AssertionError</td>
-<td>断言错。用来指示一个断言失败的情况。</td>
-</tr>
-<tr>
-<td>java.lang.ClassCircularityError</td>
-<td>类循环依赖错误。在初始化一个类时，若检测到类之间循环依赖则抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.ClassFormatError</td>
-<td>类格式错误。当Java虚拟机试图从一个文件中读取Java类，而检测到该文件的内容不符合类的有效格式时抛出。</td>
-</tr>
-<tr>
-<td>java.lang.Error</td>
-<td>错误。是所有错误的基类，用于标识严重的程序运行问题。这些问题通常描述一些不应被应用程序捕获的反常情况。</td>
-</tr>
-<tr>
-<td>java.lang.ExceptionInInitializerError</td>
-<td>初始化程序错误。当执行一个类的静态初始化程序的过程中，发生了异常时抛出。静态初始化程序是指直接包含于类中的static语句段。</td>
-</tr>
-<tr>
-<td>java.lang.IllegalAccessError</td>
-<td>违法访问错误。当一个应用试图访问、修改某个类的域（Field）或者调用其方法，但是又违反域或方法的可见性声明，则抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.IncompatibleClassChangeError</td>
-<td>不兼容的类变化错误。当正在执行的方法所依赖的类定义发生了不兼容的改变时，抛出该异常。一般在修改了应用中的某些类的声明定义而没有对整个应用重新编译而直接运行的情况下，容易引发该错误。</td>
-</tr>
-<tr>
-<td>java.lang.InstantiationError</td>
-<td>实例化错误。当一个应用试图通过Java的new操作符构造一个抽象类或者接口时抛出该异常.</td>
-</tr>
-<tr>
-<td>java.lang.InternalError</td>
-<td>内部错误。用于指示Java虚拟机发生了内部错误。</td>
-</tr>
-<tr>
-<td>java.lang.LinkageError</td>
-<td>链接错误。该错误及其所有子类指示某个类依赖于另外一些类，在该类编译之后，被依赖的类改变了其类定义而没有重新编译所有的类，进而引发错误的情况。</td>
-</tr>
-<tr>
-<td>java.lang.NoClassDefFoundError</td>
-<td>未找到类定义错误。当Java虚拟机或者类装载器试图实例化某个类，而找不到该类的定义时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.NoSuchFieldError</td>
-<td>域不存在错误。当应用试图访问或者修改某类的某个域，而该类的定义中没有该域的定义时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.NoSuchMethodError</td>
-<td>方法不存在错误。当应用试图调用某类的某个方法，而该类的定义中没有该方法的定义时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.StringIndexOutOfBoundsException</td>
-<td>字符串索引越界异常。当使用索引值访问某个字符串中的字符，而该索引值小于0或大于等于序列大小时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.OutOfMemoryError</td>
-<td>内存不足错误。当可用内存不足以让Java虚拟机分配给一个对象时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.StackOverflowError</td>
-<td>堆栈溢出错误。当一个应用递归调用的层次太深而导致堆栈溢出时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.ThreadDeath</td>
-<td>线程结束。当调用Thread类的stop方法时抛出该错误，用于指示线程结束。</td>
-</tr>
-<tr>
-<td>java.lang.UnknownError</td>
-<td>未知错误。用于指示Java虚拟机发生了未知严重错误的情况。</td>
-</tr>
-<tr>
-<td>java.lang.UnsatisfiedLinkError</td>
-<td>未满足的链接错误。当Java虚拟机未找到某个类的声明为native方法的本机语言定义时抛出。</td>
-</tr>
-<tr>
-<td>java.lang.UnsupportedClassVersionError</td>
-<td>不支持的类版本错误。当Java虚拟机试图从读取某个类文件，但是发现该文件的主、次版本号不被当前Java虚拟机支持的时候，抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.VerifyError</td>
-<td>验证错误。当验证器检测到某个类文件中存在内部不兼容或者安全问题时抛出该错误。</td>
-</tr>
-<tr>
-<td>java.lang.VirtualMachineError</td>
-<td>虚拟机错误。用于指示虚拟机被破坏或者继续执行操作所需的资源不足的情况。</td>
-</tr>
-<tr>
-<td>java.lang.ArithmeticException</td>
-<td>算术条件异常。譬如：整数除零等。</td>
-</tr>
-<tr>
-<td>java.lang.ArrayIndexOutOfBoundsException</td>
-<td>数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出。</td>
-</tr>
-<tr>
-<td>java.lang.ArrayStoreException</td>
-<td>数组存储异常。当向数组中存放非数组声明类型对象时抛出。</td>
-</tr>
-<tr>
-<td>java.lang.ClassCastException</td>
-<td>类造型异常。假设有类A和B（A不是B的父类或子类），O是A的实例，那么当强制将O构造为类B的实例时抛出该异常。该异常经常被称为强制类型转换异常。</td>
-</tr>
-<tr>
-<td>java.lang.ClassNotFoundException</td>
-<td>找不到类异常。当应用试图根据字符串形式的类名构造类，而在遍历CLASSPAH之后找不到对应名称的class文件时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.CloneNotSupportedException</td>
-<td>不支持克隆异常。当没有实现Cloneable接口或者不支持克隆方法时,调用其clone()方法则抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.EnumConstantNotPresentException</td>
-<td>枚举常量不存在异常。当应用试图通过名称和枚举类型访问一个枚举对象，但该枚举对象并不包含常量时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.Exception</td>
-<td>根异常。用以描述应用程序希望捕获的情况。</td>
-</tr>
-<tr>
-<td>java.lang.IllegalAccessException</td>
-<td>违法的访问异常。当应用试图通过反射方式创建某个类的实例、访问该类属性、调用该类方法，而当时又无法访问类的、属性的、方法的或构造方法的定义时抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.IllegalMonitorStateException</td>
-<td>违法的监控状态异常。当某个线程试图等待一个自己并不拥有的对象（O）的监控器或者通知其他线程等待该对象（O）的监控器时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.IllegalStateException</td>
-<td>违法的状态异常。当在Java环境和应用尚未处于某个方法的合法调用状态，而调用了该方法时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.IllegalThreadStateException</td>
-<td>违法的线程状态异常。线程尚未处于某个方法的合法调用状态，而调用了该方法时，抛出异常。</td>
-</tr>
-<tr>
-<td>java.lang.IndexOutOfBoundsException</td>
-<td>索引越界异常。当访问某个序列的索引值小于0或大于等于序列大小时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.InstantiationException</td>
-<td>实例化异常。当试图通过newInstance()方法创建某个类的实例，而该类是一个抽象类或接口时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.InterruptedException</td>
-<td>被中止异常。当某个线程处于长时间的等待、休眠或其他暂停状态，而此时其他的线程通过Thread的interrupt方法终止该线程时抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.NegativeArraySizeException</td>
-<td>数组大小为负值异常。当使用负数大小值创建数组时抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.NoSuchFieldException</td>
-<td>属性不存在异常。当访问某个类的不存在的属性时抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.NoSuchMethodException</td>
-<td>方法不存在异常。当访问某个类的不存在的方法时抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.NullPointerException</td>
-<td>空指针异常。当应用试图在要求使用对象的地方使用了null时，抛出该异常。譬如：调用null对象的实例方法、访问null对象的属性、计算null对象的长度、使用throw语句抛出null等等。</td>
-</tr>
-<tr>
-<td>java.lang.NumberFormatException</td>
-<td>数字格式异常。当试图将一个String转换为指定的数字类型，而该字符串确不满足数字类型要求的格式时，抛出该异常。</td>
-</tr>
-<tr>
-<td>java.lang.RuntimeException</td>
-<td>运行时异常。是所有Java虚拟机正常操作期间可以被抛出的异常的父类。</td>
-</tr>
-<tr>
-<td>java.lang.SecurityException</td>
-<td>安全异常。由安全管理器抛出，用于指示违反安全情况的异常。</td>
-</tr>
-<tr>
-<td>java.lang.TypeNotPresentException</td>
-<td>类型不存在异常。当应用试图以某个类型名称的字符串表达方式访问该类型，但是根据给定的名称又找不到该类型是抛出该异常。该异常与ClassNotFoundException的区别在于该异常是unchecked（不被检查）异常，而ClassNotFoundException是checked（被检查）异常。</td>
-</tr>
-<tr>
-<td>java.lang.UnsupportedOperationException</td>
-<td>不支持的方法异常。指明请求的方法不被支持情况的异常。</td>
-</tr>
-</tbody>
-</table>
-
+<p>Groovy的动态性为一些Java的应用场景带来了便利（例如规则类的场景，因为规则可能会经常变化或不断的增加），因此有不少Java应用会使用到Groovy，但在使用Groovy时有几个点需要注意，否则很容易碰到一些异常问题，这些总结来源于实际排查的一些Case。</p>
+<h2 id="1-正确使用GroovyClassLoader"><a href="#1-正确使用GroovyClassLoader" class="headerlink" title="1. 正确使用GroovyClassLoader"></a>1. 正确使用GroovyClassLoader</h2><p>通常使用如下代码在Java中执行Groovy脚本：<br>GroovyClassLoader groovyLoader = new GroovyClassLoader();<br>Class<script> groovyClass = (Class<Script>) groovyLoader.parseClass(groovyScript);<br>Script groovyScript = groovyClass.newInstance();<br>这个用法是比较简单的，但上面这短短的三行代码是还真挺容易犯错的，我见过的使用Groovy的应用场景一开始几乎都要在此犯下错误。</p>
+<p>首先容易犯的第一个错是采用一个看似不错的优化：就是对所有的Groovy脚本采用一个全局的GroovyClassLoader，这种方式当应用用到了很多的Groovy Script时将出现问题，PermGen中的class能被卸载的前提是ClassLoader中所有的class都没有地方引用，因此如果是共用同一个GroovyClassLoader的话就很容易导致脚本class无法被卸载，从而导致PermGen被用满。</p>
+<p>第二个容易犯的错误是每次都执行groovyLoader.parseClass(groovyScript)，Groovy为了保证每次执行的都是新的脚本内容，在这里会每次生成一个新名字的Class文件，代码如下：<br>return parseClass(text, “script” + System.currentTimeMillis() + Math.abs(text.hashCode()) + “.groovy”);<br>因此当对同一段脚本每次都执行这个方法时，会导致的现象就是装载的Class会越来越多，从而导致PermGen被用满。</p>
+<p>因此通常在使用Groovy装载和执行脚本时，比较好的做法是：<br>每个script都new一个GroovyClassLoader来装载；<br>对于parseClass后生成的Class对象进行cache，key为groovyScript脚本的md5值。</p>
+<h2 id="2-注意CodeCache的空间状况"><a href="#2-注意CodeCache的空间状况" class="headerlink" title="2. 注意CodeCache的空间状况"></a>2. 注意CodeCache的空间状况</h2><p>对于大量使用Groovy的应用，尤其是Groovy脚本还会经常更新的应用，由于这些Groovy脚本在执行了很多次后都会被JVM编译为native进行优化，会占据一些CodeCache空间，而如果这样的脚本很多的话，可能会导致CodeCache被用满，而CodeCache一旦被用满，JVM的Compiler就会被禁用，那性能下降的就不是一点点了。</p>
+<h2 id="3-自定义函数使用较多的Groovy脚本"><a href="#3-自定义函数使用较多的Groovy脚本" class="headerlink" title="3. 自定义函数使用较多的Groovy脚本"></a>3. 自定义函数使用较多的Groovy脚本</h2><p>如应用的Groovy脚本比较多的使用到自定义函数，有一个细节要特别注意，Groovy在查找需要调用的方法时，首先从其生成的MetaClass时找，当找不到时会抛出异常，在其自身捕捉到异常后然后会转为使用上下文ClassLoader进行装载，而悲催的是，自定义函数在编译时MetaClass里是不会有的，通常只能在上下文ClassLoader里找到，因此如自定义函数使用较多，会导致的就是Groovy在执行的过程会不断的抛出MissingMethodExceptionNoStack，如果这个异常抛出非常频繁的话，会导致cpu在handle_exception上被大量的消耗。<br>这个问题在官方中目前没有解决办法，只能是自己继承groovy的MetaClassImpl，自行实现方法的查找，来避免异常的抛出。</p>
+<p>最后还有一个小小的建议，如果一个处理过程中要执行很多的Groovy Script（例如几百个），最好把这些Groovy Script合成一个或少数几个Script，这样一方面会节省PermGen的空间占用，另一方面也会一定程度的提升执行程序。<br>ps: 有人让我推荐一些书，但悲催的是我自己看的Java的书比较少，就推荐下我自己看过的为数不多的几本吧：</p>
+<p>《Java并发编程实战》<br>《The Garbage Collection Handbook》<br>《Pro (IBM) WebSphere Application Server 7 Internals》<br>《Memory Systems : Cache, DRAM, Disk》（这本不是Java，不过非常值得读）<br>《Fundamental Networking in Java》<br>《Programming Concurrency on the JVM》<br>《Java Performance》<br>《Oracle JRockit: The Definitive Guide》。</p>
+</script></p>
       
 
       
@@ -487,15 +254,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">execption</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Groovy</a>
         		</li>
       		
 		</ul>
@@ -507,7 +266,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java/" class="article-tag-list-link color5">Java</a>
+        			<a href="/categories/Groovy/" class="article-tag-list-link color2">Groovy</a>
         		</li>
       		
 		</ul>
@@ -562,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://thinkhejie.github.io/2012/01/01/Java常见异常总结/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://thinkhejie.github.io/2013/05/31/groovy/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -576,15 +335,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2013/05/01/流量控制和流量整形/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/05/01/docker/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          流量控制和流量整形
+          docker(一)
         
       </div>
     </a>
   
+  
+    <a href="/2013/05/04/MAVEN命令总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MAVEN命令总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -595,7 +359,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Java常见异常总结" data-title="Java常见异常总结" data-url="http://thinkhejie.github.io/2012/01/01/Java常见异常总结/"></div>
+	<div class="ds-thread" data-thread-key="groovy" data-title="Groovy相关" data-url="http://thinkhejie.github.io/2013/05/31/groovy/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -618,8 +382,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://thinkhejie.github.io/2012/01/01/Java常见异常总结/", 
-    sourceId: "Java常见异常总结",
+    url: "http://thinkhejie.github.io/2013/05/31/groovy/", 
+    sourceId: "groovy",
     productKey: "e8377a8fc2a54542a8d70424655829f9",
     target: "cloud-tie-wrapper"
   };
