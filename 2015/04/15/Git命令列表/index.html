@@ -18,7 +18,7 @@
 <meta property="og:description" content="1git checkout
 创建新分支：git branch branchName
 切换到新分支：git checkout branchName">
-<meta property="og:updated_time" content="2017-03-02T09:06:22.000Z">
+<meta property="og:updated_time" content="2017-08-21T06:25:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git命令列表">
 <meta name="twitter:description" content="1git checkout
@@ -237,6 +237,9 @@
 <p>9、git log 打印如何美化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --pretty=format:&quot;%h -%an,%ar : %s&quot; -3</span><br></pre></td></tr></table></figure></p>
 <p>10、git stat -s 命令会出现两个MM，分别是什么意思。<br>第一个M 版本库和中间状态有差异<br>第二个M 工作区和当前文件有差异</p>
 <p>git log –pretty=format:”%h -%an,%ar : %s” -3<br>$ git log –pretty=format:”%h -%an,%ar : %s” -3<br>d0b9a20 -BeginMan,24 hours ago : ok<br>8c186cd -BeginMan,24 hours ago : mi<br>b2a3100 -BeginMan,24 hours ago : what?</p>
+<p>11、撤销操作<br><a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%92%A4%E6%B6%88%E6%93%8D%E4%BD%9C" target="_blank" rel="external">https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%92%A4%E6%B6%88%E6%93%8D%E4%BD%9C</a></p>
+<p>以提问中修改了两个文件a、b为例，假设需要撤销文件a的修改，则修改后的两个文件：1、如果没有被git add到索引区git checkout a 便可撤销对文件a的修改2、如果被git add到索引区，但没有做git commit提交1）使用git reset将a从索引区移除（但会保留在工作区）git reset  HEAD a2）撤销工作区中文件a的修改git checkout a 3、如果已被提交，则需要先回退当前提交到工作区，然后撤销文件a的修改1）回退当前提交到工作区git reset  HEAD^2）撤销工作区中文件a的修改git checkout a 补充：灵活使用以上操作的关键在于理解git中工作区、索引区的概念和git reset命令hard、mixed(default)、soft三种模式的区别，网上有很多这方面的文章，不再赘述。</p>
+<p><a href="https://www.zhihu.com/question/20039839/answer/125382988" target="_blank" rel="external">https://www.zhihu.com/question/20039839/answer/125382988</a></p>
 
       
 
@@ -366,18 +369,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/05/31/Cgroup/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/04/15/hbase_07/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Cgroup相关命令和配置文件
+          HBase Java API Guide Put
         
       </div>
     </a>
   
   
-    <a href="/2015/04/15/hbase_01/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">基本CRUD操作</div>
+    <a href="/2015/04/15/hbase_04/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FuzzyRowFilter 的说明和使用</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -557,19 +560,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NIO</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+                <a href="javascript:void(0)" class="js-tag color4">NIO</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,11 +580,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,15 +608,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,6 +636,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
               </li>
              
@@ -642,10 +649,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">架构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
