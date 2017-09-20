@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2014/05/02/safepoint/index.html">
 <meta property="og:site_name" content="异志说">
 <meta property="og:description" content="SafePoint">
-<meta property="og:updated_time" content="2017-08-29T12:05:14.000Z">
+<meta property="og:updated_time" content="2017-08-29T12:19:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SafePoint">
 <meta name="twitter:description" content="SafePoint">
@@ -202,7 +202,7 @@
         <p>SafePoint</p>
 <a id="more"></a>
 <p>听说SafePoint这个词很久了，但是一直没有花时间去搞懂它。知道JVM 的GC活动会导致Stop the world， 原因是线程会停在SafePoint上。虽然知道GC是STW的主要原因，但一直有以下几个疑问：</p>
-<p>SafePoint存在的原因是什么，解决什么问题，即Why SafePoint<br>SafePoint到底是什么？What is SafePoint.<br>什么时候会进到SafePoint? When SafePoint.<br>如何诊断SafePoint 引发的问题？How to identify SafePoint problems.<br>Google 果然是最好的老师，但是相关的资料还是不多，总结如下：</p>
+<p>SafePoint存在的原因是什么，解决什么问题，即Why SafePoint<br>SafePoint到底是什么？What is SafePoint.<br>什么时候会进到SafePoint? When SafePoint.<br>如何诊断SafePoint 引发的问题？How to identify SafePoint problems.</p>
 <h2 id="什么是SafePoint"><a href="#什么是SafePoint" class="headerlink" title="什么是SafePoint?"></a>什么是SafePoint?</h2><p>SafePoint是Java代码中的一个线程可能暂停执行的位置。SafePoint保存了在其他位置没有的一些运行时信息。SafePoint保存了线程上下文中的任何东西，包括对象，指向对象或非对象的内部指针。(原文如下：)</p>
 <p>A safepoint is a place in Java code where a Java thread may halt its execution. The safepoint contains information for the runtime that isn’t available in other places, such as which registers contain objects (needed by the GC). The safepoint also guarantees that everything in the thread context is either an object, an internal pointer to an object or not an object.</p>
 <p>在JVM处于SafePoint时，所有在执行代码的Java线程将会被暂停。不与JVM交互的运行Native Code的能继续执行（如果需要通过JNI访问Java 对象，调用JAVA方法，从Native回到JAVA的话，则必须等到Safepoint结束。</p>
@@ -217,6 +217,9 @@
 <p>如何查看JVM SafePoint行为</p>
 <p>使用JVM 参数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintSafepointStatistics</span><br><span class="line"></span><br><span class="line">–XX:PrintSafepointStatisticsCount=1</span><br></pre></td></tr></table></figure>
+<h2 id="Stop-The-World的四个阶段"><a href="#Stop-The-World的四个阶段" class="headerlink" title="Stop The World的四个阶段"></a>Stop The World的四个阶段</h2><p>根据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintSafepointStatistics</span><br><span class="line">–XX:PrintSafepointStatisticsCount=1</span><br></pre></td></tr></table></figure></p>
+<p>参数虚拟机打印的日志文件可以看出，safepoint的执行一共可以分为四个阶段：<br>Spin阶段,因为jvm在决定进入全局safepoint的时候，有的线程在安全点上，而有的线程不在安全点上，这个阶段是等待未在安全点上的用户线程进入安全点。<br>Block阶段,即使进入safepoint，用户线程这时候仍然是running状态，保证用户不在继续执行，需要将用户线程阻塞。<br>Cleanup阶段,这个阶段是JVM做的一些内部的清理工作。<br>VM Operation阶段,JVM执行的一些全局性工作，例如GC,代码反优化。<br>只要分析这个四个阶段，就能知道什么原因导致的STW时间过长。</p>
+<h2 id="其他资料"><a href="#其他资料" class="headerlink" title="其他资料"></a>其他资料</h2><p>(这篇bog详细说明了如何将用户线程阻塞)[<a href="http://blog.csdn.net/iter_zc/article/details/41892567" target="_blank" rel="external">http://blog.csdn.net/iter_zc/article/details/41892567</a>]</p>
 
       
 
@@ -528,15 +531,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cgroup</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -560,6 +563,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
@@ -569,6 +576,18 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">mmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -584,23 +603,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -620,6 +627,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">csa</a>
               </li>
              
@@ -628,19 +639,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">令牌桶</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Guava</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -653,10 +660,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
               </li>
             
             <div class="clearfix"></div>
