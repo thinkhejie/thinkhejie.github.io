@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/05/JVM系列_06/index.html">
 <meta property="og:site_name" content="异志说">
 <meta property="og:description" content="JVM-codecache内存区域介绍">
-<meta property="og:updated_time" content="2017-11-27T06:22:10.356Z">
+<meta property="og:updated_time" content="2017-11-27T06:23:43.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列六(JVM-codecache内存区域介绍)">
 <meta name="twitter:description" content="JVM-codecache内存区域介绍">
@@ -202,7 +202,32 @@
         <p>JVM-codecache内存区域介绍</p>
 <a id="more"></a>
 <h2 id="JVM-codecache内存区域介绍"><a href="#JVM-codecache内存区域介绍" class="headerlink" title="JVM-codecache内存区域介绍"></a>JVM-codecache内存区域介绍</h2><p>大家都知道JVM在运行时会将频繁调用方法的字节码编译为本地机器码。这部分代码所占用的内存空间成为CodeCache区域。一般情况下我们是不会关心这部分区域的且大部分开发人员对这块区域也不熟悉。偶然的机会我们线上服务器Down了，在日志里面看到 java.lang.OutOfMemoryError code cache。通过查找资料来详细了解一下该快内存区域的使用。</p>
-<h2 id="Codecache大小控制选项"><a href="#Codecache大小控制选项" class="headerlink" title="Codecache大小控制选项"></a>Codecache大小控制选项</h2><p>| 选项 |    默认值    | 描述|<br>| InitialCodeCacheSize    | 2555904    | 默认的CodeCache区域大小，单位为字节 |<br>| ReservedCodeCacheSize    | 251658240    | CodeCache区域的最大值，单位为字节 |<br>| CodeCacheExpansionSize    | 65536    | CodeCache每次扩展大小，单位为字节 |</p>
+<h2 id="Codecache大小控制选项"><a href="#Codecache大小控制选项" class="headerlink" title="Codecache大小控制选项"></a>Codecache大小控制选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InitialCodeCacheSize</td>
+<td>2555904</td>
+<td>默认的CodeCache区域大小，单位为字节</td>
+</tr>
+<tr>
+<td>ReservedCodeCacheSize</td>
+<td>251658240</td>
+<td>CodeCache区域的最大值，单位为字节</td>
+</tr>
+<tr>
+<td>CodeCacheExpansionSize</td>
+<td>65536</td>
+<td>CodeCache每次扩展大小，单位为字节</td>
+</tr>
+</tbody>
+</table>
 <h2 id="Codecache刷新选项"><a href="#Codecache刷新选项" class="headerlink" title="Codecache刷新选项"></a>Codecache刷新选项</h2><p>选项    默认值    描述<br>ExitOnFullCodeCache    false    当CodeCache区域满了的时候是否退出JVM<br>UseCodeCacheFlushing    false    是否在关闭JIT编译前清除CodeCache<br>MinCodeCacheFlushingInterval    30    刷新CodeCache的最小时间间隔 ，单位为秒<br>CodeCacheMinimumFreeSpace    512000    当CodeCache区域的剩余空间小于参数指定的值时停止JIT编译。剩余的空间不会再用来存放方法的本地代码, 可以存放本地方法适配器代</p>
 <h2 id="编译策略选项"><a href="#编译策略选项" class="headerlink" title="编译策略选项"></a>编译策略选项</h2><p>选项    默认值    描述<br>CompileThreshold    10000    指定方法在在被JIT编译前被调用的次数<br>OnStackReplacePercentage    140    该值为用于计算是否触发OSR（OnStackReplace）编译的阈值</p>
 <h2 id="OSR编译的阈值计算"><a href="#OSR编译的阈值计算" class="headerlink" title="OSR编译的阈值计算"></a>OSR编译的阈值计算</h2><p>在client模式时，计算规则为CompileThreshold <em> (OnStackReplacePercentage/100)，在server模式时，计算规则为(CompileThreshold </em> (OnStackReplacePercentage - InterpreterProfilePercentage))/100。InterpreterProfilePercentage的默认值为33，当方法上的回边计数器到达这个值时，即触发后台的OSR编译，并将方法上累积的调用计数器设置为CompileThreshold的值，同时将回边计数器设置为CompileThreshold/2的值，一方面是为了避免OSR编译频繁触发；另一方面是以便当方法被再次调用时即触发正常的编译，当累积的回边计数器的值再次达到该值时，先检查OSR编译是否完成。如果OSR编译完成，则在执行循环体的代码时进入编译后的代码；如果OSR编译未完成，则继续把当前回边计数器的累积值再减掉一些，从这些描述可看出，默认情况下对于回边的情况，server模式下只要回边次数达到10 700次，就会触发OSR编译。</p>
@@ -542,15 +567,19 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cgroup</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,19 +591,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">codecache</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">NIO</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,19 +611,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LXC</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+                <a href="javascript:void(0)" class="js-tag color5">mmap</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,11 +643,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -642,11 +667,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
+                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">TCP</a>
+                <a href="javascript:void(0)" class="js-tag color2">ulimit</a>
               </li>
              
               <li class="article-tag-list-item">
