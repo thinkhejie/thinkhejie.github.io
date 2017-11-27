@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="异志说">
 <meta property="og:description" content="jdk 命令">
 <meta property="og:image" content="http://thinkhejie.github.io/img/jvm/category.png">
-<meta property="og:updated_time" content="2017-09-20T09:04:28.000Z">
+<meta property="og:updated_time" content="2017-09-20T09:05:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列五(深入探究JVM | HotSpot JVM的GC实现)">
 <meta name="twitter:description" content="jdk 命令">
@@ -231,7 +231,9 @@
 <p>G1通过引入Remembered Set来避免全堆扫描。Remembered Set用于跟踪对象引用。G1中每个Region都有对应的Remembered Set。当JVM发现内部的一个引用关系需要更新（对Reference类型进行写操作），则立即产生一个Write Barrier中断这个写操作，并检查Reference引用的对象是否处于不同的Region之间（用分代的思想，就是新生代和老年代之间的引用）。如果是，则通过CardTable通知G1，G1根据CardTable把相关引用信息记录到被引用对象所属的Region的Remembered Set中，并将Remembered Set加入GC Root。这样，在G1进行根节点枚举时就可以扫描到该对象而不会出现遗漏。</p>
 <h3 id="G1老年代GC过程"><a href="#G1老年代GC过程" class="headerlink" title="G1老年代GC过程"></a>G1老年代GC过程</h3><h4 id="Initial-Mark-STW"><a href="#Initial-Mark-STW" class="headerlink" title="Initial Mark(STW)"></a>Initial Mark(STW)</h4><p>This is a stop the world event. With G1, it is piggybacked on a normal young GC. Mark survivor regions (root regions) which may have references to objects in old generation.</p>
 <p><img src="/img/jvm/category.png" alt="category"></p>
-<h4 id="Root-Region-Scanning"><a href="#Root-Region-Scanning" class="headerlink" title="Root Region Scanning"></a>Root Region Scanning</h4><h4 id="Concurrent-Marking"><a href="#Concurrent-Marking" class="headerlink" title="Concurrent Marking"></a>Concurrent Marking</h4><h4 id="Remark-STW"><a href="#Remark-STW" class="headerlink" title="Remark(STW)"></a>Remark(STW)</h4><h4 id="Cleanup-STW-and-concurrent"><a href="#Cleanup-STW-and-concurrent" class="headerlink" title="Cleanup(STW and concurrent)"></a>Cleanup(STW and concurrent)</h4><h4 id="Copying-STW"><a href="#Copying-STW" class="headerlink" title="Copying(STW)"></a>Copying(STW)</h4><h4 id="G1老年代收集的几个要点："><a href="#G1老年代收集的几个要点：" class="headerlink" title="G1老年代收集的几个要点："></a>G1老年代收集的几个要点：</h4><p>Concurrent Marking Phase<br>Liveness information is calculated concurrently while the application is running.<br>This liveness information identifies which regions will be best to reclaim during an evacuation pause.<br>There is no sweeping phase like in CMS.<br>Remark Phase<br>Uses the Snapshot-at-the-Beginning (SATB) algorithm which is much faster then what was used with CMS.<br>Completely empty regions are reclaimed.<br>Copying/Cleanup Phase<br>Young generation and old generation are reclaimed at the same time.<br>Old generation regions are selected based on their liveness.</p>
+<h4 id="Root-Region-Scanning"><a href="#Root-Region-Scanning" class="headerlink" title="Root Region Scanning"></a>Root Region Scanning</h4><p>Scan survivor regions for references into the old generation. This happens while the application continues to run. The phase must be completed before a young GC can occur.</p>
+<h4 id="Concurrent-Marking"><a href="#Concurrent-Marking" class="headerlink" title="Concurrent Marking"></a>Concurrent Marking</h4><p>Find live objects over the entire heap. This happens while the application is running. This phase can be interrupted by young generation garbage collections.</p>
+<h4 id="Remark-STW"><a href="#Remark-STW" class="headerlink" title="Remark(STW)"></a>Remark(STW)</h4><h4 id="Cleanup-STW-and-concurrent"><a href="#Cleanup-STW-and-concurrent" class="headerlink" title="Cleanup(STW and concurrent)"></a>Cleanup(STW and concurrent)</h4><h4 id="Copying-STW"><a href="#Copying-STW" class="headerlink" title="Copying(STW)"></a>Copying(STW)</h4><h4 id="G1老年代收集的几个要点："><a href="#G1老年代收集的几个要点：" class="headerlink" title="G1老年代收集的几个要点："></a>G1老年代收集的几个要点：</h4><p>Concurrent Marking Phase<br>Liveness information is calculated concurrently while the application is running.<br>This liveness information identifies which regions will be best to reclaim during an evacuation pause.<br>There is no sweeping phase like in CMS.<br>Remark Phase<br>Uses the Snapshot-at-the-Beginning (SATB) algorithm which is much faster then what was used with CMS.<br>Completely empty regions are reclaimed.<br>Copying/Cleanup Phase<br>Young generation and old generation are reclaimed at the same time.<br>Old generation regions are selected based on their liveness.</p>
 <h3 id="分析日志"><a href="#分析日志" class="headerlink" title="分析日志"></a>分析日志</h3><p>可以清晰地观察G1的收集阶段（JVM参数-XX:+UseG1GC -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">5.891: [GC pause (G1 Evacuation Pause) (young), 0.0288342 secs]</span><br><span class="line">   [Parallel Time: 22.9 ms, GC Workers: 8]</span><br><span class="line">      [GC Worker Start (ms): Min: 5891.4, Avg: 5891.4, Max: 5891.5, Diff: 0.1]</span><br><span class="line">      [Ext Root Scanning (ms): Min: 1.1, Avg: 3.0, Max: 13.6, Diff: 12.5, Sum: 24.1]</span><br><span class="line">      [Update RS (ms): Min: 0.0, Avg: 0.3, Max: 0.7, Diff: 0.7, Sum: 2.1]</span><br><span class="line">         [Processed Buffers: Min: 0, Avg: 3.9, Max: 10, Diff: 10, Sum: 31]</span><br><span class="line">      [Scan RS (ms): Min: 0.0, Avg: 0.5, Max: 0.8, Diff: 0.7, Sum: 3.8]</span><br><span class="line">      [Code Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.4, Diff: 0.4, Sum: 1.0]</span><br><span class="line">      [Object Copy (ms): Min: 3.3, Avg: 13.8, Max: 20.2, Diff: 16.9, Sum: 110.5]</span><br><span class="line">      [Termination (ms): Min: 0.0, Avg: 5.1, Max: 5.8, Diff: 5.8, Sum: 40.8]</span><br><span class="line">         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 8]</span><br><span class="line">      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]</span><br><span class="line">      [GC Worker Total (ms): Min: 22.8, Avg: 22.8, Max: 22.8, Diff: 0.1, Sum: 182.4]</span><br><span class="line">      [GC Worker End (ms): Min: 5914.2, Avg: 5914.2, Max: 5914.3, Diff: 0.0]</span><br><span class="line">   [Code Root Fixup: 0.2 ms]</span><br><span class="line">   [Code Root Purge: 0.0 ms]</span><br><span class="line">   [Clear CT: 0.3 ms]</span><br><span class="line">   [Other: 5.4 ms]</span><br><span class="line">      [Choose CSet: 0.0 ms]</span><br><span class="line">      [Ref Proc: 4.8 ms]</span><br><span class="line">      [Ref Enq: 0.1 ms]</span><br><span class="line">      [Redirty Cards: 0.2 ms]</span><br><span class="line">      [Humongous Register: 0.0 ms]</span><br><span class="line">      [Humongous Reclaim: 0.0 ms]</span><br><span class="line">      [Free CSet: 0.2 ms]</span><br><span class="line">   [Eden: 251.0M(251.0M)-&gt;0.0B(273.0M) Survivors: 14.0M-&gt;34.0M Heap: 286.6M(512.0M)-&gt;58.6M(512.0M)]</span><br><span class="line"> [Times: user=0.18 sys=0.00, real=0.02 secs]</span><br><span class="line"> 8.119: [GC pause (Metadata GC Threshold) (young) (initial-mark), 0.0240591 secs]</span><br><span class="line">   [Parallel Time: 14.9 ms, GC Workers: 8]</span><br><span class="line">      [GC Worker Start (ms): Min: 8119.1, Avg: 8119.4, Max: 8120.3, Diff: 1.1]</span><br><span class="line">      [Ext Root Scanning (ms): Min: 0.5, Avg: 2.3, Max: 9.7, Diff: 9.2, Sum: 18.2]</span><br><span class="line">      [Update RS (ms): Min: 0.0, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 1.2]</span><br><span class="line">         [Processed Buffers: Min: 0, Avg: 2.5, Max: 6, Diff: 6, Sum: 20]</span><br><span class="line">      [Scan RS (ms): Min: 0.0, Avg: 0.7, Max: 0.9, Diff: 0.9, Sum: 5.4]</span><br><span class="line">      [Code Root Scanning (ms): Min: 0.0, Avg: 0.2, Max: 0.4, Diff: 0.4, Sum: 1.3]</span><br><span class="line">      [Object Copy (ms): Min: 4.9, Avg: 11.1, Max: 12.4, Diff: 7.5, Sum: 89.2]</span><br><span class="line">      [Termination (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.7]</span><br><span class="line">         [Termination Attempts: Min: 1, Avg: 20.9, Max: 31, Diff: 30, Sum: 167]</span><br><span class="line">      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]</span><br><span class="line">      [GC Worker Total (ms): Min: 13.7, Avg: 14.5, Max: 14.8, Diff: 1.1, Sum: 116.1]</span><br><span class="line">      [GC Worker End (ms): Min: 8133.9, Avg: 8134.0, Max: 8134.0, Diff: 0.0]</span><br><span class="line">   [Code Root Fixup: 0.3 ms]</span><br><span class="line">   [Code Root Purge: 0.0 ms]</span><br><span class="line">   [Clear CT: 0.2 ms]</span><br><span class="line">   [Other: 8.6 ms]</span><br><span class="line">      [Choose CSet: 0.0 ms]</span><br><span class="line">      [Ref Proc: 8.2 ms]</span><br><span class="line">      [Ref Enq: 0.0 ms]</span><br><span class="line">      [Redirty Cards: 0.1 ms]</span><br><span class="line">      [Humongous Register: 0.0 ms]</span><br><span class="line">      [Humongous Reclaim: 0.0 ms]</span><br><span class="line">      [Free CSet: 0.1 ms]</span><br><span class="line">   [Eden: 159.0M(273.0M)-&gt;0.0B(291.0M) Survivors: 34.0M-&gt;16.0M Heap: 219.6M(512.0M)-&gt;68.1M(512.0M)]</span><br><span class="line"> [Times: user=0.11 sys=0.00, real=0.03 secs]</span><br><span class="line">8.143: [GC concurrent-root-region-scan-start]</span><br><span class="line">8.151: [GC concurrent-root-region-scan-end, 0.0081611 secs]</span><br><span class="line">8.151: [GC concurrent-mark-start]</span><br><span class="line">8.191: [GC concurrent-mark-end, 0.0399863 secs]</span><br><span class="line">8.192: [GC remark 8.192: [Finalize Marking, 0.0005544 secs] 8.192: [GC ref-proc, 0.0002680 secs] 8.192: [Unloading, 0.0068146 secs], 0.0079309 secs]</span><br><span class="line"> [Times: user=0.04 sys=0.00, real=0.00 secs]</span><br><span class="line">8.200: [GC cleanup 74M-&gt;66M(512M), 0.0005223 secs]</span><br><span class="line"> [Times: user=0.00 sys=0.00, real=0.00 secs]</span><br><span class="line">8.201: [GC concurrent-cleanup-start]</span><br><span class="line">8.201: [GC concurrent-cleanup-end, 0.0000154 secs]</span><br></pre></td></tr></table></figure>
 <p>目前来说，大内存对G1支持的较好，其余的情况有待观察。是否将GC替换为G1还有待实验（何况很多公司还在用JDK 1.7）。有消息称JDK 9会把G1作为默认的GC。</p>
@@ -356,18 +358,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/05/04/awk/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/05/04/HashMap/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          awk-命令
+          Java HashMap工作原理及实现
         
       </div>
     </a>
   
   
-    <a href="/2016/05/04/JVM系列_04/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM系列四(GC分析)</div>
+    <a href="/2016/05/03/Java-NIO解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java/NIO解析</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -538,15 +540,15 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Cgroup</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">dubbo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,11 +560,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+                <a href="javascript:void(0)" class="js-tag color5">codecache</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -570,7 +568,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,11 +588,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+                <a href="javascript:void(0)" class="js-tag color4">LXC</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,19 +616,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Groovy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Hbase</a>
               </li>
              
               <li class="article-tag-list-item">
