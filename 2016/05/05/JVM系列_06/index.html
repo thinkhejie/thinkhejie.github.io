@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://thinkhejie.github.io/2016/05/05/JVM系列_06/index.html">
 <meta property="og:site_name" content="异志说">
 <meta property="og:description" content="JVM-codecache内存区域介绍">
-<meta property="og:updated_time" content="2017-11-27T06:24:35.590Z">
+<meta property="og:updated_time" content="2017-11-27T06:29:38.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM系列六(JVM-codecache内存区域介绍)">
 <meta name="twitter:description" content="JVM-codecache内存区域介绍">
@@ -201,7 +201,9 @@
       
         <p>JVM-codecache内存区域介绍</p>
 <a id="more"></a>
-<h2 id="JVM-codecache内存区域介绍"><a href="#JVM-codecache内存区域介绍" class="headerlink" title="JVM-codecache内存区域介绍"></a>JVM-codecache内存区域介绍</h2><p>大家都知道JVM在运行时会将频繁调用方法的字节码编译为本地机器码。这部分代码所占用的内存空间成为CodeCache区域。一般情况下我们是不会关心这部分区域的且大部分开发人员对这块区域也不熟悉。偶然的机会我们线上服务器Down了，在日志里面看到 java.lang.OutOfMemoryError code cache。通过查找资料来详细了解一下该快内存区域的使用。</p>
+<h2 id="JVM-codecache内存区域介绍"><a href="#JVM-codecache内存区域介绍" class="headerlink" title="JVM-codecache内存区域介绍"></a>JVM-codecache内存区域介绍</h2><p>大家都知道JVM在运行时会将频繁调用方法的字节码编译为本地机器码。这部分代码所占用的内存空间成为CodeCache区域。一般情况下我们是不会关心这部分区域的且大部分开发人员对这块区域也不熟悉。偶然的机会我们线上服务器Down了，在日志里面看到java.lang.OutOfMemoryError code cache。通过查找资料来详细了解一下该快内存区域的使用。</p>
+<p>Java进行JIT的时候，会将编译的本地代码放在codecache中，因此可能出现codecache失效的情况。等到codecache失效了，就会需要重新flush的情况，这就会导致gc很慢的情况，因此，一定要保证codecache在不能溢出（注意采用-XX:+TieredCompilation java8 server模式的默认编译方式，是分层编译的。要取消分层编译，要-XX:-TieredCompilation）。分层编译的情况下，编译的阈值更低，更容易达到编译标准，所以很容易好近codecache，这点要注意，所以很容易的产生codecache溢出的。</p>
+<p>Java8可以加入参数-XX:+PrintCodeCache，加入后，在jvm退出的时候，就会打印出codecache的使用量，最大使用量，这样我们就可以看出是否有超出的情况。</p>
 <h2 id="Codecache大小控制选项"><a href="#Codecache大小控制选项" class="headerlink" title="Codecache大小控制选项"></a>Codecache大小控制选项</h2><table>
 <thead>
 <tr>
@@ -228,18 +230,116 @@
 </tr>
 </tbody>
 </table>
-<h2 id="Codecache刷新选项"><a href="#Codecache刷新选项" class="headerlink" title="Codecache刷新选项"></a>Codecache刷新选项</h2><p>选项    默认值    描述<br>ExitOnFullCodeCache    false    当CodeCache区域满了的时候是否退出JVM<br>UseCodeCacheFlushing    false    是否在关闭JIT编译前清除CodeCache<br>MinCodeCacheFlushingInterval    30    刷新CodeCache的最小时间间隔 ，单位为秒<br>CodeCacheMinimumFreeSpace    512000    当CodeCache区域的剩余空间小于参数指定的值时停止JIT编译。剩余的空间不会再用来存放方法的本地代码, 可以存放本地方法适配器代</p>
-<h2 id="编译策略选项"><a href="#编译策略选项" class="headerlink" title="编译策略选项"></a>编译策略选项</h2><p>选项    默认值    描述<br>CompileThreshold    10000    指定方法在在被JIT编译前被调用的次数<br>OnStackReplacePercentage    140    该值为用于计算是否触发OSR（OnStackReplace）编译的阈值</p>
+<h2 id="Codecache刷新选项"><a href="#Codecache刷新选项" class="headerlink" title="Codecache刷新选项"></a>Codecache刷新选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ExitOnFullCodeCache</td>
+<td>false    当CodeCache区域满了的时候是否退出JVM</td>
+</tr>
+<tr>
+<td>UseCodeCacheFlushing</td>
+<td>false    是否在关闭JIT编译前清除CodeCache</td>
+</tr>
+<tr>
+<td>MinCodeCacheFlushingInterval</td>
+<td>30    刷新CodeCache的最小时间间隔 ，单位为秒</td>
+</tr>
+<tr>
+<td>CodeCacheMinimumFreeSpace</td>
+<td>512000    当CodeCache区域的剩余空间小于参数指定的值时停止JIT编译。剩余的空间不会再用来存放方法的本地代码, 可以存放本地方法适配器代</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编译策略选项"><a href="#编译策略选项" class="headerlink" title="编译策略选项"></a>编译策略选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CompileThreshold</td>
+<td>10000    指定方法在在被JIT编译前被调用的次数</td>
+</tr>
+<tr>
+<td>OnStackReplacePercentage</td>
+<td>140    该值为用于计算是否触发OSR（OnStackReplace）编译的阈值</td>
+</tr>
+</tbody>
+</table>
 <h2 id="OSR编译的阈值计算"><a href="#OSR编译的阈值计算" class="headerlink" title="OSR编译的阈值计算"></a>OSR编译的阈值计算</h2><p>在client模式时，计算规则为CompileThreshold <em> (OnStackReplacePercentage/100)，在server模式时，计算规则为(CompileThreshold </em> (OnStackReplacePercentage - InterpreterProfilePercentage))/100。InterpreterProfilePercentage的默认值为33，当方法上的回边计数器到达这个值时，即触发后台的OSR编译，并将方法上累积的调用计数器设置为CompileThreshold的值，同时将回边计数器设置为CompileThreshold/2的值，一方面是为了避免OSR编译频繁触发；另一方面是以便当方法被再次调用时即触发正常的编译，当累积的回边计数器的值再次达到该值时，先检查OSR编译是否完成。如果OSR编译完成，则在执行循环体的代码时进入编译后的代码；如果OSR编译未完成，则继续把当前回边计数器的累积值再减掉一些，从这些描述可看出，默认情况下对于回边的情况，server模式下只要回边次数达到10 700次，就会触发OSR编译。</p>
 <p>用以下一段示例代码来模拟编译的触发：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;  </span><br><span class="line">    Foo foo=<span class="keyword">new</span> Foo();  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;  </span><br><span class="line">            foo.bar();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        <span class="comment">// some bar code  </span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10700</span>;i++)&#123;  </span><br><span class="line">        bar2();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bar2</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        <span class="comment">// bar2 method  </span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>以上代码采用java -server方式执行，当main中第一次调用foo.bar时，bar方法上的调用计数器为1，回边计数器为0；当bar方法中的循环执行完毕时，bar方法的调用计数器仍然为1，回边计数器则为10 700，达到触发OSR编译的条件，于是触发OSR编译，并将bar方法的调用计数器设置为10 000，回边计数器设置为5 000。</p>
 <p>当main中第二次调用foo.bar时，jdk发现bar方法的调用次数已超过compileThreshold，于是在后台执行JIT编译，并继续解释执行// some bar code，进入循环时，先检查OSR编译是否完成。如果完成，则执行编译后的代码，如果未编译完成，则继续解释执行。</p>
 <p>当main中第三次调用foo.bar时，如果此时JIT编译已完成，则进入编译后的代码；如果编译未完成，则继续按照上面所说的方式执行。</p>
 <p>由于Sun JDK的这个特性，在对Java代码进行性能测试时，要尤其注意是否事先做了足够次数的调用，以保证测试是公平的；对于高性能的程序而言，也应考虑在程序提供给用户访问前，自行进行一定的调用，以保证关键功能的性能。</p>
-<h2 id="JIT编译限制选项"><a href="#JIT编译限制选项" class="headerlink" title="JIT编译限制选项"></a>JIT编译限制选项</h2><p>选项    默认值    描述<br>MaxInlineLevel    9    在进行方法内联前，方法的最多嵌套调用次数<br>MaxInlineSize    35    被内联方法的字节码最大值<br>MinInliningThreshold    9    方法被内联的最小调用次数<br>InlineSynchronizedMethods    true    是否对同步方法进行内联</p>
-<h2 id="JIT诊断选项"><a href="#JIT诊断选项" class="headerlink" title="JIT诊断选项"></a>JIT诊断选项</h2><p>选项    默认值    描述<br>PrintFlagsFinal    false    是否打印所有的JVM参数<br>PrintCodeCache    false    是否在JVM退出前打印CodeCache的使用情况<br>PrintCodeCacheOnCompilation    false    是否在每个方法被JIT编译后打印CodeCache区域的使用情况</p>
-<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>java 进行jit的时候，会将编译的本地代码放在codecache中，因此可能出现codecache失效的情况。等到codecache失效了，就会需要重新flush的情况，这就会导致gc很慢的情况，因此，一定要保证codecache在不能溢出（注意采用-XX:+TieredCompilation java8 server模式的默认编译方式，是分层编译的。要取消分层编译，要-XX:-TieredCompilation）。分层编译的情况下，编译的阈值更低，更容易达到编译标准，所以很容易好近codecache，这点要注意，所以很容易的产生codecache溢出的。<br>好在java8可以加入参数-XX:+PrintCodeCache，加入后，在jvm退出的时候，就会打印出codecache的使用量，最大使用量，这样我们就可以看出是否有超出的情况。</p>
-<p>在tomcat的脚本中，加入-XX:+PrintCodeCache参数，在启动后，直接 sh shutdown.sh 可以看出打出命令后，立马出现了CodeCache: size=245760Kb used=1585Kb max_used=1597Kb free=244174Kb</p>
+<h2 id="JIT编译限制选项"><a href="#JIT编译限制选项" class="headerlink" title="JIT编译限制选项"></a>JIT编译限制选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MaxInlineLevel</td>
+<td>9</td>
+<td>在进行方法内联前，方法的最多嵌套调用次数</td>
+</tr>
+<tr>
+<td>MaxInlineSize</td>
+<td>35</td>
+<td>被内联方法的字节码最大值</td>
+</tr>
+<tr>
+<td>MinInliningThreshold</td>
+<td>9</td>
+<td>方法被内联的最小调用次数</td>
+</tr>
+<tr>
+<td>InlineSynchronizedMethods</td>
+<td>true</td>
+<td>是否对同步方法进行内联</td>
+</tr>
+</tbody>
+</table>
+<h2 id="JIT诊断选项"><a href="#JIT诊断选项" class="headerlink" title="JIT诊断选项"></a>JIT诊断选项</h2><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PrintFlagsFinal</td>
+<td>false</td>
+<td>是否打印所有的JVM参数</td>
+</tr>
+<tr>
+<td>PrintCodeCache</td>
+<td>false</td>
+<td>是否在JVM退出前打印CodeCache的使用情况</td>
+</tr>
+<tr>
+<td>PrintCodeCacheOnCompilation</td>
+<td>false</td>
+<td>是否在每个方法被JIT编译后打印CodeCache区域的使用情况</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>在tomcat的脚本中，加入-XX:+PrintCodeCache参数，在启动后，直接 sh shutdown.sh 可以看出打出命令后，立马出现了CodeCache: size=245760Kb used=1585Kb max_used=1597Kb free=244174Kb</p>
 <p> bounds [0x00007f2b25000000, 0x00007f2b25270000, 0x00007f2b34000000]</p>
 <p> total_blobs=490 nmethods=229 adapters=177</p>
 <p> compilation: enabled</p>
@@ -259,10 +359,9 @@
 <p>/opt/tomcat-migumoney-test/conf/catalina.policy” -Dcatalina.base=”/opt/tomcat-migumoney-test”</p>
 <p>-Dcatalina.home=”/opt/tomcat-migumoney-test” -Djava.io.tmpdir=”/opt/tomcat-migumoney-test/temp”</p>
 <p>org.apache.catalina.startup.Bootstrap “$@” start</p>
-<p>启动的时候Djava.util.logging.config.file来定义jdk的log日志的路径的。因此在catalina.out中可以输出jvm的内容</p>
+<p>启动的时候-Djava.util.logging.config.file来定义jdk的log日志的路径的。因此在catalina.out中可以输出jvm的内容</p>
 <p>相关文献：</p>
-<p><a href="http://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm#A1099598" target="_blank" rel="external">http://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm#A1099598</a><br><a href="http://blog.csdn.net/dm_vincent/article/details/39529941" target="_blank" rel="external">http://blog.csdn.net/dm_vincent/article/details/39529941</a><br><a href="http://blog.csdn.net/yandaonan/article/details/50844806" target="_blank" rel="external">http://blog.csdn.net/yandaonan/article/details/50844806</a></p>
-<p><a href="http://wen-owen.iteye.com/blog/1473550" target="_blank" rel="external">http://wen-owen.iteye.com/blog/1473550</a></p>
+<p><a href="http://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm#A1099598" target="_blank" rel="external">http://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm#A1099598</a><br><a href="http://blog.csdn.net/dm_vincent/article/details/39529941" target="_blank" rel="external">http://blog.csdn.net/dm_vincent/article/details/39529941</a><br><a href="http://blog.csdn.net/yandaonan/article/details/50844806" target="_blank" rel="external">http://blog.csdn.net/yandaonan/article/details/50844806</a><br><a href="http://wen-owen.iteye.com/blog/1473550" target="_blank" rel="external">http://wen-owen.iteye.com/blog/1473550</a></p>
 
       
 
@@ -643,11 +742,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">sar</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sar</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
