@@ -17,14 +17,14 @@
 <meta property="og:description" content="图解ByteBuffer">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_init.png">
-<meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_put.png.png">
+<meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_put.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_flip.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_get.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_mark.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_reset.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_clear.png">
 <meta property="og:image" content="http://thinkhejie.github.io/img/bytebuffer/bytebuffer_action_slice.png">
-<meta property="og:updated_time" content="2018-06-21T08:53:24.513Z">
+<meta property="og:updated_time" content="2018-06-21T08:57:28.986Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图解ByteBuffer">
 <meta name="twitter:description" content="图解ByteBuffer">
@@ -250,7 +250,7 @@
 <p><img src="/img/bytebuffer/bytebuffer_action_init.png" alt="bytebuffer_action_init"></p>
 <p>其中初始化的值，分别为position=0,limit和capacity等于我们指定的缓冲区大小，mark默认为-1。网上有一些教程的图示默认显示了mark为起始点，其实是一种低级错误，让别人误以为mark就等于起始位置。</p>
 <h3 id="Put操作"><a href="#Put操作" class="headerlink" title="Put操作"></a>Put操作</h3><p>顾名思义，put操作就是就是将数据放入缓冲区中，每一次put操作，都会position加上put进去的数据长度.position每加一，代表缓冲区内增加了一个字节的数据，具体put的操作原理如下：</p>
-<p><img src="/img/bytebuffer/bytebuffer_action_put.png.png" alt="bytebuffer_action_put"></p>
+<p><img src="/img/bytebuffer/bytebuffer_action_put.png" alt="bytebuffer_action_put"></p>
 <p>如果送入的数据大小大于缓冲区剩余容量，则会抛出异常:java.nio.BufferOverflowException,虽然可能有实际部分数据被写入缓冲区，但是flip之后，limit位置还是最后一次正确写入缓冲区的位置。</p>
 <h3 id="Flip操作"><a href="#Flip操作" class="headerlink" title="Flip操作"></a>Flip操作</h3><p>Flip，从英文的直译为：翻转。但是，这并不是将数据翻转的意思，而其实是让limit指向当前position的位置,position指向起始位置，此时position=0,进行这一部操作之后，就可以确定了当前缓冲区的有效数据。并且为数据读取做准备。</p>
 <p><img src="/img/bytebuffer/bytebuffer_action_flip.png" alt="bytebuffer_action_flip"></p>
@@ -576,11 +576,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+                <a href="javascript:void(0)" class="js-tag color5">kill</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">kill</a>
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -676,10 +676,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">ByteBuffer</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">zab</a>
               </li>
              
@@ -689,6 +685,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">ByteBuffer</a>
               </li>
              
               <li class="article-tag-list-item">
